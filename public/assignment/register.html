@@ -7,7 +7,7 @@
 
     <meta name="description" content="Build and use the form at your will.">
     <meta name="author" content="Abhinav Maurya">
-    <title>Form Maker</title>
+    <title>Register</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="register.html">Register</a></li>
+                <li><a href="#">Register</a></li>
                 <li><a href="#">Login</a></li>
                 <li><a href="#">Username</a></li>
                 <li><a href="#">Logout</a></li>
@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="home.html">Home<span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="home.html">Home</a></li>
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Admin</a></li>
                 <li><a href="#">Forms</a></li>
@@ -55,10 +55,42 @@
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-            <h1>Welcome!</h1>
+            <h2>Register</h2>
 
-            <p>Form maker is a place where you can easily build & use forms. Form maker provides you variety of tools to create the forms for your users. </p>
-            <p> Go to <a href="forms.html">Forms</a> to build your own form now.</p>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">Username:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="userName" placeholder="Username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">Password:</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="verifyPassword" class="col-sm-3 control-label">Verify Password:</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="verifyPassword" placeholder="Verify Password">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">Email:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="email" placeholder="Email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button type="submit" class="btn btn-success btn-block">Register</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
