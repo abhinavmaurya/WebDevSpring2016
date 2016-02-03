@@ -30,14 +30,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Register</a></li>
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Username</a></li>
-                <li><a href="#">Logout</a></li>
+                <li class="active"><a href="#">Register</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="profile.html">Username</a></li>
+                <li><a href="home.html">Logout</a></li>
             </ul>
-            <!--<form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>-->
         </div>
     </div>
 </nav>
@@ -46,10 +43,10 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="home.html">Home</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Forms</a></li>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="forms.html">Forms</a></li>
             </ul>
         </div>
 
@@ -58,35 +55,35 @@
             <h2>Register</h2>
 
             <form class="form-horizontal">
-                <div class="form-group">
+                <div class="form-group row">
                     <label for="userName" class="col-sm-3 control-label">Username:</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                         <input type="text" class="form-control" id="userName" placeholder="Username">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group row">
                     <label for="password" class="col-sm-3 control-label">Password:</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                         <input type="password" class="form-control" id="password" placeholder="Password">
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="verifyPassword" class="col-sm-3 control-label">Verify Password:</label>
-                    <div class="col-sm-9">
+                <div class="form-group row">
+                    <label for="verifyPassword" class="col-sm-3 control-label">Verify&nbsp;Password:</label>
+                    <div class="col-sm-6">
                         <input type="password" class="form-control" id="verifyPassword" placeholder="Verify Password">
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group row">
                     <label for="email" class="col-sm-3 control-label">Email:</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="email" placeholder="Email">
+                    <div class="col-sm-6">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
+                <div class="form-group row">
+                    <div class="col-sm-offset-3 col-sm-6">
                         <button type="submit" class="btn btn-success btn-block">Register</button>
                     </div>
                 </div>
