@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="FormBuilderApp">
+<head>
+
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet"/>
+
+    <!--Bootstrap JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!--AngularJS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+
+    <!--Config-->
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <!--Services-->
+    <script src="services/user.service.client.js"></script>
+
+    <!--Controllers-->
+    <script src="views/main/main.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
+    <script src="views/sidebar/sidebar.controller.js"></script>
+    <script src="views/users/login.controller.js"></script>
+
+
+
+    <meta charset="UTF-8">
+    <title>Form Maker</title>
+</head>
+<body ng-controller="MainController">
+    <!--<div ng-controller="MainController">-->
+    <!--include header-->
+    <div ng-include="'views/header/header.view.html'"></div>
+
+    <!--sidebar and dynamic content-->
+    <div class="container-fluid">
+        <div class="row">
+            <div ng-include="'views/sidebar/sidebar.view.html'"></div>
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div ng-view></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
