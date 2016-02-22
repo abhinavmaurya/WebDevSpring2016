@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService ($http){
+    function UserService (){
 
         var userData =
             [
@@ -25,11 +25,11 @@
 
         var api = {
 
-            findUserByCredentials: findUserByCredentials
-            /*findAllUsers: findAllUsers,
+            findUserByCredentials: findUserByCredentials,
+            findAllUsers: findAllUsers,
             createUser: createUser,
-            deleteUserById: deleteUserById,
-            updateUser: updateUser*/
+            //deleteUserById: deleteUserById,
+            updateUser: updateUser
         };
         return api;
 
@@ -44,6 +44,54 @@
                 }
             }
             callback(user);
+        }
+
+        function findAllUsers(callback){
+            callback(userData);
+        }
+
+        function createUser(user, callback){
+            var newUser = {
+                _id: (new Date()).getTime(),
+                firstName: '',
+                lastname: '',
+                username: user.username,
+                password: user.password,
+                roles:[]
+            };
+
+            console.log(userData);
+
+            userData.push(newUser);
+            callback(newUser);
+        }
+
+        function updateUser(userId, user, callback){
+
+            var old_user = findUserById(userId);
+            if(old_user){
+                var index = userData.indexOf(old_user);
+                userData[index] = {
+                    "_id": user._id,
+                    firstName: user.firstName,
+                    lastname: user.lastName,
+                    username: user.username,
+                    password: user.password,
+                    roles: user.roles
+                }
+            }
+            console.log(userData);
+            callback(user);
+        }
+
+        function findUserById(userId){
+            for(var u in userData){
+
+                if(userData[u]._id == userId) {
+                    return userData[u];
+                }
+            }
+            return null;
         }
     }
 })();
