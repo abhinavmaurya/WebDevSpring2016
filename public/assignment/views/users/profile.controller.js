@@ -9,18 +9,21 @@
         .controller("ProfileController", ProfileController);
 
 
-    function ProfileController($scope, $rootScope, UserService){
+    function ProfileController($scope, UserService){
 
-        if($rootScope.user) {
-            $scope.user = {
-                _id: $rootScope.user._id,
-                username: $rootScope.user.username,
-                firstName: $rootScope.user.firstName,
-                lastName: $rootScope.user.lastName,
-                password: $rootScope.user.password,
-                email: $rootScope.user.email,
-                roles: $rootScope.user.roles
+        var usr = UserService.getCurrentUser();
+        if(usr) {
+            $scope.currentUser = {
+                _id: usr._id,
+                username: usr.username,
+                firstName: usr.firstName,
+                lastName: usr.lastName,
+                password: usr.password,
+                email: usr.email,
+                roles: usr.roles
             };
+        }else{
+            $scope.$location.url("/home");
         }
 
         $scope.updateUser = updateUser;
@@ -28,15 +31,18 @@
 
 
         function updateUser(user){
-
-            console.log(user._id);
-            console.log(user.firstName);
             UserService.updateUser(user._id, user, success);
         }
 
         function success(user){
-
-            $rootScope.user = user;
+            $scope.error = null;
+            $scope.message = null;
+            if(user) {
+                $scope.message = "User updated successfully";
+                UserService.setCurrentUser(user);
+            }else{
+                $scope.message = "Unable to update the user";
+            }
         }
     }
 })();

@@ -8,8 +8,11 @@
         .module("FormBuilderApp")
         .controller("SidebarController", SidebarController);
 
-    function SidebarController($scope, $rootScope){
+    function SidebarController($scope, UserService){
 
+        $scope.isAdmin = function (){
+            return UserService.isAdminUser();
+        };
 
     }
 })();

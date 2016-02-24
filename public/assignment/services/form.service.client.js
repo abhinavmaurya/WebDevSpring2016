@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .factory("FormService", FormService);
 
-    function FormService($rootScope){
+    function FormService($rootScope, UserService){
 
         var formData =
             [
@@ -52,7 +52,7 @@
                 formData.splice(index, 1);
             }
 
-            findAllFormsForUser($rootScope.user._id, callback);
+            findAllFormsForUser(UserService.getCurrentUser()._id, callback);
         }
 
 
@@ -65,9 +65,7 @@
                     userId: formData[index].userId
                 };
             }
-
-            //callback(formData);
-            findAllFormsForUser($rootScope.user._id, callback);
+            findAllFormsForUser(UserService.getCurrentUser()._id, callback);
         }
 
 

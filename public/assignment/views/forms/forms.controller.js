@@ -8,23 +8,28 @@
         .module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController($rootScope, $scope, FormService){
+    function FormController($rootScope, $scope, FormService, UserService){
 
         console.log("Inside Form controller")
-        var userId = $rootScope.user._id;
+        var userId = UserService.getCurrentUser()._id;
         FormService.findAllFormsForUser(userId, setForms);
 
+        $scope.form = null;
+        $scope.selectedForm = null;
 
+        // even handlers
         $scope.setForms = setForms;
         $scope.addForm = addForm;
         $scope.deleteForm = deleteForm;
         $scope.selectForm = selectForm;
         $scope.updateForm = updateForm;
+        $scope.unselectForm = unselectForm;
 
 
         function setForms(forms){
             console.log(forms);
-            $scope.forms = forms;
+            $scope.forms = forms;   // set updated forms
+            $scope.form = null; //reset form
         }
 
         function addForm(form){
@@ -45,6 +50,7 @@
                 _id: form._id,
                 title: form.title
             };
+            $scope.selectedForm = true;
         }
 
         function updateForm(form){
@@ -54,6 +60,11 @@
             };
 
             FormService.updateFormById(form._id, updatedForm, setForms);
+        }
+
+        function unselectForm(){
+            $scope.form = null;
+            $scope.selectedForm = null;
         }
 
     }

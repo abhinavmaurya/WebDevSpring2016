@@ -7,7 +7,7 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService (){
+    function UserService ($rootScope){
 
         var userData =
             [
@@ -29,9 +29,22 @@
             findAllUsers: findAllUsers,
             createUser: createUser,
             deleteUserById: deleteUserById,
-            updateUser: updateUser
+            updateUser: updateUser,
+            setCurrentUser: setCurrentUser,
+            getCurrentUser: getCurrentUser,
+            findUserByUsername: findUserByUsername,
+            isAdminUser: isAdminUser
+
         };
         return api;
+
+        function setCurrentUser (user) {
+            $rootScope.currentUser = user;
+        }
+
+        function getCurrentUser () {
+            return $rootScope.currentUser;
+        }
 
         function findUserByCredentials(username, password, callback){
             console.log("inside finduser");
@@ -53,11 +66,8 @@
         function createUser(user, callback){
             var newUser = {
                 _id: (new Date()).getTime(),
-                firstName: '',
-                lastname: '',
                 username: user.username,
-                password: user.password,
-                roles:[]
+                password: user.password
             };
 
             console.log(userData);
@@ -101,6 +111,30 @@
             }
 
             callback(userData);
+        }
+
+        function findUserByUsername(username){
+            var user = null;
+            for(var u in userData){
+
+                if(userData[u].username == username) {
+                    user = userData[u];
+                    break;
+                }
+            }
+            return user;
+        }
+
+        function isAdminUser(){
+            var user = getCurrentUser();
+
+            if(user){
+                for(var role in user.roles){
+                    if (user.roles[role] == "admin")
+                        return true;
+                }
+            }
+            return false;
         }
     }
 })();

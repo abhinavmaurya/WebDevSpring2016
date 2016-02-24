@@ -6,16 +6,16 @@
 
     angular
         .module("FormBuilderApp")
-        .controller("LoginController", LoginController)
+        .controller("LoginController", LoginController);
 
-    function LoginController($scope, $rootScope, UserService){
+    function LoginController($scope, UserService){
 
         // event handlers declaration
-        $scope.validate = validate;
+        $scope.login = login;
         $scope.success = success;
 
         // event handler implementations
-        function validate(user){
+        function login(user){
             console.log("inside validate")
             if(user.username && user.password) {
                 UserService.findUserByCredentials(user.username, user.password, success);
@@ -24,11 +24,10 @@
 
         function success(user) {
             if (user) {
-                console.log("success");
-                $rootScope.user = user;
+                UserService.setCurrentUser(user);
                 $scope.$location.url("/profile");
             }else{
-                console.log("Invalid user");
+                $scope.message = "Invalid username/password";
             }
         }
     }

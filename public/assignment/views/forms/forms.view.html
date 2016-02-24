@@ -26,8 +26,9 @@
                         <input type="text" class="form-control" ng-model="form.title" placeholder="name"/>
                     </td>
                     <td>
-                        <a ng-click="addForm(form)" class="glyphicon glyphicon-plus btn btn-primary"></a>
-                        <a ng-click="updateForm(form)" class="glyphicon glyphicon-ok btn btn-success"></a>
+                        <a ng-show="selectedForm" ng-click="unselectForm()" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                        <a ng-hide="selectedForm" ng-click="addForm(form)" class="glyphicon glyphicon-plus btn btn-primary"></a>
+                        <a ng-show="selectedForm" ng-click="updateForm(form)" class="glyphicon glyphicon-ok btn btn-success"></a>
                     </td>
                 </tr>
                 <tr ng-repeat="form in forms">

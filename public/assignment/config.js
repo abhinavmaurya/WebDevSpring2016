@@ -30,7 +30,7 @@
                 templateUrl: "views/forms/forms.view.html"
             })
             .when("/form-fields",{
-                templateUrl: "views/forms/forms-fields.view.html"
+                templateUrl: "views/forms/form-fields.view.html"
             })
             .when("/admin",{
                 templateUrl: "views/admin/admin.view.html"

@@ -8,27 +8,17 @@
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope, $rootScope){
+    function HeaderController($scope, UserService){
 
         $scope.logout = logout;
-        $scope.isAdmin = isAdmin;
+        $scope.isAdmin = function (){
+            return UserService.isAdminUser();
+        };
 
         function logout(){
-            $rootScope.user = undefined;
-            console.log($rootScope.user);
+            UserService.setCurrentUser(undefined);
             $scope.$location.url('/home');
         }
 
-        function isAdmin(){
-            var user = $rootScope.user;
-
-            if(user){
-                for(var role in user.roles){
-                    if (user.roles[role] == "admin")
-                        return true;
-                }
-            }
-            return false;
-        }
     }
 })();
