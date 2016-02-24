@@ -71,7 +71,7 @@
             var index = userData.indexOf(findUserById(userId));
             if(index>=0){
                 userData[index] = {
-                    "_id": user._id,
+                    _id: user._id,
                     firstName: user.firstName,
                     lastname: user.lastName,
                     username: user.username,
@@ -94,8 +94,13 @@
         }
 
 
-        function deleteUserById(){
+        function deleteUserById(userId, callback){
+            var index = userData.indexOf(findUserById(userId));
+            if(index>=0){
+                userData.splice(index, 1);
+            }
 
+            callback(userData);
         }
     }
 })();

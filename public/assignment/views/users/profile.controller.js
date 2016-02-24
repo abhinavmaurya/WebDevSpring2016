@@ -13,7 +13,7 @@
 
         if($rootScope.user) {
             $scope.user = {
-                "_id": $rootScope.user._id,
+                _id: $rootScope.user._id,
                 username: $rootScope.user.username,
                 firstName: $rootScope.user.firstName,
                 lastName: $rootScope.user.lastName,
