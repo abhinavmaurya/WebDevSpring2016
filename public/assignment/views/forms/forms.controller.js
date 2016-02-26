@@ -10,8 +10,15 @@
 
     function FormController($rootScope, $scope, FormService, UserService){
 
-        console.log("Inside Form controller")
-        var userId = UserService.getCurrentUser()._id;
+        var usr = UserService.getCurrentUser();
+        var userId = null;
+        // Redirect if user id is not found in scope i.e. logout
+        if(usr){
+            userId = usr._id;
+        }else{
+            $scope.$location.url("/home");
+        }
+
         FormService.findAllFormsForUser(userId, setForms);
 
         $scope.form = null;
@@ -27,17 +34,20 @@
 
 
         function setForms(forms){
-            console.log(forms);
             $scope.forms = forms;   // set updated forms
             $scope.form = null; //reset form
         }
 
         function addForm(form){
 
-            var newForm = {
-                title: form.title
-            };
-            FormService.createFormForUser(userId, newForm, setForms);
+            if(!form){
+                $scope.message = "Please specify a valid name of the form."
+            }else{
+                var newForm = {
+                    title: form.title
+                };
+                FormService.createFormForUser(userId, newForm, setForms);
+            }
         }
 
         function deleteForm(form){

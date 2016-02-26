@@ -16,7 +16,6 @@
 
         // event handler implementations
         function login(user){
-            console.log("inside validate")
             if(user.username && user.password) {
                 UserService.findUserByCredentials(user.username, user.password, success);
             }

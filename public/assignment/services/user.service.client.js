@@ -47,7 +47,6 @@
         }
 
         function findUserByCredentials(username, password, callback){
-            console.log("inside finduser");
             var user = null;
             for(var u in userData){
 
@@ -70,8 +69,6 @@
                 password: user.password
             };
 
-            console.log(userData);
-
             userData.push(newUser);
             callback(newUser);
         }
@@ -83,13 +80,12 @@
                 userData[index] = {
                     _id: user._id,
                     firstName: user.firstName,
-                    lastname: user.lastName,
+                    lastName: user.lastName,
                     username: user.username,
                     password: user.password,
                     roles: user.roles
                 }
             }
-            console.log(userData);
             callback(userData[index]);
         }
 

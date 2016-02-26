@@ -1,44 +1,41 @@
-<div ng-controller="FormController">
+<h2>Forms</h2>
+<div ng-show="message" class="alert alert-danger" role="alert">{{message}}</div>
+<ul class="nav nav-tabs">
+    <li ng-class="{'active' : $location.url() == '/forms'}"><a href="#/forms">Forms</a></li>
+    <li><a href="#/form-fields">Fields</a></li>
+</ul>
 
-    <h2>Forms</h2>
+<div class="table-responsive">
 
-    <ul class="nav nav-tabs">
-        <li ng-class="{'active' : $location.url() == '/forms'}"><a href="#/forms">Forms</a></li>
-        <li><a href="#/form-fields">Fields</a></li>
-    </ul>
-
-    <div class="table-responsive">
-
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="col-sm-9">
+                <a href="#/forms">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Form Name
+                </a>
+            </th>
+            <th class="col-sm-3">Action</th>
+        </tr>
+        </thead>
+        <tbody>
             <tr>
-                <th>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Form Name
-                    </a>
-                </th>
-                <th>Action</th>
+                <td class="col-sm-9">
+                    <input type="text" class="form-control" ng-model="form.title" placeholder="name"/>
+                </td>
+                <td class="col-sm-3">
+                    <a ng-show="selectedForm" ng-click="unselectForm()" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                    <a ng-hide="selectedForm" ng-click="addForm(form)" class="glyphicon glyphicon-plus btn btn-primary"></a>
+                    <a ng-show="selectedForm" ng-click="updateForm(form)" class="glyphicon glyphicon-ok btn btn-success"></a>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <input type="text" class="form-control" ng-model="form.title" placeholder="name"/>
-                    </td>
-                    <td>
-                        <a ng-show="selectedForm" ng-click="unselectForm()" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                        <a ng-hide="selectedForm" ng-click="addForm(form)" class="glyphicon glyphicon-plus btn btn-primary"></a>
-                        <a ng-show="selectedForm" ng-click="updateForm(form)" class="glyphicon glyphicon-ok btn btn-success"></a>
-                    </td>
-                </tr>
-                <tr ng-repeat="form in forms">
-                    <td><a href="#/form-fields">{{form.title}}</a></td>
-                    <td>
-                        <a ng-click="deleteForm(form)" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                        <a ng-click="selectForm(form)" class="glyphicon glyphicon-pencil btn btn-info"></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <tr ng-repeat="form in forms">
+                <td class="col-sm-9"><a href="#/form-fields">{{form.title}}</a></td>
+                <td class="col-sm-3">
+                    <a ng-click="deleteForm(form)" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                    <a ng-click="selectForm(form)" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
