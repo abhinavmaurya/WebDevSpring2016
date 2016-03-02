@@ -1,0 +1,33 @@
+<h2>Search</h2>
+
+<form class="form-inline">
+    <div>
+        <input type="text" class="form-control" placeholder="Search Quote" ng-model="name"/>
+        <a ng-click="search(name)" class="btn btn-primary">Search</a>
+    </div>
+</form>
+
+
+<section ng-show="stocks">
+    <h3>Search Results</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol/ID</th>
+                <th>Name</th>
+                <th>Exchange</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="stock in stocks">
+            <td>{{stock.Symbol}}</td>
+            <td>
+                <a href="#/details/{{stock.Symbol}}">
+                    {{stock.Name}}
+                </a>
+            </td>
+            <td>{{stock.Exchange}}</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
