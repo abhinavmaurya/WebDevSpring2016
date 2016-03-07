@@ -20,7 +20,7 @@
                 controller: "HomeController"
             })
             .when("/details/:symbol",{
-                templateUrl: "details/details.view.html",
+                templateUrl: "views/details/details.view.html",
                 controller: "DetailsController"
             })
             /*.when("/login",{
@@ -45,11 +45,11 @@
             .when("/form-fields",{
                 templateUrl: "views/forms/form-fields.view.html",
                 controller: "FieldsController"
-            })
+            })*/
             .when("/admin",{
                 templateUrl: "views/admin/admin.view.html",
                 controller: "AdminController"
-            })*/
+            })
             .otherwise({
                 redirectTo: "/home"
             });

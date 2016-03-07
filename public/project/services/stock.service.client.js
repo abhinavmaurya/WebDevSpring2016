@@ -39,7 +39,7 @@
             $http({
                 method: "JSONP",
                 params: {
-                    input: name
+                    symbol: id
                 },
                 url: "http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?callback=JSON_CALLBACK",
                 isArray: true

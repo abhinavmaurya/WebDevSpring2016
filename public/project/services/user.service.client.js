@@ -13,15 +13,15 @@
         var userData =
             [
                 {	"_id":123, "firstName":"Alice",            "lastName":"Wonderland",
-                    "username":"alice",  "password":"alice",   "roles": ["student"]		},
+                    "username":"alice",  "password":"alice",   "email": "alice@tb.com"		},
                 {	"_id":234, "firstName":"Bob",              "lastName":"Hope",
-                    "username":"bob",    "password":"bob",     "roles": ["admin"]		},
+                    "username":"bob",    "password":"bob",     "email": "bob@tb.com"		},
                 {	"_id":345, "firstName":"Charlie",          "lastName":"Brown",
-                    "username":"charlie","password":"charlie", "roles": ["faculty"]		},
+                    "username":"charlie","password":"charlie", "email": "charlie@tb.com"		},
                 {	"_id":456, "firstName":"Dan",              "lastName":"Craig",
-                    "username":"dan",    "password":"dan",     "roles": ["faculty", "admin"]},
+                    "username":"dan",    "password":"dan",     "email": "dan@tb.com"},
                 {	"_id":567, "firstName":"Edward",           "lastName":"Norton",
-                    "username":"ed",     "password":"ed",      "roles": ["student"]		}
+                    "username":"ed",     "password":"ed",      "email": "ed@tb.com"		}
             ];
 
         var api = {
@@ -33,8 +33,7 @@
             updateUser: updateUser,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
-            findUserByUsername: findUserByUsername,
-            isAdminUser: isAdminUser
+            findUserByUsername: findUserByUsername
 
         };
         return api;
@@ -67,11 +66,12 @@
             var newUser = {
                 _id: (new Date()).getTime(),
                 username: user.username,
-                password: user.password
+                password: user.password,
+                email: user.email
             };
 
             userData.push(newUser);
-            callback(newUser);
+            callback(userData);
         }
 
         function updateUser(userId, user, callback){
@@ -80,14 +80,12 @@
             if(index>=0){
                 userData[index] = {
                     _id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
                     username: user.username,
                     password: user.password,
-                    roles: user.roles
+                    email: user.email
                 }
             }
-            callback(userData[index]);
+            callback(userData);
         }
 
         function findUserById(userId){
@@ -120,18 +118,6 @@
                 }
             }
             return user;
-        }
-
-        function isAdminUser(){
-            var user = getCurrentUser();
-
-            if(user){
-                for(var role in user.roles){
-                    if (user.roles[role] == "admin")
-                        return true;
-                }
-            }
-            return false;
         }
     }
 })();
