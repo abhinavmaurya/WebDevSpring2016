@@ -23,32 +23,17 @@
                 templateUrl: "views/details/details.view.html",
                 controller: "DetailsController"
             })
-            /*.when("/login",{
-                templateUrl: "views/users/login.view.html",
-                controller: "LoginController"
-            })
-            .when("/register",{
-                templateUrl: "views/users/register.view.html",
-                controller: "RegisterController"
-            })
-            .when("/logout",{
-                templateUrl: "views/home/home.view.html"
-            })
-            .when("/profile",{
-                templateUrl: "views/users/profile.view.html",
-                controller: "ProfileController"
-            })
-            .when("/forms",{
-                templateUrl: "views/forms/forms.view.html",
-                controller: "FormController"
-            })
-            .when("/form-fields",{
-                templateUrl: "views/forms/form-fields.view.html",
-                controller: "FieldsController"
-            })*/
             .when("/admin",{
                 templateUrl: "views/admin/admin.view.html",
                 controller: "AdminController"
+            })
+            .when("/watchlist",{
+                templateUrl: "views/stocks/watchlist.view.html",
+                controller: "WatchlistController"
+            })
+            .when("/portfolio",{
+                templateUrl: "views/stocks/portfolio.view.html",
+                controller: "PortfolioController"
             })
             .otherwise({
                 redirectTo: "/home"

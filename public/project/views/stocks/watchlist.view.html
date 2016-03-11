@@ -1,0 +1,27 @@
+<h2>Watchlist</h2>
+
+<div class="table-responsive">
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="stock in watchlist">
+                <td>{{stock.Name}}</td>
+                <td>{{stock.Symbol}}</td>
+                <td>{{stock.LastPrice}}</td>
+                <td>
+                    <a ng-click="addToPortfolio(stock)" class="glyphicon glyphicon-plus btn btn-success"></a>&nbsp;
+                    <a ng-click="deleteFromWatchlist(stock)" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

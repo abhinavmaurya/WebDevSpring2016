@@ -1,8 +1,23 @@
 <h2>{{stock.Name}} ({{stock.Symbol}})</h2>
+<div>
+    <p>Date: {{stock.Timestamp}}</p>
+    <p>Open Price: {{stock.Open}}</p>
+    <p>Current Price: {{stock.Last}}</p>
+    <p>Change: {{stock.Change}}</p>
+    <p>Volume: {{stock.Volume}}</p>
+    <p>Market Capital: {{stock.MarketCap}}</p>
 
-<p>Date: {{stock.Timestamp}}</p>
-<p>Open Price: {{stock.Open}}</p>
-<p>Current Price: {{stock.Last}}</p>
-<p>Change: {{stock.Change}}</p>
-<p>Volume: {{stock.Volume}}</p>
-<p>Market Capital: {{stock.MarketCap}}</p>
+</div>
+<div>
+    <a ng-click="addToWatchlist(stock)" class="btn btn-primary">Add To Watchlist</a>
+</div>
+<br>
+<div ng-show="message" class="alert alert-success" role="alert">{{message}}</div>
+<div ng-show="error" class="alert alert-danger" role="alert">{{error}}</div>
+
+<form class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Quantity" ng-model="qty">
+    </div>
+    <a ng-click="addToPortfolio(stock, qty)" class="btn btn-primary">Add To Portfolio</a>
+</form>
