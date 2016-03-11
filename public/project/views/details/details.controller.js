@@ -29,7 +29,7 @@
 
 
         function addToWatchlist(stock){
-            StockService.addToWatchlist(stock, postAdd);
+            StockService.addToWatchlist(stock, postAddToWatchlist);
         }
 
         function postAddToPortfolio(stock){
