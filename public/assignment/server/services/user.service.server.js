@@ -17,8 +17,6 @@ module.exports = function (app, model){
     }
 
     function loggedin(req, res){
-        console.log("inside loggedin");
-        console.log(req.session.currentUser);
         res.json(req.session.currentUser);
     }
 

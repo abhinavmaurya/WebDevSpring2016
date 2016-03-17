@@ -35,7 +35,8 @@
             getCurrentUser: getCurrentUser,
             findUserByUsername: findUserByUsername,
             isAdminUser: isAdminUser,
-            logout: logout
+            logout: logout,
+            getLoggedinUser: getLoggedinUser
 
         };
         return api;
@@ -44,13 +45,17 @@
             $rootScope.currentUser = user;
         }
 
-        function getCurrentUser () {
+        function getCurrentUser() {
             return $rootScope.currentUser;
             //return $http.get("/api/project/loggedin");
         }
 
+        function getLoggedinUser(){
+            return $http.get("/api/project/loggedin");
+        }
+
         function logout(){
-            return $http.post("api/project/logout");
+            return $http.post("/api/project/logout");
         }
 
         function login(credentials){

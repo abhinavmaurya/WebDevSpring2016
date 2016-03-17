@@ -26,12 +26,11 @@
             })
             .when("/profile",{
                 templateUrl: "views/users/profile.view.html",
-                controller: "ProfileController"
-                //controllerAs: "model",
-                /*
+                controller: "ProfileController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
-                }*/
+                }
             })
             .when("/forms",{
                 templateUrl: "views/forms/forms.view.html",
@@ -55,7 +54,7 @@
         var deferred = $q.defer();
 
         UserService
-            .getCurrentUser()
+            .getLoggedinUser()
             .then(function(response) {
                 var currentUser = response.data;
                 if(currentUser) {

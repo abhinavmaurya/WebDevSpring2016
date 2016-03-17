@@ -14,7 +14,8 @@
         var vm = this;
 
         function init(){
-            var usr = UserService.getCurrentUser();
+            //var usr = UserService.getCurrentUser();
+            var usr = null;
             if(usr) {
                 vm.currentUser = {
                     _id: usr._id,
