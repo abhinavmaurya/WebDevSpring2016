@@ -8,7 +8,7 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService ($rootScope){
+    function UserService ($http, $rootScope){
 
         var userData =
             [
@@ -26,7 +26,7 @@
 
         var api = {
 
-            findUserByCredentials: findUserByCredentials,
+            login: login,
             findAllUsers: findAllUsers,
             createUser: createUser,
             deleteUserById: deleteUserById,
@@ -34,29 +34,36 @@
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             findUserByUsername: findUserByUsername,
-            isAdminUser: isAdminUser
+            isAdminUser: isAdminUser,
+            logout: logout
 
         };
         return api;
 
-        function setCurrentUser (user) {
+        function setCurrentUser(user) {
             $rootScope.currentUser = user;
         }
 
         function getCurrentUser () {
             return $rootScope.currentUser;
+            //return $http.get("/api/project/loggedin");
         }
 
-        function findUserByCredentials(username, password, callback){
-            var user = null;
-            for(var u in userData){
+        function logout(){
+            return $http.post("api/project/logout");
+        }
 
-                if(userData[u].username == username && userData[u].password == password) {
-                    user = userData[u];
-                    break;
-                }
-            }
-            callback(user);
+        function login(credentials){
+            /*var user = null;
+             for(var u in userData){
+
+             if(userData[u].username == username && userData[u].password == password) {
+             user = userData[u];
+             break;
+             }
+             }
+             callback(user);*/
+            return $http.post("/api/project/login", credentials);
         }
 
         function findAllUsers(callback){
@@ -74,7 +81,7 @@
             callback(newUser);
         }
 
-        function updateUser(userId, user, callback){
+        function updateUser(userId, user){
 
             var index = userData.indexOf(findUserById(userId));
             if(index>=0){
@@ -87,7 +94,7 @@
                     roles: user.roles
                 }
             }
-            callback(userData[index]);
+            return (userData[index]);
         }
 
         function findUserById(userId){
