@@ -44,8 +44,8 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
-            .when("/form-fields",{
-                templateUrl: "views/forms/form-fields.view.html",
+            .when("/form/:formId/fields",{
+                templateUrl: "views/forms/fields.view.html",
                 controller: "FieldsController"
             })
             .when("/admin",{

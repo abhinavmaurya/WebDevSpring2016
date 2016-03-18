@@ -24,7 +24,7 @@ module.exports = function(app, formModel) {
     }
 
     function findAllformsForUser(req, res) {
-        var userId = req.params.userId;
+        var userId = parseInt(req.params.userId);
         res.json(formModel.findAllFormsByUserId(userId));
     }
 
@@ -33,12 +33,12 @@ module.exports = function(app, formModel) {
     }
 
     function findFormById(req, res) {
-        var formId = req.params.formId;
+        var formId = parseInt(req.params.formId);
         res.json(formModel.findFormById(formId));
     }
 
     function updateFormById(req, res) {
-        var formId = req.params.formId;
+        var formId = parseInt(req.params.formId);
         var form = req.body;
 
         formModel.updateFormById(formId, form);
@@ -47,7 +47,7 @@ module.exports = function(app, formModel) {
 
     function deleteFormById(req, res) {
 
-        var formId = req.params.formId;
+        var formId = parseInt(req.params.formId);
         formModel.deleteFormById(formId);
         res.send(200);
     }

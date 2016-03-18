@@ -52,7 +52,7 @@ module.exports = function() {
 
         for (var i in mock) {
 
-            if(mock[i]._id === formId) {
+            if(mock[i]._id == formId) {
 
                 mock[i].title = form.title;
                 break;
@@ -65,7 +65,7 @@ module.exports = function() {
     function deleteFormById(formId) {
         for (var i in mock) {
 
-            if (mock[i]._id === formId) {
+            if (mock[i]._id == formId) {
 
                 mock.splice(i,1);
                 break;
@@ -90,7 +90,7 @@ module.exports = function() {
 
         for (var i in mock) {
 
-            if (mock[i].userId === userId) {
+            if (mock[i].userId == userId) {
 
                 forms.push(mock[i]);
             }

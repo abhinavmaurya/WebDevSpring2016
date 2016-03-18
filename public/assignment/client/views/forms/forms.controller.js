@@ -8,10 +8,22 @@
         .module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController($rootScope, $scope, FormService, UserService){
+    function FormController(FormService, UserService, $location){
 
-        var usr = UserService.getCurrentUser();
-        var userId = null;
+
+        var vm = this;
+        function init(){
+            vm.usr = UserService.getCurrentUser();
+            FormService
+                .findAllFormsForUser(vm.usr._id)
+                .then(function(response) {
+                    setForms(response.data);
+                    vm.$location = $location;
+                });
+        }
+        init();
+
+        /*var userId = null;
         // Redirect if user id is not found in scope i.e. logout
         if(usr){
             userId = usr._id;
@@ -19,48 +31,58 @@
             $scope.$location.url("/home");
         }
 
-        FormService.findAllFormsForUser(userId, setForms);
+        FormService.findAllFormsForUser(userId, setForms);*/
 
-        $scope.form = null;
-        $scope.selectedForm = null;
+        //vm.form = null;
+        vm.selectedForm = null;
 
-        // even handlers
-        $scope.setForms = setForms;
-        $scope.addForm = addForm;
-        $scope.deleteForm = deleteForm;
-        $scope.selectForm = selectForm;
-        $scope.updateForm = updateForm;
-        $scope.unselectForm = unselectForm;
+        // event handlers
+        vm.setForms = setForms;
+        vm.addForm = addForm;
+        vm.deleteForm = deleteForm;
+        vm.selectForm = selectForm;
+        vm.updateForm = updateForm;
+        vm.unselectForm = unselectForm;
 
 
         function setForms(forms){
-            $scope.forms = forms;   // set updated forms
-            $scope.form = null; //reset form
+            console.log(forms);
+            vm.forms = forms;   // set updated forms
+            vm.form = null; //reset form
+            vm.selectedForm = false;
         }
 
         function addForm(form){
-
             if(!form){
-                $scope.message = "Please specify a valid name of the form."
+                vm.message = "Please specify a valid name of the form.";
             }else{
                 var newForm = {
                     title: form.title
                 };
-                FormService.createFormForUser(userId, newForm, setForms);
+                FormService
+                    .createFormForUser(vm.usr._id, newForm)
+                    .then(function(response) {
+                        setForms(response.data);
+                    });
             }
         }
 
         function deleteForm(form){
-            FormService.deleteFormById(form._id, setForms);
+            FormService
+                .deleteFormById(form._id)
+                .then(function(response){
+                    if(response.data)
+                        init();
+                });
         }
 
 
         function selectForm(form){
-            $scope.form = {
+            vm.form = {
                 _id: form._id,
                 title: form.title
             };
-            $scope.selectedForm = true;
+            vm.selectedForm = true;
         }
 
         function updateForm(form){
@@ -69,12 +91,18 @@
                 title: form.title
             };
 
-            FormService.updateFormById(form._id, updatedForm, setForms);
+            FormService
+                .updateFormById(form._id, updatedForm)
+                .then(function(response){
+                    if(response.data){
+                        init();
+                    }
+                });
         }
 
         function unselectForm(){
-            $scope.form = null;
-            $scope.selectedForm = null;
+            vm.form = null;
+            vm.selectedForm = null;
         }
 
     }

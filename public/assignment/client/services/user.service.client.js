@@ -21,7 +21,6 @@
             getCurrentUser: getCurrentUser,
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
-            isAdminUser: isAdminUser,
             logout: logout,
             getLoggedinUser: getLoggedinUser
 
@@ -74,7 +73,7 @@
             return $http.get("/api/assignment/user/username/"+ username);
         }
 
-        function isAdminUser(){
+        /*function isAdminUser(){
             var user = getCurrentUser();
 
             if(user){
@@ -84,6 +83,6 @@
                 }
             }
             return false;
-        }
+        }*/
     }
 })();
