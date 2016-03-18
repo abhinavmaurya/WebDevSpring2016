@@ -51,13 +51,13 @@ module.exports = function (app, model){
     function updateUser(req, res){
         var userId = req.params.userId;
         var userData = req.body;
-        user = model.updateUser(userId, userData);
+        user = model.updateUserById(userId, userData);
         req.session.currentUser = user;
         res.json(user);
     }
 
     function deleteUser(req, res){
-        var userId = req.bosy.userId;
+        var userId = req.body.userId;
         model.deleteUserById(userId);
         res.send(200);
     }

@@ -57,16 +57,16 @@
         }
 
         function updateUser(userId, user){
-            return $http.put("/api/assignment/user/"+ userId, user);
+            return $http.put("/api/assignment/user/"+userId, user);
         }
 
         function findUserById(userId){
-            return $http.get("/api/assignment/user/"+ userId);
+            return $http.get("/api/assignment/user/"+userId);
         }
 
 
         function deleteUserById(userId){
-            return $http.delete("/api/assignment/user/"+ userId);
+            return $http.delete("/api/assignment/user/"+userId);
         }
 
         function findUserByUsername(username){

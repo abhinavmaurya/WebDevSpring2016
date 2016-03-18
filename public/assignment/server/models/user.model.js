@@ -14,7 +14,7 @@ module.exports = function(){
         findUserByCredentials: findUserByCredentials,
         createUser: createUser,
         findUserById: findUserById,
-        updateUseById: updateUseById,
+        updateUserById: updateUserById,
         findUserByUsername: findUserByUsername,
         deleteUserById: deleteUserById,
         findAllUsers: findAllUsers
@@ -37,7 +37,7 @@ module.exports = function(){
         return user;
     }
 
-    function updateUseById(userId, user){
+    function updateUserById(userId, user){
         var index = mock.indexOf(findUserById(userId));
         if(index>=0){
             mock[index] = {
