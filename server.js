@@ -6,7 +6,7 @@ var multer          = require('multer');
 //var LocalStrategy   = require('passport-local').Strategy;
 var cookieParser    = require('cookie-parser');
 var session         = require('express-session');
-var mongoose        = require('mongoose');
+//var mongoose        = require('mongoose');
 
 // Create a default connection string
 //var connectionstring = 'mongodb://127.0.0.1:27017/cs5610';
@@ -29,8 +29,6 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 
 app.set('view engine', 'ejs');
-
-
 
 
 app.use(bodyParser.json());
