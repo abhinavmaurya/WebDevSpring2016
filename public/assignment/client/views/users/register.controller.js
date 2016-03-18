@@ -18,7 +18,6 @@
         init();
 
         vm.register = register;
-        //vm.success = success;
 
         function register(user){
             console.log("Inside Register");
@@ -39,9 +38,9 @@
                 vm.message = "Passwords must match";
                 return;
             }
-            var usr = UserService.findUserByUsername(user.username);
-            if (usr != null) {
-                vm.message = "User already exists";
+            //var usr = UserService.findUserByUsername(user.username);
+            if (isDuplicateUsername(user.username)) {
+                vm.message = "Username already exists";
                 return;
             }
             UserService
@@ -56,9 +55,18 @@
                 });
         }
 
-        /*function success(user){
-            UserService.setCurrentUser(user);
-            $location.url('/profile');
-        }*/
+        function isDuplicateUsername(username){
+            UserService
+                .findUserByUsername(username)
+                .then(function(response){
+                   var user = response.data;
+                    console.log("duplicate check");
+                    console.log(user);
+                    if(user)
+                        return true;
+                    else
+                        return false;
+                });
+        }
     }
 })();

@@ -20,6 +20,7 @@
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             findUserById: findUserById,
+            findUserByUsername: findUserByUsername,
             isAdminUser: isAdminUser,
             logout: logout,
             getLoggedinUser: getLoggedinUser
@@ -57,29 +58,21 @@
         }
 
         function updateUser(userId, user){
-            return $http.put("/api/assignment/user/:"+ userId, user);
+            return $http.put("/api/assignment/user/"+ userId, user);
         }
 
         function findUserById(userId){
-            return $http.get("/api/assignment/user/:"+ userId);
+            return $http.get("/api/assignment/user/"+ userId);
         }
 
 
         function deleteUserById(userId){
-            return $http.delete("/api/assignment/user/:"+ userId);
+            return $http.delete("/api/assignment/user/"+ userId);
         }
 
-        /*function findUserByUsername(username){
-            var user = null;
-            for(var u in userData){
-
-                if(userData[u].username == username) {
-                    user = userData[u];
-                    break;
-                }
-            }
-            return user;
-        }*/
+        function findUserByUsername(username){
+            return $http.get("/api/assignment/user/username/"+username);
+        }
 
         function isAdminUser(){
             var user = getCurrentUser();

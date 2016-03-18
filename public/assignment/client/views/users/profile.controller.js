@@ -26,10 +26,10 @@
                     roles: usr.roles
                 };
             }else{
-                $location.url("/home");
+                vm.$location.url("/home");
             }
         }
-        return init();
+        init();
 
 
 
@@ -42,7 +42,7 @@
                 .updateUser(user._id, user)
                 .then(function(response){
                     var updatedUser = response.data;
-                    if(updateduser){
+                    if(updatedUser){
                         vm.message = "User updated successfully";
                         UserService.setCurrentUser(updatedUser);
                     }else{
