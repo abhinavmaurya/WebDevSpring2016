@@ -28,6 +28,7 @@
                     .getFieldsForForm(formId)
                     .then(function (response) {
                         vm.fields = response;
+                        vm.$location = $location;
                         //$scope.fields = vm.fields;
                     });
 
