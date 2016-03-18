@@ -13,16 +13,16 @@
         var vm = this;
 
         vm.logout = logout;
-        vm.isAdmin = isAdmin;
+        //vm.isAdmin = isAdmin;
 
         function init(){
             vm.$location = $location;
         }
         init();
 
-        function isAdmin(){
+        /*function isAdmin(){
             return UserService.isAdminUser();
-        }
+        }*/
 
         function logout(){
 

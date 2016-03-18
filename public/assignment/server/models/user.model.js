@@ -2,6 +2,8 @@
  * Created by abhinavmaurya on 3/16/16.
  */
 
+"use strict"
+
 var mock = require('./user.mock.json');
 
 //load q promise library
@@ -12,7 +14,7 @@ module.exports = function(){
         findUserByCredentials: findUserByCredentials,
         createUser: createUser,
         findUserById: findUserById,
-        updateUser: updateUser,
+        updateUseById: updateUseById,
         findUserByUsername: findUserByUsername,
         deleteUserById: deleteUserById,
         findAllUsers: findAllUsers
@@ -35,7 +37,7 @@ module.exports = function(){
         return user;
     }
 
-    function updateUser(userId, user){
+    function updateUseById(userId, user){
         var index = mock.indexOf(findUserById(userId));
         if(index>=0){
             mock[index] = {

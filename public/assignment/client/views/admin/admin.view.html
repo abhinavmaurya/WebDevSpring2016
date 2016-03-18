@@ -5,49 +5,66 @@
 
     <table class="table table-striped table-bordered">
         <thead>
-            <tr>
-                <th>
-                    <a href="#/admin">
-                        <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Username
-                    </a>
-                </th>
-                <th>
-                    <a href="#/admin">
-                        <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Password
-                    </a>
-                </th>
-                <th>
-                    <a href="#/admin">
-                        <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Role
-                    </a>
-                </th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>
+                <a href="#/admin">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Username
+                </a>
+            </th>
+            <th>
+                <a href="#/admin">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Password
+                </a>
+            </th>
+            <th>
+                <a href="#/admin">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Role
+                </a>
+            </th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
         <tr>
             <td>
-                <input type="text" class="form-control" id="userName" placeholder="username" ng-model="model.user.username"/>
+                <input type="text" class="form-control" id="userName" placeholder="username"/>
             </td>
             <td>
-                <input type="text" class="form-control" id="password" placeholder="password" ng-model="model.user.password"/>
+                <input type="text" class="form-control" id="password" placeholder="password"/>
             </td>
             <td>
-                <input type="text" class="form-control" id="role" placeholder="email" ng-model="model.user.email"/>
+                <input type="text" class="form-control" id="role" placeholder="role1, role2"/>
             </td>
             <td nowrap="true">
-                <a ng-show="model.selectedUser" ng-click="model.unselectUser()" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                <a ng-hide="model.selectedUser" ng-click="model.addUser(model.user)" class="glyphicon glyphicon-plus btn btn-primary"></a>
-                <a ng-show="model.selectedUser" ng-click="model.updateUser(model.user)" class="glyphicon glyphicon-ok btn btn-success"></a>
+                <a href="#/admin" class="glyphicon glyphicon-plus btn btn-primary"></a>
+                <a href="#/admin" class="glyphicon glyphicon-ok btn btn-success"></a>
             </td>
         </tr>
-        <tr ng-repeat="user in model.users">
-            <td>{{user.username}}</td>
-            <td>{{user.password}}</td>
-            <td>{{user.email}}</td>
+        <tr>
+            <td>alice</td>
+            <td></td>
+            <td>student</td>
             <td>
-                <a ng-click="model.deleteUser(model.user)" class="glyphicon glyphicon-remove btn btn-danger"></a>&nbsp;
-                <a ng-click="model.selectUser(model.user)" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                <a href="#/admin" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a href="#/admin" class="glyphicon glyphicon-pencil btn btn-info"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>bob</td>
+            <td></td>
+            <td>faculty | admin</td>
+            <td>
+                <a href="#/admin" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a href="#/admin" class="glyphicon glyphicon-pencil btn btn-info"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>charlie</td>
+            <td></td>
+            <td></td>
+            <td>
+                <a href="#/admin" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a href="#/admin" class="glyphicon glyphicon-pencil btn btn-info"></a>
             </td>
         </tr>
         </tbody>
