@@ -35,7 +35,7 @@ app.use(session({ secret:process.env.PASSPORT_SECRET }));
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 
-require("./public/assignment/server/app.js")(app);
+//require("./public/assignment/server/app.js")(app);
 
 app.listen(port, ipaddress, function () {
     console.log("Server is listening on: " + ipaddress + ":" + port);
