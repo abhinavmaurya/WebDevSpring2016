@@ -14,8 +14,7 @@
         var vm = this;
 
         function init(){
-            //var usr = UserService.getCurrentUser();
-            var usr = null;
+            var usr = UserService.getCurrentUser();
             if(usr) {
                 vm.currentUser = {
                     _id: usr._id,
@@ -42,9 +41,10 @@
             UserService
                 .updateUser(user._id, user)
                 .then(function(response){
-                    if(response){
+                    var updatedUser = response.data;
+                    if(updateduser){
                         vm.message = "User updated successfully";
-                        UserService.setCurrentUser(response);
+                        UserService.setCurrentUser(updatedUser);
                     }else{
                         vm.message = "Unable to update the user";
                     }

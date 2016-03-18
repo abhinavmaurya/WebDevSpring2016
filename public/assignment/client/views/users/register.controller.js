@@ -8,42 +8,57 @@
         .module("FormBuilderApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($scope, UserService){
+    function RegisterController(UserService, $location){
 
-        $scope.register = register;
-        $scope.success = success;
+        var vm = this;
+
+        function init(){
+
+        }
+        init();
+
+        vm.register = register;
+        //vm.success = success;
 
         function register(user){
             console.log("Inside Register");
-            $scope.message = null;
+            vm.message = null;
             if (user == null) {
-                $scope.message = "Please fill in the required fields";
+                vm.message = "Please fill in the required fields";
                 return;
             }
             if (!user.username) {
-                $scope.message = "Please provide a username";
+                vm.message = "Please provide a username";
                 return;
             }
             if (!user.password || !user.vpassword) {
-                $scope.message = "Please provide a password";
+                vm.message = "Please provide a password";
                 return;
             }
             if (user.password != user.vpassword) {
-                $scope.message = "Passwords must match";
+                vm.message = "Passwords must match";
                 return;
             }
             var usr = UserService.findUserByUsername(user.username);
             if (usr != null) {
-                $scope.message = "User already exists";
+                vm.message = "User already exists";
                 return;
             }
-            UserService.createUser(user, success);
+            UserService
+                .createUser(user)
+                .then(function(response){
+                    var currentUser = response.data;
+                    console.log(currentUser);
+                    if(currentUser){
+                        UserService.setCurrentUser(currentUser);
+                        $location.url("/profile");
+                    }
+                });
         }
 
-        function success(user){
-            //$rootScope.currentUser = user;
+        /*function success(user){
             UserService.setCurrentUser(user);
-            $scope.$location.url('/profile');
-        }
+            $location.url('/profile');
+        }*/
     }
 })();

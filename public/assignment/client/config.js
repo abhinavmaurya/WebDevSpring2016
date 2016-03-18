@@ -13,7 +13,10 @@
         $routeProvider
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
-                controller: "HomeController"
+                controller: "HomeController",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/login",{
                 templateUrl: "views/users/login.view.html",
@@ -22,7 +25,8 @@
             })
             .when("/register",{
                 templateUrl: "views/users/register.view.html",
-                controller: "RegisterController"
+                controller: "RegisterController",
+                controllerAs: "model"
             })
             .when("/profile",{
                 templateUrl: "views/users/profile.view.html",
@@ -57,6 +61,7 @@
             .getLoggedinUser()
             .then(function(response) {
                 var currentUser = response.data;
+                console.log(currentUser);
                 if(currentUser) {
                     UserService.setCurrentUser(currentUser);
                     deferred.resolve();
@@ -64,6 +69,20 @@
                     deferred.reject();
                     $location.url("/home");
                 }
+            });
+
+        return deferred.promise;
+    }
+
+    function getLoggedIn(UserService, $q){
+        var deferred = $q.defer();
+
+        UserService
+            .getLoggedinUser()
+            .then(function(response){
+                var currentUser = response.data;
+                UserService.setCurrentUser(currentUser);
+                deferred.resolve();
             });
 
         return deferred.promise;

@@ -16,7 +16,7 @@
         vm.isAdmin = isAdmin;
 
         function init(){
-
+            vm.$location = $location;
         }
         init();
 

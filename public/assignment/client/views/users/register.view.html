@@ -1,36 +1,36 @@
 <h2>Register</h2>
-<div ng-show="message" class="alert alert-danger" role="alert">{{message}}</div>
+<div ng-show="model.message" class="alert alert-danger" role="alert">{{model.message}}</div>
 <form class="form-horizontal">
     <div class="form-group row">
         <label for="userName" class="col-sm-3">Username:</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control" id="userName" placeholder="Username" ng-model="user.username">
+            <input type="text" class="form-control" id="userName" placeholder="Username" ng-model="model.user.username">
         </div>
     </div>
     <div class="form-group row">
         <label for="password" class="col-sm-3">Password:</label>
         <div class="col-sm-6">
-            <input type="password" class="form-control" id="password" placeholder="Password" ng-model="user.password">
+            <input type="password" class="form-control" id="password" placeholder="Password" ng-model="model.user.password">
         </div>
     </div>
 
     <div class="form-group row">
         <label for="verifyPassword" class="col-sm-3">Verify&nbsp;Password:</label>
         <div class="col-sm-6">
-            <input type="password" class="form-control" id="verifyPassword" placeholder="Verify Password" ng-model="user.vpassword">
+            <input type="password" class="form-control" id="verifyPassword" placeholder="Verify Password" ng-model="model.user.vpassword">
         </div>
     </div>
 
     <div class="form-group row">
         <label for="email" class="col-sm-3">Email:</label>
         <div class="col-sm-6">
-            <input type="email" class="form-control" id="email" placeholder="Email" ng-model="user.email">
+            <input type="email" class="form-control" id="email" placeholder="Email" ng-model="model.user.email">
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-offset-3 col-sm-6">
-            <a class="btn btn-success btn-block" ng-click="register(user)">Register</a>
+            <a class="btn btn-success btn-block" ng-click="model.register(model.user)">Register</a>
         </div>
     </div>
 </form>
