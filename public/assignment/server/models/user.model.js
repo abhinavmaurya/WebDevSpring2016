@@ -7,7 +7,7 @@
 var mock = require('./user.mock.json');
 
 //load q promise library
-var q = require("q");
+//var q = require("q");
 
 module.exports = function(){
     var api = {

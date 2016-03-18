@@ -50,6 +50,7 @@
             vm.forms = forms;   // set updated forms
             vm.form = null; //reset form
             vm.selectedForm = false;
+            vm.message = null;
         }
 
         function addForm(form){
