@@ -146,15 +146,10 @@ module.exports = function() {
     function updateFieldByFieldIdAndFormId(formId, fieldId, field) {
 
         field._id = fieldId;
-
         for (var i in mock) {
-
             if (mock[i]._id === formId) {
-
                 for (var j in mock[i].fields) {
-
                     if (mock[i].fields[j]._id === fieldId) {
-
                         mock[i].fields[j] = field;
                     }
                 }

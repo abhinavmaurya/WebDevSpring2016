@@ -14,7 +14,16 @@
                 <label for="{{field._id}}">{{field.label}}</label>
                 <input type="{{field.type}}" class="form-control"
                        placeholder="{{field.placeholder}}"
-                       id="{{field._id}}">
+                       id="{{field._id}}"/>
+            </div>
+
+            <div ng-switch-when="TEXTAREA">
+
+                <label for="{{field._id}}">{{field.label}}</label>
+                <textarea class="form-control"
+                          placeholder="{{field.placeholder}}"
+                          id="{{field._id}}" rows="3"/>
+
             </div>
 
             <!--For dropdown fields-->
@@ -78,3 +87,102 @@
         </div>
     </div>
 </form>
+
+<!--Modal Script-->
+<script type="text/ng-template" id="fieldEditModal.html">
+
+    <div class="modal-header" ng-switch on="field.type">
+
+        <h3 class="modal-title" ng-switch-default>
+            Single Line Field
+        </h3>
+
+        <h3 class="modal-title" ng-switch-when="TEXTAREA">
+            Multiple Lines Field
+        </h3>
+
+        <h3 class="modal-title" ng-switch-when="DATE">
+            Date Field
+        </h3>
+
+        <h3 class="modal-title" ng-switch-when="OPTIONS">
+            Dropdown Field
+        </h3>
+
+        <h3 class="modal-title"  ng-switch-when="CHECKBOXES">
+            Checkbox Field
+        </h3>
+
+        <h3 class="modal-title" ng-switch-when="RADIOS">
+            Radio Button Field
+        </h3>
+    </div>
+
+    <form class="modal-body form" ng-switch on="field.type">
+
+        <div class="row" ng-switch-when="TEXT">
+
+            <div class="form-group col-md-12">
+
+                <label for="labelForField">Label</label>
+                <input type="text" id="labelForField" class="form-control" ng-model="$parent.newField.label">
+
+            </div>
+
+            <div class="form-group col-md-12">
+
+                <label for="placeholderForField">Placeholder</label>
+                <input type="text" id="placeholderForField" class="form-control" ng-model="$parent.newField.placeholder">
+
+            </div>
+
+        </div>
+
+        <div class="row" ng-switch-when="DATE">
+
+            <div class="form-group col-md-12">
+
+                <label for="labelForField">Label</label>
+                <input type="text" id="labelForField" class="form-control" ng-model="$parent.newField.label">
+            </div>
+        </div>
+
+        <div class="row" ng-switch-when="TEXTAREA">
+
+            <div class="form-group col-md-12">
+                <label for="labelForField">Label</label>
+                <input type="text" id="labelForField" class="form-control" ng-model="$parent.newField.label">
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="placeholderForField">Placeholder</label>
+                    <textarea type="text" id="placeholderForField" class="form-control"
+                              ng-model="$parent.newField.placeholder" rows="3">
+                    </textarea>
+            </div>
+        </div>
+
+        <div class="row" ng-switch-default>
+            <div class="form-group col-md-12">
+
+                <label for="labelForField">Label</label>
+                <input type="text" id="labelForField" class="form-control" ng-model="$parent.newField.label">
+
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="optionsForField">Options</label>
+                    <textarea name="" id="optionsForField" rows="3" class="form-control"
+                              ng-model="$parent.newField.options">
+
+                    </textarea>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+
+    </div>
+</script>

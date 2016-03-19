@@ -37,7 +37,7 @@ module.exports = function (app, formModel) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
-
+        formModel.updateFieldByFieldIdAndFormId(formId, fieldId, field);
         res.send(200);
     }
 

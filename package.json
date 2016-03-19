@@ -19,6 +19,7 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
+    "angular-ui-bootstrap": "^1.2.4",
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
     "express": "~3.4.4",

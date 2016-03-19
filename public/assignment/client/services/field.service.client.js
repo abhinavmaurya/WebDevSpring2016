@@ -10,7 +10,7 @@
         .module("FormBuilderApp")
         .factory("FieldService", FieldService);
 
-    function FieldService($http, $q) {
+    function FieldService($http) {
 
         var api = {
 
@@ -56,8 +56,7 @@
             var url = "/api/assignment/form/:formId/field/:fieldId";
             url = url.replace(":formId", formId);
             url = url.replace(":fieldId", fieldId);
-
-            $http.put(url, field);
+            return $http.put(url, field);
         }
     }
 })();
