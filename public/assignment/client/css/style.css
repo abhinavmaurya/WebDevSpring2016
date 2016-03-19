@@ -58,3 +58,7 @@ table.thick-top-border{
     color: #fff;
     background-color: #373a3c;
 }
+
+.action-column{
+    white-space: nowrap;
+}

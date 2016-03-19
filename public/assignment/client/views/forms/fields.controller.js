@@ -27,9 +27,9 @@
                 FieldService
                     .getFieldsForForm(formId)
                     .then(function (response) {
-                        vm.fields = response;
+                        vm.fields = response.data;
                         vm.$location = $location;
-                        //$scope.fields = vm.fields;
+                        $scope.fields = vm.fields;
                     });
 
             }else{
@@ -37,12 +37,12 @@
             }
 
             vm.options = [
-                {name: "Single Line Text Field", value: "sline-text"},
-                {name: "Multi Line Text Field", value: "mline-text"},
-                {name: "Date Field", value: "date"},
-                {name: "Dropdown Field", value: "dropdown"},
-                {name: "Checkboxes Field", value: "checkbox"},
-                {name: "Radio Buttons Field", value: "radio"}
+                {name: "Single Line Text Field", value: "SINGLE-LINE-TEXT"},
+                {name: "Multi Line Text Field", value: "MULTI-LINE-TEXT"},
+                {name: "Date Field", value: "DATE"},
+                {name: "Dropdown Field", value: "DROPDOWN"},
+                {name: "Checkboxes Field", value: "CHECKBOX"},
+                {name: "Radio Buttons Field", value: "RADIO"}
             ];
         }
         init();
@@ -51,18 +51,19 @@
 
             var fieldId = vm.fields[$index]._id;
 
-            FieldService.deleteFieldFromForm(formId, fieldId).then(function (response) {
+            FieldService
+                .deleteFieldFromForm(formId, fieldId)
+                .then(function (response) {
+                    if(response.data) {
+                        FieldService
+                            .getFieldsForForm(formId)
+                            .then(function (response) {
+                                vm.fields = response.data;
+                                $scope.fields = vm.fields;
 
-                if(response === "OK") {
-
-                    FieldService.getFieldsForForm(formId).then(function (response) {
-
-                        vm.fields = response;
-                        $scope.fields = vm.fields;
-
-                    });
-                }
-            });
+                            });
+                    }
+                });
         }
 
         function addField() {
@@ -71,42 +72,42 @@
 
             switch (fieldType) {
 
-                case "sline-text":
-                    vm.field = createSingleLineField();
+                case "SINGLE-LINE-TEXT":
+                    vm.field = createSingleLineTextField();
                     break;
 
-                case "mline-text":
-                    vm.field = createMultiLineField();
+                case "MULTI-LINE-TEXT":
+                    vm.field = createMultiLineTextField();
                     break;
 
-                case "date":
+                case "DATE":
                     vm.field = createDateField();
                     break;
 
-                case "dropdown":
+                case "DROPDOWN":
                     vm.field = createDropDownField();
                     break;
 
-                case "checkbox":
+                case "CHECKBOX":
                     vm.field = createCheckboxField();
                     break;
 
-                case "radio":
+                case "RADIO":
                     vm.field = createRadioField();
                     break;
-
             }
 
-            FieldService.createFieldForForm(formId, vm.field).then(function (response) {
-
-                vm.fields = response;
-                $scope.fields = vm.fields;
-                vm.field = {};
+            FieldService
+                .createFieldForForm(formId, vm.field)
+                .then(function (response) {
+                    vm.fields = response.data;
+                    $scope.fields = vm.fields;
+                    vm.field = {};
             });
 
         }
 
-        function createSingleLineField() {
+        function createSingleLineTextField() {
 
             var field = {
                 _id: null,
@@ -118,7 +119,7 @@
             return field;
         }
 
-        function createMultiLineField() {
+        function createMultiLineTextField() {
 
             var field = {
                 _id: null,

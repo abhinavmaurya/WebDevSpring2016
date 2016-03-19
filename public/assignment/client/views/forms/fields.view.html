@@ -2,14 +2,12 @@
 
 <ul class="nav nav-tabs">
     <li role="form-tab"><a href="#/forms">Forms</a></li>
-    <li role="form-tab" ng-class="{'active': model.$location.url() == '/fields'}"><a href="#">Fields</a></li>
+    <li role="form-tab" ng-class="{'active': true}"><a href="#">Fields</a></li>
 </ul>
-
+<br>
 <form sortable-fields field-axis="y">
-
-    <div class="row" ng-repeat="field in model.fields">
-
-        <div class="form-group col-md-8" ng-switch on="field.type">
+    <div class="row action-column" ng-repeat="field in model.fields">
+        <div class="col-sm-9 form-group" ng-switch on="field.type">
             <!-- For text and date fields-->
             <div ng-switch-default>
 
@@ -17,32 +15,25 @@
                 <input type="{{field.type}}" class="form-control"
                        placeholder="{{field.placeholder}}"
                        id="{{field._id}}">
-
             </div>
 
             <!--For dropdown fields-->
             <div ng-switch-when="OPTIONS">
-
                 <label for="{{field._id}}">{{field.label}}</label>
-
                 <select name="{{field.label}}" id="{{field._id}}" class="form-control">
 
                     <option ng-repeat = "option in field.options"
                             value="{{option.value}}">{{option.label}}</option>
-
                 </select>
             </div>
 
             <!--For Checkbox-->
             <div ng-switch-when="CHECKBOXES">
-
                 <label for="{{field._id}}">{{field.label}}</label>
-
                 <div ng-repeat = "option in field.options">
-                    <input
-                            type="checkbox"
-                            name="{{field.label}}"
-                            value="{{option.value}}">
+                    <input type="checkbox"
+                           name="{{field.label}}"
+                           value="{{option.value}}">
                     {{option.label}}
                     <br>
                 </div>
@@ -50,9 +41,7 @@
 
             <!--For radio buttons-->
             <div ng-switch-when="RADIOS">
-
                 <label for="{{field._id}}">{{field.label}}</label>
-
                 <div ng-repeat = "option in field.options">
                     <input
                             type="radio"
@@ -62,18 +51,17 @@
                     <br>
                 </div>
             </div>
-
         </div>
-        <div class="col-md-4 text-center">
-            <span class="glyphicon glyphicon-pencil hover" ng-click="model.editField($index)"></span>
-            <span class="glyphicon glyphicon-remove hover" ng-click="model.removeField($index)"></span>
-            <span class="glyphicon glyphicon-align-justify hover"></span>
+        <div class="action-column col-sm-3">
+            <span class="glyphicon glyphicon-pencil hover btn btn-info" ng-click="model.editField($index)"></span>
+            <span class="glyphicon glyphicon-remove hover btn btn-danger" ng-click="model.removeField($index)"></span>
+            <span class="glyphicon glyphicon-align-justify hover btn btn-primary"></span>
         </div>
     </div>
-
-    <div class="row">
-
-        <div class="form-group col-md-8 no-bottom-margin">
+</form>
+<form>
+    <div class="row action-column">
+        <div class="form-group col-sm-9">
 
             <label>Add new field:</label>
 
@@ -83,17 +71,10 @@
                     ng-init="model.options[0]">
 
                 <option value="{{option.value}}">{{option.name}}</option>
-
             </select>
-
         </div>
-
-        <div class="col-md-4 text-center">
-            <span class="glyphicon glyphicon-plus hover" ng-click="model.addField()"></span>
-            <span class="glyphicon glyphicon-remove hover not-visible"></span>
-            <span class="glyphicon glyphicon-align-justify hover not-visible"></span>
-
+        <div class="col-sm-3">
+            <span class="glyphicon glyphicon-plus hover btn btn-success" ng-click="model.addField()"></span>
         </div>
-
     </div>
 </form>

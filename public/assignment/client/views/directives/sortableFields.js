@@ -9,22 +9,24 @@
         .module("sortableFields", [])
         .directive("sortableFields", sortableFields);
 
-    function sortableFields() {
+    function sortableFields(FieldService) {
 
         var start = null, end = null;
 
         function link(scope, element, attributes) {
 
             var fieldAxis = attributes.fieldAxis;
-            $(element).sortable( {
+            $(element).sortable({
 
                 axis: fieldAxis,
                 start: function (event, ui) {
                     start = ui.item.index();
+                    console.log("start= "+start);
                 },
 
                 stop: function (event, ui) {
                     end = ui.item.index();
+                    console.log("end= "+end);
                     var temp = scope.fields[start];
                     scope.fields[start] = scope.fields[end];
                     scope.fields[end] = temp;
