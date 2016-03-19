@@ -225,8 +225,6 @@
                     options: convertOptions(field.options),
                     placeholder: field.placeholder
                 };
-                console.log($scope.newField);
-                console.log(field);
 
                 function convertOptions(options){
                     var string = "";
@@ -254,7 +252,6 @@
 
                     function UpdateOtherFields() {
                         var content = $scope.newField.options;
-                        console.log(content);
                         content = content.trim();
                         var rawOptions = content.split("\n");
                         var options = [];

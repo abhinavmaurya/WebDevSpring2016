@@ -22,18 +22,6 @@
                 });
         }
         init();
-
-        /*var userId = null;
-        // Redirect if user id is not found in scope i.e. logout
-        if(usr){
-            userId = usr._id;
-        }else{
-            $scope.$location.url("/home");
-        }
-
-        FormService.findAllFormsForUser(userId, setForms);*/
-
-        //vm.form = null;
         vm.selectedForm = null;
 
         // event handlers
@@ -105,6 +93,5 @@
             vm.form = null;
             vm.selectedForm = null;
         }
-
     }
 })();
