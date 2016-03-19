@@ -1,7 +1,3 @@
-.pageTitle {
-    font-size: 20px;
-}
-
 .form-group{
     margin-bottom: 30px;
 }
@@ -16,47 +12,14 @@ table>tbody>tr>td.no-padding{
 .hover{
     cursor: pointer;
 }
-#my-nav>li>a{
-    padding-left: 60px;
-    padding-right: 60px;
-}
 table.thick-top-border{
     border-top-width: 2px;
-}
-#forms-container{
-    max-width: 700px;
 }
 .right-align-cell{
     text-align: right;
 }
-#my-form{
-    margin-top: 10px;
-    padding: 10px 0 10px 10px;
-    border: 1px solid #dddddd;
-}
-#my-form span.glyphicon {
-    font-size: 2em;
-}
-#my-form>.row>div:nth-child(2) {
-    margin-top: 26px;
-}
-.no-bottom-margin {
-    margin-bottom: 0;
-}
-.not-visible{
-    visibility: hidden;
-}
 .nav-tabs{
     border-bottom:none;
-}
-
-#forms-n-fields-tbl {
-    margin-top: 10px;
-}
-
-.thead-inverse th {
-    color: #fff;
-    background-color: #373a3c;
 }
 
 .action-column{

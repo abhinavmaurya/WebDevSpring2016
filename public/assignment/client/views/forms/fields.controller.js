@@ -8,7 +8,7 @@
         .module("FormBuilderApp")
         .controller("FieldsController", FieldsController);
 
-    function FieldsController(FieldService, $routeParams, $location, $scope, $uibModal, $log) {
+    function FieldsController(FieldService, $routeParams, $location, $scope, $uibModal, FormService) {
 
         var vm = this;
         vm.fields = null;
@@ -32,6 +32,15 @@
                         console.log(vm.fields);
                         vm.$location = $location;
                         $scope.fields = vm.fields;
+                    });
+
+                FormService
+                    .findFormById(formId)
+                    .then(function(response){
+                        console.log(response);
+                        if(response.data){
+                            vm.formTitle = response.data.title;
+                        }
                     });
 
             }else{
@@ -238,6 +247,8 @@
                             } else {
                                 UpdateOtherFields();
                             }
+                        }else{
+                            UpdateOtherFields();
                         }
                     }
 

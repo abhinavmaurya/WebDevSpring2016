@@ -34,8 +34,7 @@ module.exports = function() {
 
     function findFormById(formId) {
         for (var i in mock) {
-
-            if(mock[i]._id === formId) {
+            if(mock[i]._id == formId) {
 
                 return mock[i];
             }
@@ -77,7 +76,7 @@ module.exports = function() {
     function findFormByTitle(formTitle) {
         for (var i in mock) {
 
-            if (mock[i].title === formTitle) {
+            if (mock[i].title == formTitle) {
 
                 return mock[i];
             }
@@ -102,7 +101,7 @@ module.exports = function() {
     function createFieldForForm(formId, field) {
         for (var i in mock) {
 
-            if (mock[i]._id === formId) {
+            if (mock[i]._id == formId) {
 
                 if(!mock[i].fields) {
                     mock[i].fields = [];
@@ -118,7 +117,7 @@ module.exports = function() {
 
         for (var i in mock) {
 
-            if (mock[i]._id === formId) {
+            if (mock[i]._id == formId) {
 
                 return mock[i].fields;
             }
@@ -129,7 +128,7 @@ module.exports = function() {
     function findFieldByFieldIdAndFormId(formId, fieldId) {
         for (var i in mock) {
 
-            if (mock[i]._id === formId) {
+            if (mock[i]._id == formId) {
 
                 for (var j in mock[i].fields) {
 
@@ -147,9 +146,9 @@ module.exports = function() {
 
         field._id = fieldId;
         for (var i in mock) {
-            if (mock[i]._id === formId) {
+            if (mock[i]._id == formId) {
                 for (var j in mock[i].fields) {
-                    if (mock[i].fields[j]._id === fieldId) {
+                    if (mock[i].fields[j]._id == fieldId) {
                         mock[i].fields[j] = field;
                     }
                 }
@@ -158,11 +157,10 @@ module.exports = function() {
     }
     function deleteFieldByFieldIdAndFormId(formId, fieldId) {
         for (var i in mock) {
-            if (mock[i]._id === formId) {
+            if (mock[i]._id == formId) {
                 for (var j in mock[i].fields) {
-                    if (mock[i].fields[j]._id === fieldId) {
+                    if (mock[i].fields[j]._id === fieldId)
                         mock[i].fields.splice(j,1);
-                    }
                 }
             }
         }
