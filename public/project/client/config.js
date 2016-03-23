@@ -24,7 +24,7 @@
                 controller: "SearchController"
             })
             .when("/details/:symbol",{
-                templateUrl: "views/details/details.view.html",
+                templateUrl: "views/stocks/details.view.html",
                 controller: "DetailsController"
             })
             .when("/admin",{
