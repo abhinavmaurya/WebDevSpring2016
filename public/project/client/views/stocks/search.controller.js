@@ -6,10 +6,10 @@
 
     angular
         .module("TradeBullApp")
-        .controller("HomeController", HomeController);
+        .controller("SearchController", SearchController);
 
 
-    function HomeController($scope, StockService, $routeParams, $location){
+    function SearchController($scope, StockService, $routeParams, $location){
 
         var name = $routeParams.name;
         if(name){
@@ -21,7 +21,6 @@
         $scope.error = error;
 
         function search(name){
-            $location.url("/home/"+name);
             StockService.findStockByName(name, render, error);
         }
 

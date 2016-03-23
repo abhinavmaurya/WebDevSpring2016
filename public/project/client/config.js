@@ -15,9 +15,13 @@
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController"
             })
-            .when("/home/:name", {
-                templateUrl: "views/home/home.view.html",
-                controller: "HomeController"
+            .when("/search", {
+                templateUrl: "views/stocks/search.view.html",
+                controller: "SearchController"
+            })
+            .when("/search/:name", {
+                templateUrl: "views/stocks/search.view.html",
+                controller: "SearchController"
             })
             .when("/details/:symbol",{
                 templateUrl: "views/details/details.view.html",
@@ -34,6 +38,14 @@
             .when("/portfolio",{
                 templateUrl: "views/stocks/portfolio.view.html",
                 controller: "PortfolioController"
+            })
+            .when("/register", {
+                templateUrl: "views/user/register.view.html",
+                controller: "RegisterController"
+            })
+            .when("/login", {
+                templateUrl: "views/user/login.view.html",
+                controller: "LoginController"
             })
             .otherwise({
                 redirectTo: "/home"
