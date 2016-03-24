@@ -30,10 +30,14 @@
 
 
         function search(name){
+            vm.message = null;
             StockService
                 .findStockByName(name)
                 .then(function(response){
-                    vm.stocks = response.data;
+                    if(response.data && response.data.length > 0)
+                        vm.stocks = response.data;
+                    else
+                        vm.message = "No matching record(s) found."
                 });
         }
     }

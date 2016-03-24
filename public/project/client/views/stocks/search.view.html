@@ -6,7 +6,8 @@
         <a ng-click="model.search(model.name)" class="btn btn-primary">Search</a>
     </div>
 </form>
-
+<br>
+<div ng-show="model.message" class="alert alert-danger" role="alert">{{model.message}}</div>
 
 <section ng-show="model.stocks">
     <h3>Search Results</h3>
