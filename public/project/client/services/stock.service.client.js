@@ -26,7 +26,7 @@
             findStockById: findStockById,
             findInWatchlist: findInWatchlist,
             findInPortfolio: findInPortfolio,
-            findAllStockInWatchlist: findAllStockInWatchlist,
+            getUserWatchlist: getUserWatchlist,
             addToWatchlist: addToWatchlist,
             addToPortfolio: addToPortfolio,
             removeFromWatchlist: removeFromWatchlist,
@@ -52,8 +52,8 @@
             });
         }
 
-        function findStockById(id, callback){
-            $http({
+        function findStockById(id){
+            /*$http({
                 method: "JSONP",
                 params: {
                     symbol: id
@@ -65,7 +65,8 @@
             }).error(function(data, status) {
                 console.log("Unable to fetch data");
                 error();
-            });
+            });*/
+            return $http.jsonp("http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?symbol=" + id + "&callback=JSON_CALLBACK");
         }
 
         function findInWatchlist(stock){
@@ -140,8 +141,9 @@
             callback(portfolio);
         }
 
-        function findAllStockInWatchlist(callback){
-            callback(watchlist);
+        function getUserWatchlist(userId){
+            console.log("Service called");
+            return $http.get("/api/project/"+ userId + "/watchlist");
         }
 
         function findAllStockInPortfolio(callback){

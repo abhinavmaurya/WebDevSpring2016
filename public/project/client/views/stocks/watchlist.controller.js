@@ -8,18 +8,37 @@
         .module("TradeBullApp")
         .controller("WatchlistController", WatchlistController);
 
-    function WatchlistController($scope, StockService){
+    function WatchlistController(StockService, UserService){
 
-        $scope.watchlist = null;
-        $scope.render = render;
-        $scope.deleteFromWatchlist = deleteFromWatchlist;
+        var vm = this;
+        var userId = UserService.getCurrentUser()._id;
+        vm.watchlist = [];
+        vm.deleteFromWatchlist = deleteFromWatchlist;
 
-        StockService.findAllStockInWatchlist(render);
 
-        function render(response){
-            console.log(response);
-            $scope.watchlist = response;
+        function init(){
+            StockService
+                .getUserWatchlist(userId)
+                .then(
+                    function(response){
+                        var watch_lst = response.data;
+                        //var stockToAdd = null;
+                        for(var s in watch_lst){
+                            StockService
+                                .findStockById(watch_lst[s].Symbol)
+                                .then(function(response){
+                                    var stock = response.data;
+                                    vm.watchlist.push(stock);
+                                });
+                        }
+                    },
+                    function(err){
+                        console.log("Error fetching watchlist");
+                    }
+                )
         }
+
+        init();
 
         function deleteFromWatchlist(stock){
             StockService.removeFromWatchlist(stock, render);

@@ -6,8 +6,8 @@ module.exports = function (app, model){
 
     app.post("/api/project/:userId/watchlist/:stockId", addToWatchlist);
     app.delete("/api/project/:userId/watchlist/:stockId", deleteFromWatchlist);
-    app.get("/api/project/:userId/watchlist", getWatchlist);
-    app.get("/api/project/:userId/watchlist/:stockId", getStockFromWatchlist);
+    app.get("/api/project/:userId/watchlist", getUserWatchlist);
+    app.get("/api/project/:userId/watchlist/:stockId", findStockInUserWatchList);
 
     function addToWatchlist(req, res){
         var userId = req.params.userId;
@@ -17,7 +17,7 @@ module.exports = function (app, model){
         res.send(200);
     }
 
-    function getStockFromWatchlist(req, res){
+    function findStockInUserWatchList(req, res){
         var userId = req.params.userId;
         var stockId = req.params.stockId;
         console.log(userId + "--" + stockId);
@@ -33,10 +33,10 @@ module.exports = function (app, model){
         res.send(200);
     }
 
-    function getWatchlist(req, res){
+    function getUserWatchlist(req, res){
         var userId = req.params.userId;
         console.log(userId + "--");
-        //var watchlist = model.getWatchlistOfUser(userId, stockId);
-        res.send(200);
+        var watchlist = model.getUserWatchlist(userId);
+        res.send(watchlist);
     }
 }

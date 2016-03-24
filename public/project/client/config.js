@@ -38,6 +38,7 @@
             .when("/watchlist",{
                 templateUrl: "views/stocks/watchlist.view.html",
                 controller: "WatchlistController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }
@@ -79,7 +80,6 @@
                 .getLoggedinUser()
                 .then(function(response) {
                     var currentUser = response.data;
-                    console.log(currentUser);
                     if(currentUser) {
                         UserService.setCurrentUser(currentUser);
                         deferred.resolve();

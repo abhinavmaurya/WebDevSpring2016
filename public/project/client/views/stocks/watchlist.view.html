@@ -13,12 +13,12 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="stock in watchlist">
+            <tr ng-repeat="stock in model.watchlist">
                 <td>{{stock.Name}}</td>
                 <td>{{stock.Symbol}}</td>
                 <td>{{stock.LastPrice}}</td>
                 <td>
-                    <a ng-click="deleteFromWatchlist(stock)" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                    <a ng-click="model.deleteFromWatchlist(stock)" class="glyphicon glyphicon-remove btn btn-danger"></a>
                 </td>
             </tr>
         </tbody>
