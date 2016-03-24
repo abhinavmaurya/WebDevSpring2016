@@ -29,7 +29,7 @@
             getUserWatchlist: getUserWatchlist,
             addToWatchlist: addToWatchlist,
             addToPortfolio: addToPortfolio,
-            removeFromWatchlist: removeFromWatchlist,
+            deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
             removeFromPortfolio: removeFromPortfolio,
             findAllStockInPortfolio: findAllStockInPortfolio,
             updatePortfolioStock: updatePortfolioStock
@@ -125,12 +125,8 @@
                 callback(null);
         }
 
-        function removeFromWatchlist(stock, callback){
-            var index = watchlist.indexOf(findInWatchlist(stock));
-            if(index >= 0){
-                watchlist.splice(index, 1);
-            }
-            callback(watchlist);
+        function deleteStockFromUserWatchlist(userId, stockId){
+            return $http.delete("/api/project/"+userId+"/watchlist/"+stockId);
         }
 
         function removeFromPortfolio(stock, callback){

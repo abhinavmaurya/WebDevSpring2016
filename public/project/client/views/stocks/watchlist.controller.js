@@ -12,17 +12,16 @@
 
         var vm = this;
         var userId = UserService.getCurrentUser()._id;
-        vm.watchlist = [];
         vm.deleteFromWatchlist = deleteFromWatchlist;
 
 
         function init(){
+            vm.watchlist = [];
             StockService
                 .getUserWatchlist(userId)
                 .then(
                     function(response){
                         var watch_lst = response.data;
-                        //var stockToAdd = null;
                         for(var s in watch_lst){
                             StockService
                                 .findStockById(watch_lst[s].Symbol)
@@ -41,7 +40,11 @@
         init();
 
         function deleteFromWatchlist(stock){
-            StockService.removeFromWatchlist(stock, render);
+            StockService
+                .deleteStockFromUserWatchlist(userId, stock.Symbol)
+                .then(function(response){
+                    init();
+                });
         }
     }
 })();

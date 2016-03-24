@@ -10,12 +10,12 @@ module.exports = function(){
     var api = {
         // watchlist
         findStockInUserWatchList: findStockInUserWatchList,
-        getUserWatchlist: getUserWatchlist
+        getUserWatchlist: getUserWatchlist,
+        deleteStockFromUserWatchlist: deleteStockFromUserWatchlist
     };
     return api;
 
     function findStockInUserWatchList(userId, stockId){
-        console.log("Inside findStockInUserWatchList");
         var flag = null;
         for (var u in watchlistMock) {
             if (watchlistMock[u].userId == userId) {
@@ -39,5 +39,18 @@ module.exports = function(){
             }
         }
         return user_watchlist;
+    }
+
+    function deleteStockFromUserWatchlist(userId, stockId){
+        for (var u in watchlistMock) {
+            if (watchlistMock[u].userId == userId) {
+                for(var s in watchlistMock[u].watchlist){
+                    if(watchlistMock[u].watchlist[s].Symbol == stockId){
+                        watchlistMock[u].watchlist.splice(s, 1);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

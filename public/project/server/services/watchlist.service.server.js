@@ -5,7 +5,7 @@
 module.exports = function (app, model){
 
     app.post("/api/project/:userId/watchlist/:stockId", addToWatchlist);
-    app.delete("/api/project/:userId/watchlist/:stockId", deleteFromWatchlist);
+    app.delete("/api/project/:userId/watchlist/:stockId", deleteStockFromUserWatchlist);
     app.get("/api/project/:userId/watchlist", getUserWatchlist);
     app.get("/api/project/:userId/watchlist/:stockId", findStockInUserWatchList);
 
@@ -25,11 +25,11 @@ module.exports = function (app, model){
         res.send(200);
     }
 
-    function deleteFromWatchlist(req, res){
+    function deleteStockFromUserWatchlist(req, res){
         var userId = req.params.userId;
         var stockId = req.params.stockId;
         console.log(userId + "--" + stockId);
-        //model.deleteFromWatchlist(userId, stockId);
+        model.deleteStockFromUserWatchlist(userId, stockId);
         res.send(200);
     }
 
