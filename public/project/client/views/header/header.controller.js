@@ -8,16 +8,30 @@
         .module("TradeBullApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope){
+    function HeaderController(UserService, $location){
 
-        $scope.logout = logout;
-        $scope.isAdmin = function (){
-            return true;
-        };
+        var vm = this;
+
+        vm.logout = logout;
+
+        function init(){
+            vm.$location = $location;
+        }
+        init();
 
         function logout(){
-            //UserService.setCurrentUser(undefined);
-            $scope.$location.url('/home');
+
+            UserService
+                .logout()
+                .then(
+                    function(response){
+                        UserService.setCurrentUser(null);
+                        $location.url('/home');
+                    },
+                    function(err){
+                        console.log("Failure");
+                    }
+                );
         }
 
     }

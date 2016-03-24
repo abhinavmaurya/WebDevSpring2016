@@ -38,35 +38,43 @@
                 vm.message = "Passwords must match";
                 return;
             }
-            //var usr = UserService.findUserByUsername(user.username);
             if (isDuplicateUsername(user.username)) {
                 vm.message = "Username already exists";
                 return;
             }
             UserService
                 .createUser(user)
-                .then(function(response){
-                    var currentUser = response.data;
-                    console.log(currentUser);
-                    if(currentUser){
-                        UserService.setCurrentUser(currentUser);
-                        $location.url("/profile");
+                .then(
+                    function(response){
+                        var currentUser = response.data;
+                        console.log(currentUser);
+                        if(currentUser){
+                            UserService.setCurrentUser(currentUser);
+                            $location.url("/profile");
+                        }
+                    },
+                    function(err){
+                        console.log("API Failure");
                     }
-                });
+                );
         }
 
         function isDuplicateUsername(username){
             UserService
                 .findUserByUsername(username)
-                .then(function(response){
-                   var user = response.data;
-                    console.log("duplicate check");
-                    console.log(user);
-                    if(user)
-                        return true;
-                    else
+                .then(
+                    function(response){
+                       var user = response.data;
+                        if(user)
+                            return true;
+                        else
+                            return false;
+                    },
+                    function(err){
+                        console.log("API Failure");
                         return false;
-                });
+                    }
+                );
         }
     }
 })();

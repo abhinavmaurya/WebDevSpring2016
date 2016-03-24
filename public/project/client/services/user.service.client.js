@@ -8,116 +8,68 @@
         .module("TradeBullApp")
         .factory("UserService", UserService);
 
-    function UserService ($rootScope){
-
-        var userData =
-            [
-                {	"_id":123, "firstName":"Alice",            "lastName":"Wonderland",
-                    "username":"alice",  "password":"alice",   "email": "alice@tb.com"		},
-                {	"_id":234, "firstName":"Bob",              "lastName":"Hope",
-                    "username":"bob",    "password":"bob",     "email": "bob@tb.com"		},
-                {	"_id":345, "firstName":"Charlie",          "lastName":"Brown",
-                    "username":"charlie","password":"charlie", "email": "charlie@tb.com"		},
-                {	"_id":456, "firstName":"Dan",              "lastName":"Craig",
-                    "username":"dan",    "password":"dan",     "email": "dan@tb.com"},
-                {	"_id":567, "firstName":"Edward",           "lastName":"Norton",
-                    "username":"ed",     "password":"ed",      "email": "ed@tb.com"		}
-            ];
+    function UserService ($http, $rootScope){
 
         var api = {
 
-            findUserByCredentials: findUserByCredentials,
+            login: login,
             findAllUsers: findAllUsers,
             createUser: createUser,
             deleteUserById: deleteUserById,
             updateUser: updateUser,
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
-            findUserByUsername: findUserByUsername
+            findUserById: findUserById,
+            findUserByUsername: findUserByUsername,
+            logout: logout,
+            getLoggedinUser: getLoggedinUser
 
         };
         return api;
 
-        function setCurrentUser (user) {
+        function setCurrentUser(user) {
             $rootScope.currentUser = user;
         }
 
-        function getCurrentUser () {
+        function getCurrentUser() {
             return $rootScope.currentUser;
         }
 
-        function findUserByCredentials(username, password, callback){
-            var user = null;
-            for(var u in userData){
-
-                if(userData[u].username == username && userData[u].password == password) {
-                    user = userData[u];
-                    break;
-                }
-            }
-            callback(user);
+        function getLoggedinUser(){
+            return $http.get("/api/project/loggedin");
         }
 
-        function findAllUsers(callback){
-            callback(userData);
+        function logout(){
+            return $http.post("/api/project/logout");
         }
 
-        function createUser(user, callback){
-            var newUser = {
-                _id: (new Date()).getTime(),
-                username: user.username,
-                password: user.password,
-                email: user.email
-            };
-
-            userData.push(newUser);
-            callback(userData);
+        function login(credentials){
+            return $http.post("/api/project/login", credentials);
         }
 
-        function updateUser(userId, user, callback){
+        function findAllUsers(){
+            return $http.get("/api/project/user/");
+        }
 
-            var index = userData.indexOf(findUserById(userId));
-            if(index>=0){
-                userData[index] = {
-                    _id: user._id,
-                    username: user.username,
-                    password: user.password,
-                    email: user.email
-                }
-            }
-            callback(userData);
+        function createUser(user){
+            return $http.post("/api/project/register", user);
+        }
+
+        function updateUser(userId, user){
+            return $http.put("/api/project/user/"+userId, user);
         }
 
         function findUserById(userId){
-            for(var u in userData){
-
-                if(userData[u]._id == userId) {
-                    return userData[u];
-                }
-            }
-            return null;
+            return $http.get("/api/project/user/"+userId);
         }
 
 
-        function deleteUserById(userId, callback){
-            var index = userData.indexOf(findUserById(userId));
-            if(index>=0){
-                userData.splice(index, 1);
-            }
-
-            callback(userData);
+        function deleteUserById(userId){
+            return $http.delete("/api/project/user/"+userId);
         }
 
         function findUserByUsername(username){
-            var user = null;
-            for(var u in userData){
-
-                if(userData[u].username == username) {
-                    user = userData[u];
-                    break;
-                }
-            }
-            return user;
+            return $http.get("/api/project/user/username/"+ username);
         }
     }
 })();

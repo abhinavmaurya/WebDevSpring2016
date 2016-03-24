@@ -14,7 +14,6 @@
 
         // event handlers declaration
         vm.login = login;
-        //vm.success = success;
 
         function init(){
 

@@ -25,7 +25,7 @@
                     email: usr.email
                 };
             }else{
-                vm.$location.url("/home");
+                $location.url("/home");
             }
         }
         init();
@@ -36,15 +36,20 @@
         function updateUser(user){
             UserService
                 .updateUser(user._id, user)
-                .then(function(response){
-                    var updatedUser = response.data;
-                    if(updatedUser){
-                        vm.message = "User updated successfully";
-                        UserService.setCurrentUser(updatedUser);
-                    }else{
-                        vm.message = "Unable to update the user";
+                .then(
+                    function(response){
+                        var updatedUser = response.data;
+                        if(updatedUser){
+                            vm.message = "User updated successfully";
+                            UserService.setCurrentUser(updatedUser);
+                        }else{
+                            vm.message = "Unable to update the user";
+                        }
+                    },
+                    function(err){
+                        console.log("API Failure");
                     }
-                });
+                );
         }
     }
 })();

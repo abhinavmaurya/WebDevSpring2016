@@ -8,7 +8,13 @@
         .module("TradeBullApp")
         .controller("MainController", MainController);
 
-    function MainController($scope, $location){
-        $scope.$location = $location;
+    function MainController($location){
+
+        var vm = this;
+
+        function init(){
+            vm.$location = $location;
+        }
+        init();
     }
 })();

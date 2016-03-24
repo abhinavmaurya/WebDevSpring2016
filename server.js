@@ -37,6 +37,9 @@ app.use(express.static(__dirname + '/public'));
 
 require("./public/assignment/server/app.js")(app);
 
+// Project app.js
+require("./public/project/server/app.js")(app);
+
 app.listen(port, ipaddress, function () {
     console.log("Server is listening on: " + ipaddress + ":" + port);
 });

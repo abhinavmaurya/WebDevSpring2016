@@ -13,25 +13,25 @@
         var vm = this;
 
         vm.logout = logout;
-        //vm.isAdmin = isAdmin;
 
         function init(){
             vm.$location = $location;
         }
         init();
 
-        /*function isAdmin(){
-            return UserService.isAdminUser();
-        }*/
-
         function logout(){
 
             UserService
                 .logout()
-                .then(function(){
-                    UserService.setCurrentUser(null);
-                    $location.url('/home');
-                });
+                .then(
+                    function(response){
+                        UserService.setCurrentUser(null);
+                        $location.url('/home');
+                    },
+                    function(err){
+                        console.log("Failure");
+                    }
+                );
         }
 
     }
