@@ -36,8 +36,8 @@
         };
         return api;
 
-        function findStockByName(name, callback, error){
-            $http({
+        function findStockByName(name){
+            /*$http({
                 method: "JSONP",
                 params: {
                     input: name
@@ -49,7 +49,8 @@
             }).error(function(data, status) {
                 console.log("Unable to fetch data");
                 error();
-            });
+            });*/
+            return $http.jsonp("http://dev.markitondemand.com/Api/Lookup/jsonp?input=" + name + "&callback=JSON_CALLBACK");
         }
 
         function findStockById(id){

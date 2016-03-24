@@ -11,25 +11,30 @@
 
     function SearchController($scope, StockService, $routeParams, $location){
 
+        var vm = this;
+
+        vm.search = search;
+
+        function init(){
+            var name = $routeParams.name;
+            if(name){
+                search(name);
+            }
+        }
+        init();
+
         var name = $routeParams.name;
         if(name){
             search(name);
         }
 
-        $scope.search = search;
-        $scope.render = render;
-        $scope.error = error;
 
         function search(name){
-            StockService.findStockByName(name, render, error);
-        }
-
-        function render(response){
-            console.log(response);
-            $scope.stocks = response;
-        }
-        function error(){
-            console.log("error");
+            StockService
+                .findStockByName(name)
+                .then(function(response){
+                    vm.stocks = response.data;
+                });
         }
     }
 

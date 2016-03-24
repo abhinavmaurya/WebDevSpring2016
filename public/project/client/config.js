@@ -18,11 +18,19 @@
             })
             .when("/search", {
                 templateUrl: "views/stocks/search.view.html",
-                controller: "SearchController"
+                controller: "SearchController",
+                controllerAs: "model",
+                resolve:{
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/search/:name", {
                 templateUrl: "views/stocks/search.view.html",
-                controller: "SearchController"
+                controller: "SearchController",
+                controllerAs: "model",
+                resolve:{
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/details/:symbol",{
                 templateUrl: "views/stocks/details.view.html",

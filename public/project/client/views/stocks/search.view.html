@@ -2,13 +2,13 @@
 
 <form class="form-inline">
     <div>
-        <input type="text" class="form-control" placeholder="e.g. Facebook" ng-model="name"/>
-        <a ng-click="search(name)" class="btn btn-primary">Search</a>
+        <input type="text" class="form-control" placeholder="e.g. Facebook" ng-model="model.name"/>
+        <a ng-click="model.search(model.name)" class="btn btn-primary">Search</a>
     </div>
 </form>
 
 
-<section ng-show="stocks">
+<section ng-show="model.stocks">
     <h3>Search Results</h3>
     <table class="table table-striped">
         <thead>
@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="stock in stocks">
+        <tr ng-repeat="stock in model.stocks">
             <td>{{stock.Symbol}}</td>
             <td>
                 <a href="#/details/{{stock.Symbol}}">
