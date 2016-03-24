@@ -8,28 +8,46 @@
         .module("TradeBullApp")
         .controller("DetailsController", DetailsController);
 
-    function DetailsController($routeParams, $scope, StockService){
+    function DetailsController($routeParams, $scope, StockService, UserService){
         var stockID = $routeParams.symbol;
+        var user = UserService.getCurrentUser();
 
-        $scope.render = render;
-        $scope.addToWatchlist = addToWatchlist;
-        $scope.addToPortfolio = addToPortfolio;
-        $scope.postAddToPortfolio = postAddToPortfolio;
-        $scope.postAddToWatchlist = postAddToWatchlist;
-
-        $scope.message = null;
-        $scope.error = null;
-
-        StockService.findStockById(stockID, render);
-
-        function render(response){
-            console.log(response);
-            $scope.stock = response;
+        var vm = this;
+        function init(){
+            StockService
+                .findStockById(stockID)
+                .then(function(response){
+                    vm.stock = response.data;
+                });
+            findInUserWatchlist();
         }
+        init();
+        vm.addToWatchlist = addToWatchlist;
+        vm.addToPortfolio = addToPortfolio;
 
+        vm.message = null;
+        vm.error = null;
 
-        function addToWatchlist(stock){
-            StockService.addToWatchlist(stock, postAddToWatchlist);
+        function findInUserWatchlist(){
+            if(user) {
+                StockService
+                    .findInUserWatchlist(user._id, stockID)
+                    .then(function(response){
+                        console.log(response.data);
+                        if(response.data) {
+                            vm.displayAddToWatchlist = true;
+                        }
+                    });
+            }
+        }
+        function addToWatchlist(){
+            StockService
+                .addToUserWatchlist(user._id, stockID)
+                .then(function(response){
+                    if(response.data){
+                        vm.displayAddToWatchlist = true;
+                    }
+                });
         }
 
         function postAddToPortfolio(stock){
@@ -38,10 +56,6 @@
             }else{
                 $scope.message = "Unable to add stock to portfolio";
             }
-        }
-
-        function postAddToWatchlist(stock){
-
         }
 
         function addToPortfolio(stock, qty){

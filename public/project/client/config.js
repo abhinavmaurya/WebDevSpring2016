@@ -34,7 +34,12 @@
             })
             .when("/details/:symbol",{
                 templateUrl: "views/stocks/details.view.html",
-                controller: "DetailsController"
+                controller: "DetailsController",
+                controllerAs: "model",
+                resolve:{
+                    getLoggedIn: getLoggedIn
+                }
+
             })
             .when("/admin",{
                 templateUrl: "views/admin/admin.view.html",

@@ -10,11 +10,6 @@
 
     function StockService($http){
 
-        var watchlist =
-            [
-            {"Name":"Apple Inc","Symbol":"AAPL","LastPrice":101.1},
-            {"Name":"Adobe Systems Inc","Symbol":"ADBE","LastPrice":85.26}
-            ];
         var portfolio =
             [
             {"Name":"Apple Inc","Symbol":"AAPL","LastPrice":101.1,"BuyingPrice":101.1, "Quantity": 50},
@@ -24,10 +19,10 @@
         var api = {
             findStockByName: findStockByName,
             findStockById: findStockById,
-            findInWatchlist: findInWatchlist,
+            findInUserWatchlist: findInUserWatchlist,
             findInPortfolio: findInPortfolio,
             getUserWatchlist: getUserWatchlist,
-            addToWatchlist: addToWatchlist,
+            addToUserWatchlist: addToUserWatchlist,
             addToPortfolio: addToPortfolio,
             deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
             removeFromPortfolio: removeFromPortfolio,
@@ -37,50 +32,15 @@
         return api;
 
         function findStockByName(name){
-            /*$http({
-                method: "JSONP",
-                params: {
-                    input: name
-                },
-                url: "http://dev.markitondemand.com/Api/Lookup/jsonp?callback=JSON_CALLBACK",
-                isArray: true
-            }).success(function(data, status) {
-                callback(data);
-            }).error(function(data, status) {
-                console.log("Unable to fetch data");
-                error();
-            });*/
             return $http.jsonp("http://dev.markitondemand.com/Api/Lookup/jsonp?input=" + name + "&callback=JSON_CALLBACK");
         }
 
         function findStockById(id){
-            /*$http({
-                method: "JSONP",
-                params: {
-                    symbol: id
-                },
-                url: "http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?callback=JSON_CALLBACK",
-                isArray: true
-            }).success(function(data, status) {
-                callback(data);
-            }).error(function(data, status) {
-                console.log("Unable to fetch data");
-                error();
-            });*/
             return $http.jsonp("http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?symbol=" + id + "&callback=JSON_CALLBACK");
         }
 
-        function findInWatchlist(stock){
-            var flag = null;
-            if(stock) {
-                for (var s in watchlist) {
-                    if (watchlist[s].Symbol == stock.Symbol) {
-                        flag = watchlist[s];
-                        break;
-                    }
-                }
-            }
-            return(flag);
+        function findInUserWatchlist(userId, stockId){
+            return $http.get("/api/project/"+userId+"/watchlist/"+stockId);
         }
 
         function findInPortfolio(stock){
@@ -96,19 +56,8 @@
             return(flag);
         }
 
-        function addToWatchlist(stock, callback){
-            if(!findInWatchlist(stock)) {
-                var newStock = {
-                    "Name": stock.Name,
-                    "Symbol": stock.Symbol,
-                    "LastPrice": stock.LastPrice
-                };
-                watchlist.push(newStock);
-                console.log("After add");
-                console.log(watchlist);
-                callback(newStock);
-            }else
-                callback(stock);
+        function addToUserWatchlist(userId, stockId){
+            return $http.post("/api/project/"+ userId +"/watchlist/"+stockId);
         }
 
         function addToPortfolio(stock, qty, callback){
@@ -139,7 +88,6 @@
         }
 
         function getUserWatchlist(userId){
-            console.log("Service called");
             return $http.get("/api/project/"+ userId + "/watchlist");
         }
 

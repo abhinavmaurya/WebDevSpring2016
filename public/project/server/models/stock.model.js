@@ -11,7 +11,8 @@ module.exports = function(){
         // watchlist
         findStockInUserWatchList: findStockInUserWatchList,
         getUserWatchlist: getUserWatchlist,
-        deleteStockFromUserWatchlist: deleteStockFromUserWatchlist
+        deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
+        addToUserWatchlist: addToUserWatchlist
     };
     return api;
 
@@ -50,6 +51,16 @@ module.exports = function(){
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    function addToUserWatchlist(userId, stockId){
+        for (var u in watchlistMock) {
+            if (watchlistMock[u].userId == userId) {
+                var record = {"Symbol": stockId};
+                watchlistMock[u].watchlist.push(record);
+                break;
             }
         }
     }
