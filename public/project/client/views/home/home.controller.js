@@ -9,7 +9,14 @@
         .controller("HomeController", HomeController);
 
 
-    function HomeController($scope, StockService, $routeParams, $location){
+    function HomeController(){
+
+        var vm = this;
+
+        function init(){
+
+        }
+        init();
 
     }
 
