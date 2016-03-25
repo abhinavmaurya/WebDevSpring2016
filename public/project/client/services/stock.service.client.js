@@ -10,12 +10,6 @@
 
     function StockService($http){
 
-        var portfolio =
-            [
-            {"Name":"Apple Inc","Symbol":"AAPL","LastPrice":101.1,"BuyingPrice":101.1, "Quantity": 50},
-            {"Name":"Adobe Systems Inc","Symbol":"ADBE","LastPrice":85.26, "BuyingPrice":85.26, "Quantity": 50}
-            ];
-        var result;
         var api = {
             findStockByName: findStockByName,
             findStockById: findStockById,
@@ -25,9 +19,9 @@
             addToUserWatchlist: addToUserWatchlist,
             addStockToUserPortfolio: addStockToUserPortfolio,
             deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
-            removeFromPortfolio: removeFromPortfolio,
+            deleteStockFromUserPortfolio: deleteStockFromUserPortfolio,
             getUserPortfolio: getUserPortfolio,
-            updatePortfolioStock: updatePortfolioStock
+            updateStockInUserPortfolio: updateStockInUserPortfolio
         };
         return api;
 
@@ -68,12 +62,8 @@
             return $http.delete("/api/project/"+userId+"/watchlist/"+stockId);
         }
 
-        function removeFromPortfolio(stock, callback){
-            var index = portfolio.indexOf(findInPortfolio(stock));
-            if(index >= 0){
-                portfolio.splice(index, 1);
-            }
-            callback(portfolio);
+        function deleteStockFromUserPortfolio(userId, stockId){
+            return $http.delete("/api/project/"+userId+"/portfolio/"+stockId);
         }
 
         function getUserWatchlist(userId){
@@ -84,17 +74,8 @@
             return $http.get("/api/project/"+ userId + "/portfolio");
         }
 
-        function updatePortfolioStock(stock, callback){
-            var index = portfolio.indexOf(findInPortfolio(stock));
-            if(index >= 0){
-                portfolio[index]={
-                    "Name": stock.Name,
-                    "Symbol": stock.Symbol,
-                    "BuyingPrice": stock.BuyingPrice,
-                    "Quantity": stock.Quantity
-                };
-            }
-            callback(portfolio);
+        function updateStockInUserPortfolio(userId, stockId, updatedStock){
+            return $http.put("/api/project/"+ userId +"/portfolio/"+stockId, updatedStock);
         }
     }
 })();

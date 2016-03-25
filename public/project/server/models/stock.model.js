@@ -14,7 +14,9 @@ module.exports = function(){
         deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
         addToUserWatchlist: addToUserWatchlist,
         addStockToUserPortfolio: addStockToUserPortfolio,
-        getUserPortfolio: getUserPortfolio
+        getUserPortfolio: getUserPortfolio,
+        deleteStockFromUserPortfolio: deleteStockFromUserPortfolio,
+        updateStockInUserPortfolio: updateStockInUserPortfolio
     };
     return api;
 
@@ -57,6 +59,19 @@ module.exports = function(){
         }
     }
 
+    function deleteStockFromUserPortfolio(userId, stockId){
+        for (var u in portfolioMock) {
+            if (portfolioMock[u].userId == userId) {
+                for(var s in portfolioMock[u].stocks){
+                    if(portfolioMock[u].stocks[s].Symbol == stockId){
+                        portfolioMock[u].stocks.splice(s, 1);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     function addToUserWatchlist(userId, stockId){
         for (var u in watchlistMock) {
             if (watchlistMock[u].userId == userId) {
@@ -85,5 +100,20 @@ module.exports = function(){
             }
         }
         return user_portfolio;
+    }
+
+    function updateStockInUserPortfolio(userId, stockId, update){
+        for(var u in portfolioMock){
+            if(portfolioMock[u].userId == userId){
+                for(var s in portfolioMock[u].stocks){
+                    if(portfolioMock[u].stocks[s].Symbol == stockId){
+                        portfolioMock[u].stocks[s].BuyingPrice = update.BuyingPrice;
+                        portfolioMock[u].stocks[s].Quantity = update.Quantity;
+                        console.log(portfolioMock[u].stocks[s]);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

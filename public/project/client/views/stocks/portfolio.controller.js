@@ -8,7 +8,7 @@
         .module("TradeBullApp")
         .controller("PortfolioController", WatchlistController);
 
-    function WatchlistController($scope, StockService, UserService){
+    function WatchlistController(StockService, UserService){
 
         var vm = this;
         var userId = UserService.getCurrentUser()._id;
@@ -50,7 +50,11 @@
         }
 
         function deleteFromPortfolio(stock){
-            StockService.removeFromPortfolio(stock, render);
+            StockService
+                .deleteStockFromUserPortfolio(userId, stock.Symbol)
+                .then(function(response){
+                    refreshList();
+                });
         }
 
         function selectStock(stock){
@@ -68,7 +72,12 @@
         }
 
         function updateStock(stock){
-            StockService.updatePortfolioStock(stock, render);
+            console.log(stock);
+            StockService
+                .updateStockInUserPortfolio(userId, stock.Symbol, stock)
+                .then(function(response){
+                    refreshList();
+                });
         }
     }
 })();

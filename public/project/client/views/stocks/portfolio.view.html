@@ -7,8 +7,8 @@
         <tr>
             <th>Name</th>
             <th>Symbol</th>
-            <th>Buying Price</th>
-            <th>Quantity</th>
+            <th>Buy Price</th>
+            <th>Qty</th>
             <th>Current Price</th>
             <th>Action</th>
         </tr>
@@ -31,8 +31,8 @@
             <td>
                 {{model.selStock.LastPrice}}
             </td>
-            <td>
-                <a ng-click="model.unselectStock()" class="glyphicon glyphicon-remove btn btn-danger"></a>
+            <td class="action-column">
+                <a ng-click="model.unselectStock()" class="glyphicon glyphicon-remove btn btn-danger"></a>&nbsp;
                 <a ng-click="model.updateStock(model.selStock)" class="glyphicon glyphicon-ok btn btn-success"></a>
             </td>
         </tr>
@@ -42,8 +42,8 @@
             <td>{{stock.BuyingPrice}}</td>
             <td>{{stock.Quantity}}</td>
             <td>{{stock.LastPrice}}</td>
-            <td>
-                <a ng-click="model.selectStock(stock)" class="glyphicon glyphicon-pencil btn btn-info"></a>
+            <td class="action-column">
+                <a ng-click="model.selectStock(stock)" class="glyphicon glyphicon-pencil btn btn-info"></a>&nbsp;
                 <a ng-click="model.deleteFromPortfolio(stock)" class="glyphicon glyphicon-remove btn btn-danger"></a>
             </td>
         </tr>
