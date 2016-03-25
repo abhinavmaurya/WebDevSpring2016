@@ -10,46 +10,58 @@
         .controller("AdminController", AdminController);
 
 
-    function AdminController($scope, UserService){
+    function AdminController(UserService){
 
-        console.log("Inside AdminController")
-        UserService.findAllUsers(setUsers);
+        var vm = this;
 
-        $scope.user = null;
-        $scope.selectedUser = null;
-        $scope.setUsers = setUsers;
+        function init(){
+            UserService
+                .findAllUsers()
+                .then(function(response){
+                    vm.users = response.data;
+                    console.log(vm.users);
+                });
+        }
+        init();
+
+        vm.user = null;
+        vm.selectedUser = null;
 
         //functions
-        $scope.addUser = addUser;
-        $scope.updateUser = updateUser;
-        $scope.selectUser = selectUser;
-        $scope.unselectUser = unselectUser;
-        $scope.deleteUser = deleteUser;
+        vm.addUser = addUser;
+        vm.updateUser = updateUser;
+        vm.selectUser = selectUser;
+        vm.unselectUser = unselectUser;
+        vm.deleteUser = deleteUser;
 
 
-        function setUsers(users){
+        /*function setUsers(users){
             console.log(users);
             $scope.users = users;
             $scope.user = null;
-        }
+        }*/
 
         function selectUser(user){
-            $scope.user = {
+            vm.user = {
                 _id: user._id,
                 username: user.username,
                 password: user.password,
                 email: user.email
             };
-            $scope.selectedUser = true;
+            vm.selectedUser = true;
         }
 
-        function unselectUser(user){
-            $scope.user = null;
-            $scope.selectedUser = null;
+        function unselectUser(){
+            vm.user = null;
+            vm.selectedUser = null;
         }
 
         function deleteUser(user){
-            UserService.deleteUserById(user._id, setUsers);
+            UserService
+                .deleteUserById(user._id)
+                .then(function(response){
+                    init();
+                });
         }
 
         function addUser(user){
@@ -59,9 +71,13 @@
                     password: user.password,
                     email: user.email
                 };
-                UserService.createUser(newUser, setUsers);
+                UserService
+                    .createUser(newUser)
+                    .then(function(response){
+                        init();
+                    });
             }else{
-                $scope.message("Please provide user credentials properly");
+                vm.message("Please provide user credentials properly");
             }
         }
 
@@ -72,9 +88,14 @@
                     password: user.password,
                     email: user.email
                 };
-                UserService.updateUser(user._id, updatedUser, setUsers);
+                UserService
+                    .updateUser(user._id, updatedUser)
+                    .then(function(response){
+                        init();
+                        unselectUser();
+                    });
             }else{
-                $scope.message("Please provide user credentials properly");
+                vm.message("Please provide user credentials properly");
             }
         }
     }

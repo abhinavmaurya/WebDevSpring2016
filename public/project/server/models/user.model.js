@@ -17,7 +17,7 @@ module.exports = function(){
         updateUserById: updateUserById,
         findUserByUsername: findUserByUsername,
         deleteUserById: deleteUserById,
-        findAllUsers: findAllUsers
+        getAllUsers: getAllUsers
     };
     return api;
 
@@ -79,7 +79,7 @@ module.exports = function(){
         }
     }
 
-    function findAllUsers(){
+    function getAllUsers(){
         return mock;
     }
 }

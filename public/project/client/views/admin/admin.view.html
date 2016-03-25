@@ -27,27 +27,27 @@
         <tbody>
         <tr>
             <td>
-                <input type="text" class="form-control" id="userName" placeholder="username" ng-model="user.username"/>
+                <input type="text" class="form-control" id="userName" placeholder="username" ng-model="model.user.username"/>
             </td>
             <td>
-                <input type="text" class="form-control" id="password" placeholder="password" ng-model="user.password"/>
+                <input type="text" class="form-control" id="password" placeholder="password" ng-model="model.user.password"/>
             </td>
             <td>
-                <input type="text" class="form-control" id="role" placeholder="email" ng-model="user.email"/>
+                <input type="text" class="form-control" id="role" placeholder="email" ng-model="model.user.email"/>
             </td>
-            <td nowrap="true">
-                <a ng-show="selectedUser" ng-click="unselectUser()" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                <a ng-hide="selectedUser" ng-click="addUser(user)" class="glyphicon glyphicon-plus btn btn-primary"></a>
-                <a ng-show="selectedUser" ng-click="updateUser(user)" class="glyphicon glyphicon-ok btn btn-success"></a>
+            <td class="action-column">
+                <a ng-show="model.selectedUser" ng-click="model.unselectUser()" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a ng-hide="model.selectedUser" ng-click="model.addUser(model.user)" class="glyphicon glyphicon-plus btn btn-primary"></a>
+                <a ng-show="model.selectedUser" ng-click="model.updateUser(model.user)" class="glyphicon glyphicon-ok btn btn-success"></a>
             </td>
         </tr>
-        <tr ng-repeat="user in users">
+        <tr ng-repeat="user in model.users">
             <td>{{user.username}}</td>
             <td>{{user.password}}</td>
             <td>{{user.email}}</td>
             <td>
-                <a ng-click="deleteUser(user)" class="glyphicon glyphicon-remove btn btn-danger"></a>&nbsp;
-                <a ng-click="selectUser(user)" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                <a ng-click="model.deleteUser(user)" class="glyphicon glyphicon-remove btn btn-danger"></a>&nbsp;
+                <a ng-click="model.selectUser(user)" class="glyphicon glyphicon-pencil btn btn-info"></a>
             </td>
         </tr>
         </tbody>
