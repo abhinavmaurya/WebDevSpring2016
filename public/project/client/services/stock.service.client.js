@@ -23,10 +23,10 @@
             findInPortfolio: findInPortfolio,
             getUserWatchlist: getUserWatchlist,
             addToUserWatchlist: addToUserWatchlist,
-            addToPortfolio: addToPortfolio,
+            addStockToUserPortfolio: addStockToUserPortfolio,
             deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
             removeFromPortfolio: removeFromPortfolio,
-            findAllStockInPortfolio: findAllStockInPortfolio,
+            getUserPortfolio: getUserPortfolio,
             updatePortfolioStock: updatePortfolioStock
         };
         return api;
@@ -60,19 +60,8 @@
             return $http.post("/api/project/"+ userId +"/watchlist/"+stockId);
         }
 
-        function addToPortfolio(stock, qty, callback){
-            if(stock) {
-                var newStock = {
-                    "Name": stock.Name,
-                    "Symbol": stock.Symbol,
-                    "BuyingPrice": stock.LastPrice,
-                    "Quantity": qty
-                };
-                portfolio.push(newStock);
-                console.log(portfolio);
-                callback(newStock);
-            }else
-                callback(null);
+        function addStockToUserPortfolio(userId, stockId, stock){
+            return $http.post("/api/project/"+ userId + "/portfolio/" + stockId, stock);
         }
 
         function deleteStockFromUserWatchlist(userId, stockId){
@@ -91,8 +80,8 @@
             return $http.get("/api/project/"+ userId + "/watchlist");
         }
 
-        function findAllStockInPortfolio(callback){
-            callback(portfolio);
+        function getUserPortfolio(userId){
+            return $http.get("/api/project/"+ userId + "/portfolio");
         }
 
         function updatePortfolioStock(stock, callback){

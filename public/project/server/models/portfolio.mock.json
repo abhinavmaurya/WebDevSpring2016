@@ -1,0 +1,12 @@
+[
+  {"userId":123, "stocks":[
+    {"Symbol":"AAPL", "BuyingPrice":101.1, "Quantity": 50},
+    {"Symbol":"ADBE", "BuyingPrice":56.9, "Quantity": 100},
+    {"Symbol":"FB", "BuyingPrice":95, "Quantity": 80}
+  ]},
+  {"userId":234, "stocks":[
+    {"Symbol":"MSFT", "BuyingPrice":59.8, "Quantity": 60},
+    {"Symbol":"BAC", "BuyingPrice":15.5, "Quantity": 300},
+    {"Symbol":"LNKD", "BuyingPrice":120, "Quantity": 30}
+  ]}
+]

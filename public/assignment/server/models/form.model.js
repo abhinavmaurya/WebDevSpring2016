@@ -35,7 +35,6 @@ module.exports = function() {
     function findFormById(formId) {
         for (var i in mock) {
             if(mock[i]._id == formId) {
-
                 return mock[i];
             }
         }

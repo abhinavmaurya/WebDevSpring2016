@@ -19,7 +19,8 @@
     <form class="form-inline">
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Quantity" ng-model="model.qty">
+            <input type="text" class="form-control" placeholder="Buying Price" ng-model="model.buyPrice">
         </div>
-        <a ng-click="model.addToPortfolio(model.qty)" class="btn btn-primary">Add To Portfolio</a>
+        <a ng-click="model.addToPortfolio(model.qty, model.buyPrice)" class="btn btn-primary">Add To Portfolio</a>
     </form>
 </div>

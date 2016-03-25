@@ -3,7 +3,7 @@
  */
 
 var watchlistMock = require("./watchlist.mock.json");
-//var portfolioMock = require("./portfolio.mock.json");
+var portfolioMock = require("./portfolio.mock.json");
 
 module.exports = function(){
 
@@ -12,7 +12,9 @@ module.exports = function(){
         findStockInUserWatchList: findStockInUserWatchList,
         getUserWatchlist: getUserWatchlist,
         deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
-        addToUserWatchlist: addToUserWatchlist
+        addToUserWatchlist: addToUserWatchlist,
+        addStockToUserPortfolio: addStockToUserPortfolio,
+        getUserPortfolio: getUserPortfolio
     };
     return api;
 
@@ -63,5 +65,25 @@ module.exports = function(){
                 break;
             }
         }
+    }
+
+    function addStockToUserPortfolio(userId, stock){
+        for(var u in portfolioMock){
+            if(portfolioMock[u].userId == userId){
+                portfolioMock[u].stocks.push(stock);
+                break;
+            }
+        }
+    }
+
+    function getUserPortfolio(userId){
+        var user_portfolio = null;
+        for(var u in portfolioMock){
+            if(portfolioMock[u].userId == userId){
+                user_portfolio = portfolioMock[u].stocks;
+                break;
+            }
+        }
+        return user_portfolio;
     }
 }

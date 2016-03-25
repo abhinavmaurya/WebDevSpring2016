@@ -59,6 +59,7 @@
             .when("/portfolio",{
                 templateUrl: "views/stocks/portfolio.view.html",
                 controller: "PortfolioController",
+                controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }

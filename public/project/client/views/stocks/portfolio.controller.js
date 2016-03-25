@@ -8,23 +8,45 @@
         .module("TradeBullApp")
         .controller("PortfolioController", WatchlistController);
 
-    function WatchlistController($scope, StockService){
+    function WatchlistController($scope, StockService, UserService){
 
-        $scope.portfolio = null;
-        $scope.render = render;
-        $scope.deleteFromPortfolio = deleteFromPortfolio;
-        $scope.selStock = null;
+        var vm = this;
+        var userId = UserService.getCurrentUser()._id;
 
-        $scope.selectStock = selectStock;
-        $scope.unselectStock = unselectStock;
-        $scope.updateStock = updateStock;
 
-        StockService.findAllStockInPortfolio(render);
+        vm.portfolio = null;
+        vm.selStock = null;
+        vm.deleteFromPortfolio = deleteFromPortfolio;
+        vm.selectStock = selectStock;
+        vm.unselectStock = unselectStock;
+        vm.updateStock = updateStock;
 
-        function render(response){
-            console.log(response);
-            $scope.portfolio = response;
+        function init(){
+            refreshList();
+        }
+        init();
+
+        function refreshList(){
             unselectStock();
+            StockService
+                .getUserPortfolio(userId)
+                .then(function(response){
+                    console.log(response.data);
+                    vm.portfolio = response.data;
+                    loadRealTimeData();
+                });
+        }
+
+        function loadRealTimeData(){
+            // synchronize loading of data from API
+            angular.forEach(vm.portfolio, function(stock){
+                StockService
+                    .findStockById(stock.Symbol)
+                    .then(function(response){
+                        stock.LastPrice = response.data.LastPrice;
+                        stock.Name = response.data.Name;
+                    });
+            });
         }
 
         function deleteFromPortfolio(stock){
@@ -32,16 +54,17 @@
         }
 
         function selectStock(stock){
-            $scope.selStock = {
+            vm.selStock = {
                 "Name": stock.Name,
                 "Symbol": stock.Symbol,
                 "BuyingPrice": stock.BuyingPrice,
-                "Quantity": stock.Quantity
+                "Quantity": stock.Quantity,
+                "LastPrice": stock.LastPrice
             };
         }
 
         function unselectStock(){
-            $scope.selStock = null;
+            vm.selStock = null;
         }
 
         function updateStock(stock){

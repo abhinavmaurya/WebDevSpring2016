@@ -58,11 +58,21 @@
             }
         }
 
-        function addToPortfolio(stock, qty){
-            if(qty && qty > 0) {
-                StockService.addToPortfolio(stock, qty, postAddToPortfolio);
+        function addToPortfolio(qty, buyPrice){
+            if((isNaN(qty) && qty <= 0) || (isNaN(buyPrice) && buyPrice <= 0)) {
+                $scope.error = "Please provide valid quantity and buying price";
             }else{
-                $scope.error = "Please provide valid quantity";
+                var newStock = {
+                    "Symbol": stockID,
+                    "BuyingPrice": buyPrice,
+                    "Quantity": qty
+                };
+                StockService
+                    .addStockToUserPortfolio(user._id, stockID, newStock)
+                    .then(function(response){
+                        vm.qty = null;
+                        vm.buyPrice = null;
+                    });
             }
         }
     }

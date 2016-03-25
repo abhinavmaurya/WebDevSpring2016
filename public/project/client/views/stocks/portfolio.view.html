@@ -9,37 +9,42 @@
             <th>Symbol</th>
             <th>Buying Price</th>
             <th>Quantity</th>
+            <th>Current Price</th>
             <th>Action</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr ng-show="selStock">
+        <tr ng-show="model.selStock">
             <td>
-                <input type="text" class="form-control" placeholder="Stock Name" ng-model="selStock.Name" disabled/>
+                <input type="text" class="form-control" placeholder="Stock Name" ng-model="model.selStock.Name" disabled/>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="Stock Symbol" ng-model="selStock.Symbol" disabled/>
+                <input type="text" class="form-control" placeholder="Stock Symbol" ng-model="model.selStock.Symbol" disabled/>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="Buying Price" ng-model="selStock.BuyingPrice"/>
+                <input type="text" class="form-control" placeholder="Buying Price" ng-model="model.selStock.BuyingPrice"/>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="Quantity" ng-model="selStock.Quantity"/>
+                <input type="text" class="form-control" placeholder="Quantity" ng-model="model.selStock.Quantity"/>
             </td>
             <td>
-                <a ng-click="unselectStock()" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                <a ng-click="updateStock(selStock)" class="glyphicon glyphicon-ok btn btn-success"></a>
+                {{model.selStock.LastPrice}}
+            </td>
+            <td>
+                <a ng-click="model.unselectStock()" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a ng-click="model.updateStock(model.selStock)" class="glyphicon glyphicon-ok btn btn-success"></a>
             </td>
         </tr>
-        <tr ng-repeat="stock in portfolio">
+        <tr ng-repeat="stock in model.portfolio">
             <td>{{stock.Name}}</td>
             <td>{{stock.Symbol}}</td>
             <td>{{stock.BuyingPrice}}</td>
             <td>{{stock.Quantity}}</td>
+            <td>{{stock.LastPrice}}</td>
             <td>
-                <a ng-click="selectStock(stock)" class="glyphicon glyphicon-pencil btn btn-info"></a>
-                <a ng-click="deleteFromPortfolio(stock)" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a ng-click="model.selectStock(stock)" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                <a ng-click="model.deleteFromPortfolio(stock)" class="glyphicon glyphicon-remove btn btn-danger"></a>
             </td>
         </tr>
         </tbody>
