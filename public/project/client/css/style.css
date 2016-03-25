@@ -1,3 +1,10 @@
 .action-column {
     white-space: nowrap;
 }
+
+.home-image{
+    /*height: 200px;
+    width: 400px;*/
+    max-height: 100%;
+    max-width: 100%;
+}

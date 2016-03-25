@@ -9,9 +9,10 @@
         .controller("HomeController", HomeController);
 
 
-    function HomeController(){
+    function HomeController(UserService){
 
         var vm = this;
+        var user = UserService.getCurrentUser();
 
         function init(){
 

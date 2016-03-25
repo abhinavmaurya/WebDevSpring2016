@@ -14,7 +14,10 @@
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve:{
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/search", {
                 templateUrl: "views/stocks/search.view.html",
