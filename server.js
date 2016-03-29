@@ -6,22 +6,22 @@ var multer          = require('multer');
 //var LocalStrategy   = require('passport-local').Strategy;
 var cookieParser    = require('cookie-parser');
 var session         = require('express-session');
-//var mongoose        = require('mongoose');
+var mongoose        = require('mongoose');
 
 // Create a default connection string
-//var connectionstring = 'mongodb://127.0.0.1:27017/cs5610';
+var connectionstring = 'mongodb://127.0.0.1:27017/webdev2016';
 
 //  remote connection string if running on remote
-/*if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
     connectionstring = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
             process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
             process.env.OPENSHIFT_MONGODB_DB_HOST + ":" +
             process.env.OPENSHIFT_MONGODB_DB_PORT + "/" +
             process.env.OPENSHIFT_APP_NAME;
-}*/
+}
 
 // connect to database
-//var db = mongoose.connect(connectionstring);
+var db = mongoose.connect(connectionstring);
 
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -35,7 +35,7 @@ app.use(session({ secret:process.env.PASSPORT_SECRET }));
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 
-require("./public/assignment/server/app.js")(app);
+require("./public/assignment/server/app.js")(app, db, mongoose);
 
 // Project app.js
 require("./public/project/server/app.js")(app);
