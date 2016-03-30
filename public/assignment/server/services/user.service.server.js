@@ -82,23 +82,23 @@ module.exports = function (app, userModel){
         userModel.updateUserById(userId, userData)
             .then(
                 function(stats){
-                    //return userModel.getUserByUserId(userId);
-                    res.send(200);
+                    return userModel.findUserById(userId);
+                    //res.send(200);
                 },
                 function(err){
                     res.status(400).send(err);
                 }
             )
-            /*.then(
+            .then(
                 function(user){
                     console.log(user);
-                    req.session.currentUser(user);
+                    req.session.currentUser = user;
                     res.json(user);
                 },
                 function(err){
                     res.status(400).send(err);
                 }
-            )*/;
+            );
     }
 
     function deleteUser(req, res){

@@ -42,7 +42,7 @@
         }
 
         function addForm(form){
-            if(!form){
+            if(!form || !form.title){
                 vm.message = "Please specify a valid name of the form.";
             }else{
                 var newForm = {
@@ -51,7 +51,7 @@
                 FormService
                     .createFormForUser(vm.usr._id, newForm)
                     .then(function(response) {
-                        setForms(response.data);
+                        init();
                     });
             }
         }
@@ -75,18 +75,23 @@
         }
 
         function updateForm(form){
+            if(!form || !form.title){
+                vm.message = "Please specify a valid name of the form.";
+            }else {
+                var updatedForm = {
+                    title: form.title
+                };
 
-            var updatedForm = {
-                title: form.title
-            };
-
-            FormService
-                .updateFormById(form._id, updatedForm)
-                .then(function(response){
-                    if(response.data){
-                        init();
-                    }
-                });
+                FormService.updateFormById(form._id, updatedForm)
+                    .then(
+                        function (response) {
+                            init();
+                        },
+                        function(err){
+                            console.log("Error updating form");
+                        }
+                    );
+            }
         }
 
         function unselectForm(){

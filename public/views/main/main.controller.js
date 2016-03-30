@@ -21,12 +21,13 @@
 
 
         function loader(){
-            $scope.showLoader = false;
+            $scope.showLoader = true;
             setTimeout(resetLoader, 1000);
         }
 
         function resetLoader(){
-            $scope.showLoader = true;
+            $scope.showLoader = false;
+            $scope.$apply();
         }
     }
 })();
