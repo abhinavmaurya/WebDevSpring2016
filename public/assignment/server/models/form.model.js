@@ -23,38 +23,61 @@ module.exports = function(db) {
         deleteFormById: deleteFormById,
         findFormByTitle: findFormByTitle,
         findAllFormsByUserId: findAllFormsByUserId,
-
-        //Field
-        createFieldForForm: createFieldForForm,
-        findAllFieldsForForm: findAllFieldsForForm,
-        findFieldByFieldIdAndFormId: findFieldByFieldIdAndFormId,
-        updateFieldByFieldIdAndFormId: updateFieldByFieldIdAndFormId,
-        deleteFieldByFieldIdAndFormId: deleteFieldByFieldIdAndFormId
+        getMongooseModel: getMongooseModel
     };
     return api;
 
+    function getMongooseModel(){
+        return FormModel;
+    }
+
     function createForm(form) {
-        form._id = new Date().getTime();
-        mock.push(form);
+        var deferred = q.defer();
+        FormModel.create(form, function(err, doc){
+            if(err){
+                deferred.reject();
+            }else{
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
+
     }
 
     function findFormById(formId) {
-        for (var i in mock) {
+        /*for (var i in mock) {
             if(mock[i]._id == formId) {
                 return mock[i];
             }
         }
-        return null;
+        return null;*/
+        var deferred = q.defer();
+        FormModel.findById(formId, function(err, doc){
+            if(err){
+                deferred.reject();
+            }else{
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
     function findAllForms() {
 
-        return mock;
+        var deferred = q.defer();
+        FormModel.find(function(err, doc){
+            if(err){
+                deferred.reject();
+            }else{
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
     function updateFormById(formId, form) {
 
-        for (var i in mock) {
+        /*for (var i in mock) {
 
             if(mock[i]._id == formId) {
 
@@ -63,11 +86,23 @@ module.exports = function(db) {
             }
         }
 
-        return mock;
+        return mock;*/
+        var deferred = q.defer();
+        FormModel.update(
+            {_id: formId},
+            {$set: form},
+            function(err, stats){
+                if(err){
+                    deferred.reject();
+                }else{
+                    deferred.resolve(stats);
+                }
+        });
+        return deferred.promise;
     }
 
     function deleteFormById(formId) {
-        for (var i in mock) {
+        /*for (var i in mock) {
 
             if (mock[i]._id == formId) {
 
@@ -75,22 +110,46 @@ module.exports = function(db) {
                 break;
             }
         }
-        return mock;
+        return mock;*/
+        var deferred = q.defer();
+        FormModel.remove(
+            {_id: formId},
+            function(err, stats){
+                if(err){
+                    deferred.reject();
+                }else{
+                    deferred.resolve(stats);
+                }
+            });
+        return deferred.promise;
+
     }
 
     function findFormByTitle(formTitle) {
-        for (var i in mock) {
+        /*for (var i in mock) {
 
             if (mock[i].title == formTitle) {
 
                 return mock[i];
             }
         }
-        return null;
+        return null;*/
+        var deferred = q.defer();
+        FormModel.findOne(
+            {title: formTitle},
+            function(err, doc){
+                if(err){
+                    deferred.reject();
+                }else{
+                    deferred.resolve(doc);
+                }
+        });
+        return deferred.promise;
+
     }
 
     function findAllFormsByUserId(userId) {
-        var forms = [];
+        /*var forms = [];
 
         for (var i in mock) {
 
@@ -99,76 +158,20 @@ module.exports = function(db) {
                 forms.push(mock[i]);
             }
         }
-
-        return forms;
-    }
-
-    function createFieldForForm(formId, field) {
-        for (var i in mock) {
-
-            if (mock[i]._id == formId) {
-
-                if(!mock[i].fields) {
-                    mock[i].fields = [];
+        return forms;*/
+        var deferred = q.defer();
+        FormModel.find(
+            {userId: userId},
+            function(err, doc){
+                if(err){
+                    deferred.reject();
+                }else{
+                    deferred.resolve(doc);
                 }
-                field._id = new Date().getTime();
-                mock[i].fields.push(field);
-                break;
-            }
-        }
+            });
+        return deferred.promise;
     }
 
-    function findAllFieldsForForm (formId) {
-
-        for (var i in mock) {
-
-            if (mock[i]._id == formId) {
-
-                return mock[i].fields;
-            }
-        }
-        return null;
-    }
-
-    function findFieldByFieldIdAndFormId(formId, fieldId) {
-        for (var i in mock) {
-
-            if (mock[i]._id == formId) {
-
-                for (var j in mock[i].fields) {
-
-                    if (mock[i].fields[j]._id === fieldId) {
-
-                        return mock[i].fields[j];
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    function updateFieldByFieldIdAndFormId(formId, fieldId, field) {
-
-        field._id = fieldId;
-        for (var i in mock) {
-            if (mock[i]._id == formId) {
-                for (var j in mock[i].fields) {
-                    if (mock[i].fields[j]._id == fieldId) {
-                        mock[i].fields[j] = field;
-                    }
-                }
-            }
-        }
-    }
-    function deleteFieldByFieldIdAndFormId(formId, fieldId) {
-        for (var i in mock) {
-            if (mock[i]._id == formId) {
-                for (var j in mock[i].fields) {
-                    if (mock[i].fields[j]._id === fieldId)
-                        mock[i].fields.splice(j,1);
-                }
-            }
-        }
-    }
+    // ----------------------------------------------
 
 }
