@@ -36,6 +36,7 @@ app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 
 require("./public/assignment/server/app.js")(app, db, mongoose);
+//require("./public/assignment/server/app.js")(app);
 
 // Project app.js
 require("./public/project/server/app.js")(app);

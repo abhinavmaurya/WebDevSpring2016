@@ -45,21 +45,22 @@
                     if(updatedUser){
                         vm.message = "User updated successfully";
                         UserService.setCurrentUser(updatedUser);
+                        //return UserService.setCurrentUser(updatedUser);
                     }else{
                         vm.message = "Unable to update the user";
                     }
-                });
+                })
+                /*.then(
+                    function(response){
+                        var updatedUser = response.data;
+                        console.log("Updated User");
+                        console.log(updatedUser);
+                        UserService.setCurrentUser(updatedUser);
+                    },
+                    function(err){
+                        vm.message("Unable to fetch updated profile");
+                    }
+                )*/;
         }
-
-        /*function success(user){
-            $scope.error = null;
-            $scope.message = null;
-            if(user) {
-                $scope.message = "User updated successfully";
-                UserService.setCurrentUser(user);
-            }else{
-                $scope.message = "Unable to update the user";
-            }
-        }*/
     }
 })();

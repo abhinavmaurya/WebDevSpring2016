@@ -2,11 +2,11 @@
  * Created by abhinavmaurya on 3/16/16.
  */
 
-module.exports = function (app, model){
+module.exports = function (app, userModel){
     app.post("/api/assignment/login", login);
     app.get("/api/assignment/loggedin", loggedin);
     app.post("/api/assignment/logout", logout);
-    app.post("/api/assignment/register", register);
+    app.post("/api/assignment/register", createUser);
     app.put("/api/assignment/user/:userId", updateUser);
     app.delete("/api/assignment/user/:userId", deleteUser);
     app.get("/api/assignment/user", getAllUsers);
@@ -15,9 +15,16 @@ module.exports = function (app, model){
 
     function login(req, res){
         var credentials = req.body;
-        var user = model.findUserByCredentials(credentials);
-        req.session.currentUser = user;
-        res.json(user);
+        userModel.findUserByCredentials(credentials)
+            .then(
+                function(doc){
+                    req.session.currentUser = doc;
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function loggedin(req, res){
@@ -31,39 +38,91 @@ module.exports = function (app, model){
 
     function getUserByUserId(req, res){
         var userId = req.params.userId;
-        var user = model.findUserById(userId);
-        res.json(user);
+        userModel.findUserById(userId)
+            .then(
+                function(doc){
+                    res.json(user);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function getUserByUsername(req, res){
         var username = req.params.username;
-        var user = model.findUserByUsername(username);
-        res.json(user);
+        userModel.findUserByUsername(username)
+            .then(
+                function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    function register(req, res){
+    function createUser(req, res){
         var user = req.body;
-        user = model.createUser(user);
-        req.session.currentUser = user;
-        res.json(user);
+        userModel.createUser(user)
+            .then(
+                function(doc){
+                    req.session.currentUser = doc;
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function updateUser(req, res){
         var userId = req.params.userId;
         var userData = req.body;
-        user = model.updateUserById(userId, userData);
-        req.session.currentUser = user;
-        res.json(user);
+        userModel.updateUserById(userId, userData)
+            .then(
+                function(stats){
+                    //return userModel.getUserByUserId(userId);
+                    res.send(200);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            /*.then(
+                function(user){
+                    console.log(user);
+                    req.session.currentUser(user);
+                    res.json(user);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )*/;
     }
 
     function deleteUser(req, res){
         var userId = req.body.userId;
-        model.deleteUserById(userId);
-        res.send(200);
+        userModel.deleteUserById(userId)
+            .then(
+                function(stats){
+                    res.send(200);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function getAllUsers(req, res){
-        var users = model.getAllUsers();
-        res.json(users);
+        userModel.getAllUsers()
+            .then(
+                function(docs){
+                    res.json(docs);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
     }
 }
