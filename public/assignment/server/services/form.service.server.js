@@ -51,4 +51,4 @@ module.exports = function(app, formModel) {
         formModel.deleteFormById(formId);
         res.send(200);
     }
-}
+};

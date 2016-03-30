@@ -41,9 +41,6 @@ module.exports = function(db){
     }
 
     function createUser(user){
-        /*user._id = new Date().getTime();
-        mock.push(user);
-        return user;*/
         var deferred = q.defer();
         UserModel.create(user, function (err, doc) {
             if(err){
@@ -118,7 +115,6 @@ module.exports = function(db){
         );
         return deferred.promise;
     }
-
 
 
     function findAllUsers(){
