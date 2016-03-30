@@ -4,9 +4,15 @@
 
 "use strict"
 
-var mock = require("./form.mock.json");
+//var mock = require("./form.mock.json");
+var q = require("q");
+var mongoose = require("mongoose");
 
 module.exports = function(db) {
+
+    var FormSchema = require("./form.schema.server.js")(mongoose);
+    var FormModel = mongoose.model("Form", FormSchema);
+
     var api = {
 
         //Form

@@ -35,8 +35,8 @@ app.use(session({ secret:process.env.PASSPORT_SECRET }));
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 
-//require("./public/assignment/server/app.js")(app, db);
-//require("./public/assignment/server/app.js")(app);
+require("./public/assignment/server/app.js")(app, db);
+
 
 // Project app.js
 require("./public/project/server/app.js")(app);
