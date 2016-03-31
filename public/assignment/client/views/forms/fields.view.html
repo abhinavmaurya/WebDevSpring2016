@@ -1,9 +1,6 @@
-<h1 class="page-header">{{model.form.title}}</h1>
+<h2>{{model.form.title}}</h2>
 
-<ul class="nav nav-tabs">
-    <li role="presentation"><a href="#/forms">Forms</a></li>
-    <li role="presentation" class="active"><a href="#/fields">Fields</a></li>
-</ul>
+<div class="form-nav" ng-include="'views/forms/navigation.html'"></div>
 <br>
 <table class="table table-responsive">
     <tbody am-sortable am-sortable-callback="model.sortFields">
@@ -15,19 +12,33 @@
                 <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
             </div>
         </td>
+        <td ng-switch-when="TEXTAREA">
+            <label>{{field.label}}</label>
+            <div class="input-group">
+                <textarea class="form-control" placeholder="{{field.placeholder}}"></textarea>
+                <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
+            </div>
+        </td>
+        <td ng-switch-when="PASSWORD">
+            <label>{{field.label}}</label>
+            <div class="input-group">
+                <input type="password" class="form-control" placeholder="{{field.placeholder}}">
+                <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
+            </div>
+        </td>
+        <td ng-switch-when="EMAIL">
+            <label>{{field.label}}</label>
+            <div class="input-group">
+                <input type="email" class="form-control" placeholder="{{field.placeholder}}">
+                <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
+            </div>
+        </td>
         <td ng-switch-when="OPTIONS">
             <label>{{field.label}}</label>
             <div class="input-group">
                 <select class="form-control">
                     <option ng-repeat="op in field.options">{{op.label}}</option>
                 </select>
-                <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
-            </div>
-        </td>
-        <td ng-switch-when="TEXTAREA">
-            <label>{{field.label}}</label>
-            <div class="input-group">
-                <textarea class="form-control" placeholder="{{field.placeholder}}"></textarea>
                 <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
             </div>
         </td>
@@ -57,31 +68,22 @@
                 <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
             </div>
         </td>
-        <!--<td ng-switch-default>
-            <label>{{field.label}}</label>
-            <div class="input-group">
-                <input type="date" placeholder="{{field.placeholder}}" class="form-control">
-                <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
-            </div>
-        </td>-->
         <br>
     </tr>
     </tbody>
 </table>
 
 <hr>
-<label for="input5">Add New Field:</label>
+<label for="new-field">Add New Field:</label>
 <div class="input-group">
-    <select ng-model="fieldType" class="form-control" id="input5">
-        <option>Single Line Text Field</option>
-        <option>Date Field</option>
-        <option>Dropdown Field</option>
-        <option>Checkboxes Field</option>
-        <option>Radio Buttons Field</option>
-        <option>Multi Line Text Field</option>
+    <select ng-model="fieldType" class="form-control" id="new-field"
+            ng-options="option.name for option in model.options track by option.value"
+            ng-init="model.options[0]">
+
+        <option value="{{option.value}}">{{option.name}}</option>
     </select>
     <div class="input-group-btn">
-        <button ng-click="model.addField(fieldType)" type="button" class="btn btn-success">
+        <button ng-click="model.addField(fieldType.value)" type="button" class="btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </div>
@@ -120,6 +122,30 @@
                         <label>Placeholder</label>
                         <textarea ng-model="model.eField.placeholder" class="form-control"
                                   placeholder="Edit Placeholder"></textarea>
+                    </form>
+                </div>
+                <div ng-switch-when="PASSWORD">
+                    <h3>Password Field</h3>
+                    <form>
+                        <label>Label</label>
+                        <input ng-model="model.eField.label" class="form-control" type="text"
+                               placeholder="Edit Label">
+                        <br>
+                        <label>Placeholder</label>
+                        <input ng-model="model.eField.placeholder" class="form-control" type="password"
+                               placeholder="Edit Placeholder">
+                    </form>
+                </div>
+                <div ng-switch-when="EMAIL">
+                    <h3>Single Line Field</h3>
+                    <form>
+                        <label>Label</label>
+                        <input ng-model="model.eField.label" class="form-control" type="text"
+                               placeholder="Edit Label">
+                        <br>
+                        <label>Placeholder</label>
+                        <input ng-model="model.eField.placeholder" class="form-control" type="email"
+                               placeholder="Edit Placeholder">
                     </form>
                 </div>
                 <div ng-switch-when="OPTIONS">

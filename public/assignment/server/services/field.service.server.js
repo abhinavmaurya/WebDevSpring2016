@@ -100,20 +100,21 @@ module.exports = function (app, formModel) {
                 .sortFields(formId, startIndex, endIndex)
                 .then(
                     function(stat) {
-                        return fieldModel.findAllFieldsForForm(formId);
+                        //return fieldModel.findAllFieldsForForm(formId);
+                        res.send(200);
                     },
                     function(err) {
                         res.status(400).send(err);
                     }
-                )
-                .then(
+                );
+                /*.then(
                     function(fields) {
                         res.json(fields);
                     },
                     function(err) {
                         res.status(400).send(err);
                     }
-                );
+                );*/
         }
     }
 

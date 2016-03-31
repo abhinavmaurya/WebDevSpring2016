@@ -13,32 +13,18 @@
         vm.deleteField = deleteField;
         vm.addField = addField;
         vm.sortFields = sortFields;
-        vm.reorder = reorder;
-        vm.options =
-            [
-                'Single Line Text Field',
-                'Multi Line Text Field',
-                'Date Field',
-                'Dropdown Field',
-                'Checkboxes Field',
-                'Radio Buttons Field'
-            ];
-        vm.selection = vm.options[0];
-        vm.fieldOptions = null;
-        var formId = "000";
-        if ($routeParams.formId) {
-            formId = $routeParams.formId;
-        }
+        var formId = $routeParams.formId;
 
-        var optionMap =
-            [
-                {key: "Single Line Text Field", value: "TEXT"},
-                {key: "Multi Line Text Field", value: "TEXTAREA"},
-                {key: "Date Field", value: "DATE"},
-                {key: "Dropdown Field", value: "OPTIONS"},
-                {key: "Checkboxes Field", value: "CHECKBOXES"},
-                {key: "Radio Buttons Field", value: "RADIOS"}
-            ];
+        vm.options = [
+            {name: "Single Line Text Field", value: "TEXT"},
+            {name: "Multi Line Text Field", value: "TEXTAREA"},
+            {name: "Password Field", value: "PASSWORD"},
+            {name: "Email Field", value: "EMAIL"},
+            {name: "Date Field", value: "DATE"},
+            {name: "Dropdown Field", value: "DROPDOWN"},
+            {name: "Checkboxes Field", value: "CHECKBOX"},
+            {name: "Radio Buttons Field", value: "RADIO"}
+        ];
 
         function init() {
             FieldService
@@ -59,28 +45,13 @@
         }
         init();
 
-        function sendEdit(field) {
-            vm.cField = null;
-            FieldService
-                .updateField(formId, field._id, field)
-                .then(init);
-        }
-
-        function reorder() {
-            vm.form.fields = vm.fields;
-            FormService
-                .updateFormById(formId, vm.form)
-                .then(init);
-
-        }
-
         function sortFields(start, end) {
             FieldService
                 .sortFields(formId, start, end)
                 .then(
                     function (response) {
-                        console.log(response.data);
-                        vm.fields = response.data;
+                        //vm.fields = response.data;
+                        init();
                     },
                     function (err) {
                         vm.error = err;
@@ -90,23 +61,51 @@
 
         function deleteField(field) {
             vm.cField = null;
+            console.log(field._id);
             FieldService
                 .deleteField(formId, field._id)
                 .then(init);
         }
 
-        function translateFieldType(fieldType) {
-            for (var k in optionMap) {
-                console.log(optionMap[k].key + " " + optionMap[k].value);
-                if (optionMap[k].key == fieldType){
-                    return optionMap[k].value;
-                }
-            }
-        }
-
         function addField(fieldType) {
-            var field = {"label": "", "type": translateFieldType(fieldType), "placeholder": "", "options": null};
-            console.log(field);
+            var field = null;
+            console.log(fieldType);
+            switch (fieldType) {
+                case "TEXT":
+                    field = createSingleLineTextField();
+                    break;
+
+                case "TEXTAREA":
+                    field = createMultiLineTextField();
+                    break;
+
+                case "DATE":
+                    field = createDateField();
+                    break;
+
+                case "DROPDOWN":
+                    field = createDropDownField();
+                    break;
+
+                case "CHECKBOX":
+                    field = createCheckboxField();
+                    break;
+
+                case "RADIO":
+                    field = createRadioField();
+                    break;
+
+                case "EMAIL":
+                    field = createEmailField();
+                    break;
+
+                case "PASSWORD":
+                    field = createPasswordField();
+                    break;
+
+                default:
+                    field = createSingleLineTextField();
+            }
             FieldService
                 .createField(formId, field)
                 .then(init);
@@ -114,9 +113,21 @@
 
 
         function editField(field) {
-            vm.eField = field;
+            vm.eField = {
+                _id: field._id,
+                label: field.label,
+                type: field.type,
+                placeholder: field.placeholder,
+                option: field.options
+            };
 
-            var isOption = !(vm.eField.type === 'TEXT' || vm.eField.type === 'TEXTAREA');
+            var isOption =
+                !(
+                    vm.eField.type === 'TEXT' ||
+                    vm.eField.type === 'TEXTAREA' ||
+                    vm.eField.type === 'PASSWORD' ||
+                    vm.eField.type === 'EMAIL'
+                );
 
             if (isOption) {
                 var optionList = [];
@@ -149,13 +160,101 @@
                 vm.eField.options = optionArray;
 
             }
-            else {
-            }
             console.log(vm.eField._id);
             FieldService
                 .updateField(formId, vm.eField._id, vm.eField)
                 .then(init);
             vm.eField = null;
+        }
+
+
+
+        /* Helper functions to create fields*/
+        function createSingleLineTextField() {
+
+            var field = {
+                label: "New Text Field",
+                type: "TEXT",
+                placeholder: "New Field"
+            };
+
+            return field;
+        }
+
+        function createPasswordField() {
+
+            var field = {
+                label: "New Password Field",
+                type: "PASSWORD",
+                placeholder: "Password"
+            };
+
+            return field;
+        }
+
+        function createEmailField() {
+
+            var field = {
+                label: "New Email Field",
+                type: "EMAIL",
+                placeholder: "alice@wonderland.com"
+            };
+
+            return field;
+        }
+
+        function createMultiLineTextField() {
+
+            var field = {
+                label: "New Text Field",
+                type: "TEXTAREA",
+                placeholder: "New Field"
+            };
+
+            return field;
+        }
+
+        function createDateField() {
+
+            var field = {
+                label: "New Date Field",
+                type: "DATE"
+            };
+
+            return field;
+        }
+
+        function createDropDownField() {
+
+            var field = {"label": "New Dropdown", "type": "OPTIONS", "options": [
+                {"label": "Option 1", "value": "OPTION_1"},
+                {"label": "Option 2", "value": "OPTION_2"},
+                {"label": "Option 3", "value": "OPTION_3"}
+            ]};
+
+            return field;
+        }
+
+        function createCheckboxField() {
+
+            var field = {"label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+                {"label": "Option A", "value": "OPTION_A"},
+                {"label": "Option B", "value": "OPTION_B"},
+                {"label": "Option C", "value": "OPTION_C"}
+            ]};
+
+            return field;
+        }
+
+        function createRadioField() {
+
+            var field = {"label": "New Radio Buttons", "type": "RADIOS", "options": [
+                {"label": "Option X", "value": "OPTION_X"},
+                {"label": "Option Y", "value": "OPTION_Y"},
+                {"label": "Option Z", "value": "OPTION_Z"}
+            ]};
+
+            return field;
         }
 
     }

@@ -1,9 +1,12 @@
 <h2>Forms</h2>
 <div ng-show="model.message" class="alert alert-danger" role="alert">{{model.message}}</div>
-<ul class="nav nav-tabs">
+<!--<ul class="nav nav-tabs">
     <li ng-class="{'active' : model.$location.url() == '/forms'}"><a href="#/forms">Forms</a></li>
     <li><a href="#/fields">Fields</a></li>
-</ul>
+</ul>-->
+
+<div class="form-nav" ng-include="'views/forms/navigation.html'"></div>
+<br>
 
 <div class="table-responsive">
 

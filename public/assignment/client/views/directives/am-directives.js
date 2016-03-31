@@ -15,6 +15,7 @@
             var end   = null;
             $(element)
                 .sortable({
+                    handle: '.handle',
                     axis: "y",
                     sort: function(event, ui) {
                         //ui.helper.find("a").hide();
