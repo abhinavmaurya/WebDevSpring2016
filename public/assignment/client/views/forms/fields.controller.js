@@ -13,6 +13,7 @@
         vm.deleteField = deleteField;
         vm.addField = addField;
         vm.sortFields = sortFields;
+        vm.duplicateField = duplicateField;
         var formId = $routeParams.formId;
 
         vm.options = [
@@ -108,6 +109,20 @@
             }
             FieldService
                 .createField(formId, field)
+                .then(init);
+        }
+
+
+        function duplicateField(field){
+            var dupField = {
+                label: field.label,
+                type: field.type,
+                placeholder: field.placeholder,
+                option: field.options
+            };
+
+            FieldService
+                .createField(formId, dupField)
                 .then(init);
         }
 
