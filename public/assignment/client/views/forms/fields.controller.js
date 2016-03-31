@@ -1,278 +1,162 @@
-/**
- * Created by abhinavmaurya on 2/19/16.
- */
 "use strict";
-
-(function() {
+(function(){
     angular
         .module("FormBuilderApp")
         .controller("FieldsController", FieldsController);
 
-    function FieldsController(FieldService, $routeParams, $location, $scope, $uibModal, FormService) {
-
+    function FieldsController(FieldService, FormService, $routeParams, $route) {
         var vm = this;
-        vm.fields = null;
-        vm.field = null;
-        vm.options = null;
-
-        vm.removeField = removeField;
-        vm.addField = addField;
+        vm.cField = null;
+        vm.eField = null;
         vm.editField = editField;
+        vm.commitEdit = commitEdit;
+        vm.deleteField = deleteField;
+        vm.addField = addField;
+        vm.sortFields = sortFields;
+        vm.reorder = reorder;
+        vm.options =
+            [
+                'Single Line Text Field',
+                'Multi Line Text Field',
+                'Date Field',
+                'Dropdown Field',
+                'Checkboxes Field',
+                'Radio Buttons Field'
+            ];
+        vm.selection = vm.options[0];
+        vm.fieldOptions = null;
+        var formId = "000";
+        if ($routeParams.formId) {
+            formId = $routeParams.formId;
+        }
 
-        vm.oldIndex = -1;
-        var formId = -1;
+        var optionMap =
+            [
+                {key: "Single Line Text Field", value: "TEXT"},
+                {key: "Multi Line Text Field", value: "TEXTAREA"},
+                {key: "Date Field", value: "DATE"},
+                {key: "Dropdown Field", value: "OPTIONS"},
+                {key: "Checkboxes Field", value: "CHECKBOXES"},
+                {key: "Radio Buttons Field", value: "RADIOS"}
+            ];
 
         function init() {
-            if($routeParams.formId) {
-                formId = $routeParams.formId;
-                FieldService
-                    .getFieldsForForm(formId)
-                    .then(function (response) {
+            FieldService
+                .findFieldsByForm(formId)
+                .then(
+                    function(response){
+                        vm.display = response.data;
                         vm.fields = response.data;
-                        console.log(vm.fields);
-                        vm.$location = $location;
-                        $scope.fields = vm.fields;
-                    });
-
-                FormService
-                    .findFormById(formId)
-                    .then(function(response){
-                        console.log(response);
-                        if(response.data){
-                            vm.formTitle = response.data.title;
-                        }
-                    });
-
-            }else{
-                $location.url("/forms");
-            }
-
-            vm.options = [
-                {name: "Single Line Text Field", value: "SINGLE-LINE-TEXT"},
-                {name: "Multi Line Text Field", value: "MULTI-LINE-TEXT"},
-                {name: "Date Field", value: "DATE"},
-                {name: "Dropdown Field", value: "DROPDOWN"},
-                {name: "Checkboxes Field", value: "CHECKBOX"},
-                {name: "Radio Buttons Field", value: "RADIO"}
-            ];
+                    }
+                );
+            FormService
+                .findFormById(formId)
+                .then(
+                    function (response){
+                        vm.form = response.data;
+                    }
+                );
         }
         init();
 
-        function removeField($index) {
-
-            var fieldId = vm.fields[$index]._id;
-
+        function sendEdit(field) {
+            vm.cField = null;
             FieldService
-                .deleteFieldFromForm(formId, fieldId)
-                .then(function (response) {
-                    if(response.data) {
-                        FieldService
-                            .getFieldsForForm(formId)
-                            .then(function (response) {
-                                vm.fields = response.data;
-                                $scope.fields = vm.fields;
-
-                            });
-                    }
-                });
+                .updateField(formId, field._id, field)
+                .then(init);
         }
 
-        function addField() {
+        function reorder() {
+            vm.form.fields = vm.fields;
+            FormService
+                .updateFormById(formId, vm.form)
+                .then(init);
 
-            var fieldType = vm.fieldType.value;
+        }
 
-            switch (fieldType) {
-
-                case "SINGLE-LINE-TEXT":
-                    vm.field = createSingleLineTextField();
-                    break;
-
-                case "MULTI-LINE-TEXT":
-                    vm.field = createMultiLineTextField();
-                    break;
-
-                case "DATE":
-                    vm.field = createDateField();
-                    break;
-
-                case "DROPDOWN":
-                    vm.field = createDropDownField();
-                    break;
-
-                case "CHECKBOX":
-                    vm.field = createCheckboxField();
-                    break;
-
-                case "RADIO":
-                    vm.field = createRadioField();
-                    break;
-            }
-
+        function sortFields(start, end) {
             FieldService
-                .createFieldForForm(formId, vm.field)
+                .sortFields(formId, start, end)
                 .then(
                     function (response) {
-                        vm.fields = response.data;
                         console.log(response.data);
-                        $scope.fields = vm.fields;
-                        vm.field = {};
+                        vm.fields = response.data;
                     },
-                    function(err){
-                        console.log(err);
+                    function (err) {
+                        vm.error = err;
                     }
                 );
-
         }
 
-        function createSingleLineTextField() {
-
-            var field = {
-                _id: null,
-                label: "New Text Field",
-                type: "TEXT",
-                placeholder: "New Field"
-            };
-
-            return field;
+        function deleteField(field) {
+            vm.cField = null;
+            FieldService
+                .deleteField(formId, field._id)
+                .then(init);
         }
 
-        function createMultiLineTextField() {
-
-            var field = {
-                _id: null,
-                label: "New Text Field",
-                type: "TEXTAREA",
-                placeholder: "New Field"
-            };
-
-            return field;
-        }
-
-        function createDateField() {
-
-            var field = {
-                _id: null,
-                label: "New Date Field",
-                type: "DATE"
-            };
-
-            return field;
-        }
-
-        function createDropDownField() {
-
-            var field = {"_id": null, "label": "New Dropdown", "type": "OPTIONS", "options": [
-                {"label": "Option 1", "value": "OPTION_1"},
-                {"label": "Option 2", "value": "OPTION_2"},
-                {"label": "Option 3", "value": "OPTION_3"}
-            ]};
-
-            return field;
-        }
-
-        function createCheckboxField() {
-
-            var field = {"_id": null, "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
-                {"label": "Option A", "value": "OPTION_A"},
-                {"label": "Option B", "value": "OPTION_B"},
-                {"label": "Option C", "value": "OPTION_C"}
-            ]};
-
-            return field;
-        }
-
-        function createRadioField() {
-
-            var field = {"_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
-                {"label": "Option X", "value": "OPTION_X"},
-                {"label": "Option Y", "value": "OPTION_Y"},
-                {"label": "Option Z", "value": "OPTION_Z"}
-            ]};
-
-            return field;
-        }
-        function editField($index) {
-
-            vm.fieldToBeEdited = vm.fields[$index];
-            var modalInstance = $uibModal.open({
-                templateUrl: 'fieldEditModal.html',
-                controller: 'ModalInstanceCtrl',
-                resolve: {
-                    field: function () {
-                        return vm.fieldToBeEdited;
-                    }
+        function translateFieldType(fieldType) {
+            for (var k in optionMap) {
+                console.log(optionMap[k].key + " " + optionMap[k].value);
+                if (optionMap[k].key == fieldType){
+                    return optionMap[k].value;
                 }
-            });
-
-            modalInstance.result.then(function (field) {
-                FieldService
-                    .updateField(formId, field._id, field)
-                    .then(function (response) {
-                        if(response.data) {
-                            FieldService
-                                .getFieldsForForm(formId)
-                                .then(function (response) {
-                                    init();
-                            });
-                        }
-                });
-            });
+            }
         }
+
+        function addField(fieldType) {
+            var field = {"label": "", "type": translateFieldType(fieldType), "placeholder": "", "options": null};
+            console.log(field);
+            FieldService
+                .createField(formId, field)
+                .then(init);
+        }
+
+
+        function editField(field) {
+            vm.eField = field;
+
+            var isOption = !(vm.eField.type === 'TEXT' || vm.eField.type === 'TEXTAREA');
+
+            if (isOption) {
+                var optionList = [];
+                var ol = vm.eField.options;
+                for (var o in ol) {
+                    optionList.push(ol[o].label + ":" + ol[o].value)
+                }
+                console.log(optionList);
+                vm.optionText = optionList.join("\n");
+                console.log(vm.optionText);
+            }
+        }
+
+        function commitEdit(field) {
+            vm.eField = field;
+
+            var isOption = !(field.type == 'TEXT' || field.type == 'TEXTAREA');
+
+            var optionArray = [];
+            if (isOption) {
+                console.log(vm.optionText);
+                var oa = vm.optionText;
+                for (var o in oa) {
+                    var a = oa[o].split(":");
+                    optionArray.push({
+                        label: a[0],
+                        value: a[1]
+                    });
+                }
+                vm.eField.options = optionArray;
+
+            }
+            else {
+            }
+            console.log(vm.eField._id);
+            FieldService
+                .updateField(formId, vm.eField._id, vm.eField)
+                .then(init);
+            vm.eField = null;
+        }
+
     }
-
-    angular
-        .module('FormBuilderApp')
-        .controller('ModalInstanceCtrl',
-            function ($scope, $uibModalInstance, field) {
-                $scope.field = field;
-                $scope.convertOptions = convertOptions;
-                $scope.newField = {
-                    label: field.label,
-                    options: convertOptions(field.options),
-                    placeholder: field.placeholder
-                };
-
-                function convertOptions(options){
-                    var string = "";
-                    for(var i in options){
-                        string += options[i].label + ":" + options[i].value + "\n";
-                    }
-                    return string;
-                }
-
-                $scope.ok = function () {
-                    if($scope.newField.label) {
-                        $scope.field.label = $scope.newField.label;
-                    }
-                    if($scope.field.type != "DATE") {
-                        if($scope.newField.placeholder) {
-                            if($scope.field.type === "TEXT" || $scope.field.type === "TEXTAREA") {
-                                $scope.field.placeholder = $scope.newField.placeholder;
-                            } else {
-                                UpdateOtherFields();
-                            }
-                        }else{
-                            UpdateOtherFields();
-                        }
-                    }
-
-                    function UpdateOtherFields() {
-                        var content = $scope.newField.options;
-                        content = content.trim();
-                        var rawOptions = content.split("\n");
-                        var options = [];
-                        for (var i in rawOptions) {
-                            var rawField = rawOptions[i].split(":");
-                            var option = {label: rawField[0].trim(), value: rawField[1].trim()};
-                            options.push(option);
-                        }
-                        $scope.field.options = options;
-                    }
-                    $uibModalInstance.close($scope.field);
-            };
-
-            $scope.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
-            };
-    });
 })();

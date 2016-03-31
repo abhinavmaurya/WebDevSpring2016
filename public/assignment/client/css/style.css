@@ -25,3 +25,7 @@ table.thick-top-border{
 .action-column{
     white-space: nowrap;
 }
+
+.page-header {
+    margin-top: 0;
+}

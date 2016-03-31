@@ -11,7 +11,8 @@ module.exports = function(formModel) {
         findAllFieldsForForm: findAllFieldsForForm,
         findFieldByFieldIdAndFormId: findFieldByFieldIdAndFormId,
         updateFieldByFieldIdAndFormId: updateFieldByFieldIdAndFormId,
-        deleteFieldByFieldIdAndFormId: deleteFieldByFieldIdAndFormId
+        deleteFieldByFieldIdAndFormId: deleteFieldByFieldIdAndFormId,
+        sortFields: sortFields
     };
 
     return api;
@@ -20,14 +21,22 @@ module.exports = function(formModel) {
         return FormModel.findById(formId)
             .then(
                 function(form) {
+                    console.log(form.fields);
                     form.fields.push(field);
+                    console.log(field);
                     return form.save();
                 }
             );
     }
 
     function findAllFieldsForForm (formId) {
-        return FormModel.findById(formId).select("fields");
+        return FormModel.findById(formId)
+            .then(
+                function(form){
+                    console.log(form.fields);
+                    return form.fields;
+                }
+            );
     }
 
     function findFieldByFieldIdAndFormId(formId, fieldId) {
@@ -63,6 +72,21 @@ module.exports = function(formModel) {
                 function(form){
                     form.fields.id(fieldId).remove();
                     return form.save();
+                }
+            );
+    }
+
+    function sortFields(formId, startIndex, endIndex) {
+        return FormModel
+            .findById(formId)
+            .then(
+                function(form) {
+                    form.fields.splice(endIndex, 0, form.fields.splice(startIndex, 1)[0]);
+
+                    // notify mongoose 'pages' field changed
+                    form.markModified("fields");
+
+                    form.save();
                 }
             );
     }

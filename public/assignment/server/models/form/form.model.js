@@ -45,12 +45,6 @@ module.exports = function(db) {
     }
 
     function findFormById(formId) {
-        /*for (var i in mock) {
-            if(mock[i]._id == formId) {
-                return mock[i];
-            }
-        }
-        return null;*/
         var deferred = q.defer();
         FormModel.findById(formId, function(err, doc){
             if(err){
@@ -76,17 +70,6 @@ module.exports = function(db) {
     }
 
     function updateFormById(formId, form) {
-
-        /*for (var i in mock) {
-
-            if(mock[i]._id == formId) {
-
-                mock[i].title = form.title;
-                break;
-            }
-        }
-
-        return mock;*/
         var deferred = q.defer();
         FormModel.update(
             {_id: formId},
@@ -102,15 +85,6 @@ module.exports = function(db) {
     }
 
     function deleteFormById(formId) {
-        /*for (var i in mock) {
-
-            if (mock[i]._id == formId) {
-
-                mock.splice(i,1);
-                break;
-            }
-        }
-        return mock;*/
         var deferred = q.defer();
         FormModel.remove(
             {_id: formId},
@@ -126,14 +100,6 @@ module.exports = function(db) {
     }
 
     function findFormByTitle(formTitle) {
-        /*for (var i in mock) {
-
-            if (mock[i].title == formTitle) {
-
-                return mock[i];
-            }
-        }
-        return null;*/
         var deferred = q.defer();
         FormModel.findOne(
             {title: formTitle},
@@ -149,16 +115,6 @@ module.exports = function(db) {
     }
 
     function findAllFormsByUserId(userId) {
-        /*var forms = [];
-
-        for (var i in mock) {
-
-            if (mock[i].userId == userId) {
-
-                forms.push(mock[i]);
-            }
-        }
-        return forms;*/
         var deferred = q.defer();
         FormModel.find(
             {userId: userId},
@@ -172,6 +128,4 @@ module.exports = function(db) {
         return deferred.promise;
     }
 
-    // ----------------------------------------------
-
-}
+};

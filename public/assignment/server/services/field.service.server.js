@@ -11,8 +11,9 @@ module.exports = function (app, formModel) {
     app.get("/api/assignment/form/:formId/field/:fieldId", findFieldByFieldIdAndFormId);
     app.put("/api/assignment/form/:formId/field/:fieldId", updateFieldByFieldIdAndFormId);
     app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldByFieldIdAndFormId);
+    app.put("/api/assignment/form/:formId/field", updateFields);
 
-    var fieldModel = require("../models/field.model.js")(formModel);
+    var fieldModel = require("../models/field/field.model.js")(formModel);
 
     function createFormField (req, res) {
         var field = req.body;
@@ -87,6 +88,33 @@ module.exports = function (app, formModel) {
                     res.status(400).send(err);
                 }
             );
+    }
+
+    function updateFields (req, res) {
+        var formId = req.params.formId;
+        var startIndex = req.query.startIndex;
+        var endIndex = req.query.endIndex;
+
+        if(startIndex && endIndex) {
+            fieldModel
+                .sortFields(formId, startIndex, endIndex)
+                .then(
+                    function(stat) {
+                        return fieldModel.findAllFieldsForForm(formId);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                )
+                .then(
+                    function(fields) {
+                        res.json(fields);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
+        }
     }
 
 };
