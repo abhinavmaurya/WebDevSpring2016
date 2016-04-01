@@ -16,15 +16,20 @@
         function init(){
             var usr = UserService.getCurrentUser();
             if(usr) {
+                console.log(usr);
                 vm.currentUser = {
                     _id: usr._id,
                     username: usr.username,
                     firstName: usr.firstName,
                     lastName: usr.lastName,
                     password: usr.password,
-                    email: usr.email,
+                    emails: makeString(usr.emails),
+                    phones: makeString(usr.phones),
                     roles: usr.roles
                 };
+                console.log(vm.currentUser);
+                /*console.log(['123', '234'].join(";"));
+                console.log('123'.split(";"));*/
             }else{
                 vm.$location.url("/home");
             }
@@ -36,8 +41,17 @@
         vm.updateUser = updateUser;
         //vm.success = success;
 
+        function makeString(array){
+            var str = array.join(";") + "";
+            return str;
+        }
 
         function updateUser(user){
+            console.log(user);
+            console.log(vm.currentUser);
+            user.emails = user.emails.split(";");
+            user.phones = user.phones.split(";");
+            user.updated = Date.now;
             UserService
                 .updateUser(user._id, user)
                 .then(function(response){
@@ -45,22 +59,11 @@
                     if(updatedUser){
                         vm.message = "User updated successfully";
                         UserService.setCurrentUser(updatedUser);
-                        //return UserService.setCurrentUser(updatedUser);
+                        init();
                     }else{
                         vm.message = "Unable to update the user";
                     }
-                })
-                /*.then(
-                    function(response){
-                        var updatedUser = response.data;
-                        console.log("Updated User");
-                        console.log(updatedUser);
-                        UserService.setCurrentUser(updatedUser);
-                    },
-                    function(err){
-                        vm.message("Unable to fetch updated profile");
-                    }
-                )*/;
+                });
         }
     }
 })();

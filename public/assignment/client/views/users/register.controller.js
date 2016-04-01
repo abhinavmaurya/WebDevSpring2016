@@ -42,22 +42,23 @@
             if (isDuplicateUsername(user.username)) {
                 vm.message = "Username already exists";
                 return;
-            }
-            UserService
-                .createUser(user)
-                .then(
-                    function(response){
-                        var currentUser = response.data;
-                        console.log(currentUser);
-                        if(currentUser){
-                            UserService.setCurrentUser(currentUser);
-                            $location.url("/profile");
+            }else{
+                UserService
+                    .createUser(user)
+                    .then(
+                        function(response){
+                            var currentUser = response.data;
+                            console.log(currentUser);
+                            if(currentUser){
+                                UserService.setCurrentUser(currentUser);
+                                $location.url("/profile");
+                            }
+                        },
+                        function(err){
+                            console.log(err);
                         }
-                    },
-                    function(err){
-                        console.log(error);
-                    }
-                );
+                    );
+            }
         }
 
         function isDuplicateUsername(username){

@@ -33,7 +33,6 @@
 
         function getCurrentUser() {
             return $rootScope.currentUser;
-            //return $http.get("/api/project/loggedin");
         }
 
         function getLoggedinUser(){

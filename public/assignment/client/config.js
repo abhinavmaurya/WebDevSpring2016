@@ -70,7 +70,6 @@
             .getLoggedinUser()
             .then(function(response) {
                 var currentUser = response.data;
-                console.log(currentUser);
                 if(currentUser) {
                     UserService.setCurrentUser(currentUser);
                     deferred.resolve();

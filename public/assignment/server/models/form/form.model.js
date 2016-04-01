@@ -4,7 +4,6 @@
 
 "use strict"
 
-//var mock = require("./form.mock.json");
 var q = require("q");
 var mongoose = require("mongoose");
 
@@ -15,7 +14,6 @@ module.exports = function(db) {
 
     var api = {
 
-        //Form
         createForm: createForm,
         findFormById: findFormById,
         findAllForms: findAllForms,

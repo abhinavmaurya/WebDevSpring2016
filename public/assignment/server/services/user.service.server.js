@@ -64,6 +64,8 @@ module.exports = function (app, userModel){
 
     function createUser(req, res){
         var user = req.body;
+        user.emails = [user.email];
+        user.phones = [user.phone];
         userModel.createUser(user)
             .then(
                 function(doc){
@@ -83,7 +85,6 @@ module.exports = function (app, userModel){
             .then(
                 function(stats){
                     return userModel.findUserById(userId);
-                    //res.send(200);
                 },
                 function(err){
                     res.status(400).send(err);
@@ -91,7 +92,6 @@ module.exports = function (app, userModel){
             )
             .then(
                 function(user){
-                    console.log(user);
                     req.session.currentUser = user;
                     res.json(user);
                 },
