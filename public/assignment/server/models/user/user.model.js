@@ -4,7 +4,6 @@
 
 "use strict"
 
-//load q promise library
 var q = require("q");
 var mongoose = require("mongoose");
 
@@ -52,19 +51,13 @@ module.exports = function(db){
 
     function updateUserById(userId, user){
         var deferred = q.defer();
-        console.log(userId);
-        console.log(user);
-        //delete user._id;
         UserModel.update(
             {_id: userId},
             {$set: user},
             function(err, stats){
                 if(err){
-                    console.log("update user error");
-                    console.log(err);
                     deferred.reject();
                 }else{
-                    console.log(stats);
                     deferred.resolve(stats);
                 }
             }
@@ -76,11 +69,8 @@ module.exports = function(db){
         var deferred = q.defer();
         UserModel.findById(userId, function(err, doc){
             if(err){
-                console.log("findUserById error");
                 deferred.reject(err);
             }else{
-                console.log("findUserById -- user");
-                console.log(doc);
                 deferred.resolve(doc);
             }
         });

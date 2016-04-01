@@ -95,11 +95,13 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
+            <!--<div class="modal-header">
+                <h4 class="modal-title">{{model.eField.header}}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">{{model.cField.label}}</h4>
-            </div>
+            </div>-->
+
             <div class="modal-body" ng-switch on="model.eField.type">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <div ng-switch-when="TEXT">
                     <h3>Single Line Field</h3>
                     <form>
@@ -156,8 +158,8 @@
                                placeholder="Edit Dropdown Label">
                         <br>
                         <label>Options</label>
-                        <textarea ng-model="model.optionText" class="form-control"
-                                  placeholder="Edit Dropdown Options" ng-list="&#10;" ng-trim="false"></textarea>
+                        <textarea ng-model="model.eField.optionText" class="form-control"
+                                  placeholder="Edit Dropdown Options"></textarea>
                     </form>
                 </div>
                 <div ng-switch-when="DATE">
@@ -176,8 +178,8 @@
                                placeholder="Edit Radio Label">
                         <br>
                         <label>Options</label>
-                        <textarea ng-model="model.optionText" class="form-control" placeholder="Edit Radio Options"
-                                  ng-list="&#10;" ng-trim="false"></textarea>
+                        <textarea ng-model="model.eField.optionText" class="form-control"
+                                  placeholder="Edit Radio Options"></textarea>
                     </form>
                 </div>
                 <div ng-switch-default>
@@ -188,8 +190,8 @@
                                placeholder="Edit Checkbox label">
                         <br>
                         <label>Options</label>
-                        <textarea ng-model="model.optionText" class="form-control"
-                                  placeholder="Edit Checkbox options" ng-list="&#10;" ng-trim="false"></textarea>
+                        <textarea ng-model="model.eField.optionText" class="form-control"
+                                  placeholder="Edit Checkbox options"></textarea>
                     </form>
                 </div>
             </div>

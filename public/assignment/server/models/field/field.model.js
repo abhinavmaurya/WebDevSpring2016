@@ -21,9 +21,7 @@ module.exports = function(formModel) {
         return FormModel.findById(formId)
             .then(
                 function(form) {
-                    console.log(form.fields);
                     form.fields.push(field);
-                    console.log(field);
                     return form.save();
                 }
             );
@@ -33,7 +31,6 @@ module.exports = function(formModel) {
         return FormModel.findById(formId)
             .then(
                 function(form){
-                    console.log(form.fields);
                     return form.fields;
                 }
             );
@@ -82,10 +79,7 @@ module.exports = function(formModel) {
             .then(
                 function(form) {
                     form.fields.splice(endIndex, 0, form.fields.splice(startIndex, 1)[0]);
-
-                    // notify mongoose 'pages' field changed
                     form.markModified("fields");
-
                     form.save();
                 }
             );

@@ -65,14 +65,13 @@ module.exports = function (app, formModel) {
         var field = req.body;
         fieldModel.updateFieldByFieldIdAndFormId(formId, fieldId, field)
             .then(
-                function(field){
-                    res.json(field);
+                function(form){
+                    res.json(form);
                 },
                 function(err){
                     res.status(400).send(err);
                 }
             );
-        res.send(200);
     }
 
     function deleteFieldByFieldIdAndFormId (req, res) {
@@ -100,21 +99,12 @@ module.exports = function (app, formModel) {
                 .sortFields(formId, startIndex, endIndex)
                 .then(
                     function(stat) {
-                        //return fieldModel.findAllFieldsForForm(formId);
                         res.send(200);
                     },
                     function(err) {
                         res.status(400).send(err);
                     }
                 );
-                /*.then(
-                    function(fields) {
-                        res.json(fields);
-                    },
-                    function(err) {
-                        res.status(400).send(err);
-                    }
-                );*/
         }
     }
 

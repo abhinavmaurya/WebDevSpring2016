@@ -17,9 +17,5 @@
         }
         init();
 
-        /*vm.isAdmin = function (){
-            return UserService.isAdminUser();
-        };*/
-
     }
 })();

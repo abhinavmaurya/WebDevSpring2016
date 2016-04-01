@@ -78,7 +78,6 @@
                     $location.url("/home");
                 }
             });
-
         return deferred.promise;
     }
 
@@ -92,7 +91,6 @@
                 UserService.setCurrentUser(currentUser);
                 deferred.resolve();
             });
-
         return deferred.promise;
     }
 })();

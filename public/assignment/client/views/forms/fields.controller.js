@@ -32,7 +32,6 @@
                 .findFieldsByForm(formId)
                 .then(
                     function(response){
-                        vm.display = response.data;
                         vm.fields = response.data;
                     }
                 );
@@ -62,7 +61,6 @@
 
         function deleteField(field) {
             vm.cField = null;
-            console.log(field._id);
             FieldService
                 .deleteField(formId, field._id)
                 .then(init);
@@ -70,7 +68,6 @@
 
         function addField(fieldType) {
             var field = null;
-            console.log(fieldType);
             switch (fieldType) {
                 case "TEXT":
                     field = createSingleLineTextField();
@@ -133,7 +130,8 @@
                 label: field.label,
                 type: field.type,
                 placeholder: field.placeholder,
-                option: field.options
+                options: field.options,
+                header: translateFieldType(field.type)
             };
 
             var isOption =
@@ -141,7 +139,8 @@
                     vm.eField.type === 'TEXT' ||
                     vm.eField.type === 'TEXTAREA' ||
                     vm.eField.type === 'PASSWORD' ||
-                    vm.eField.type === 'EMAIL'
+                    vm.eField.type === 'EMAIL' ||
+                    vm.eField.type === 'DATE'
                 );
 
             if (isOption) {
@@ -150,34 +149,41 @@
                 for (var o in ol) {
                     optionList.push(ol[o].label + ":" + ol[o].value)
                 }
-                console.log(optionList);
-                vm.optionText = optionList.join("\n");
-                console.log(vm.optionText);
+                vm.eField.optionText = optionList.join("\n");
             }
         }
 
         function commitEdit(field) {
-            vm.eField = field;
+            vm.eField = {
+                label: field.label,
+                type: field.type,
+                placeholder: field.placeholder
+            };
 
-            var isOption = !(field.type == 'TEXT' || field.type == 'TEXTAREA');
+            var isOption =
+                !(
+                    vm.eField.type === 'TEXT' ||
+                    vm.eField.type === 'TEXTAREA' ||
+                    vm.eField.type === 'PASSWORD' ||
+                    vm.eField.type === 'EMAIL' ||
+                    vm.eField.type === 'DATE'
+                );
 
             var optionArray = [];
             if (isOption) {
-                console.log(vm.optionText);
-                var oa = vm.optionText;
+                var oa = field.optionText.split("\n");
                 for (var o in oa) {
                     var a = oa[o].split(":");
                     optionArray.push({
-                        label: a[0],
-                        value: a[1]
+                        label: a[0].trim(),
+                        value: a[1].trim()
                     });
                 }
                 vm.eField.options = optionArray;
 
             }
-            console.log(vm.eField._id);
             FieldService
-                .updateField(formId, vm.eField._id, vm.eField)
+                .updateField(formId, field._id, vm.eField)
                 .then(init);
             vm.eField = null;
         }
@@ -270,6 +276,14 @@
             ]};
 
             return field;
+        }
+
+        function translateFieldType(fieldType) {
+            for (var k in vm.options) {
+                if (vm.options[k].value == fieldType){
+                    return vm.options[k].key;
+                }
+            }
         }
 
     }

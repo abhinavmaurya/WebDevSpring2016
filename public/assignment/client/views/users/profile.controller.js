@@ -9,14 +9,13 @@
         .controller("ProfileController", ProfileController);
 
 
-    function ProfileController($location, UserService){
+    function ProfileController(UserService){
 
         var vm = this;
         var usr = null;
         function init(){
             usr = UserService.getCurrentUser();
             if(usr) {
-                console.log(usr);
                 vm.currentUser = {
                     username: usr.username,
                     firstName: usr.firstName,
@@ -26,23 +25,16 @@
                     phones: makeString(usr.phones),
                     roles: usr.roles
                 };
-                console.log(vm.currentUser);
-                /*console.log(['123', '234'].join(";"));
-                console.log('123'.split(";"));*/
             }else{
                 vm.$location.url("/home");
             }
         }
         init();
 
-
-
         vm.updateUser = updateUser;
-        //vm.success = success;
 
         function makeString(array){
-            var str = array.join(";") + "";
-            return str;
+            return array.join(";");
         }
 
         function updateUser(user){
@@ -51,16 +43,21 @@
             user.updated = Date.now;
             UserService
                 .updateUser(usr._id, user)
-                .then(function(response){
-                    var updatedUser = response.data;
-                    if(updatedUser){
-                        vm.message = "User updated successfully";
-                        UserService.setCurrentUser(updatedUser);
-                        init();
-                    }else{
-                        vm.message = "Unable to update the user";
+                .then(
+                    function(response){
+                        var updatedUser = response.data;
+                        if(updatedUser){
+                            vm.message = "User updated successfully";
+                            UserService.setCurrentUser(updatedUser);
+                            init();
+                        }else{
+                            vm.message = "Unable to update the user";
+                        }
+                    },
+                    function(err){
+                        console.log(err);
                     }
-                });
+                );
         }
     }
 })();

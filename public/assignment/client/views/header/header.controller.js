@@ -29,7 +29,7 @@
                         $location.url('/home');
                     },
                     function(err){
-                        console.log("Failure");
+                        console.log(err);
                     }
                 );
         }

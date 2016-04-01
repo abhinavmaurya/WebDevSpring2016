@@ -71,17 +71,5 @@
         function findUserByUsername(username){
             return $http.get("/api/assignment/user/username/"+ username);
         }
-
-        /*function isAdminUser(){
-            var user = getCurrentUser();
-
-            if(user){
-                for(var role in user.roles){
-                    if (user.roles[role] == "admin")
-                        return true;
-                }
-            }
-            return false;
-        }*/
     }
 })();

@@ -92,8 +92,6 @@ module.exports = function (app, userModel){
             )
             .then(
                 function(user){
-                    console.log("Use updated and found");
-                    console.log(user);
                     req.session.currentUser = user;
                     res.json(user);
                 },

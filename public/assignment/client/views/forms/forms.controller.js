@@ -34,7 +34,6 @@
 
 
         function setForms(forms){
-            console.log(forms);
             vm.forms = forms;   // set updated forms
             vm.form = null; //reset form
             vm.selectedForm = false;
@@ -50,19 +49,14 @@
                 };
                 FormService
                     .createFormForUser(vm.usr._id, newForm)
-                    .then(function(response) {
-                        init();
-                    });
+                    .then(init);
             }
         }
 
         function deleteForm(form){
             FormService
                 .deleteFormById(form._id)
-                .then(function(response){
-                    if(response.data)
-                        init();
-                });
+                .then(init);
         }
 
 
@@ -83,14 +77,7 @@
                 };
 
                 FormService.updateFormById(form._id, updatedForm)
-                    .then(
-                        function (response) {
-                            init();
-                        },
-                        function(err){
-                            console.log("Error updating form");
-                        }
-                    );
+                    .then(init);
             }
         }
 

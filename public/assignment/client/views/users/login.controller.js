@@ -43,15 +43,6 @@
                     });
             }
         }
-
-        /*function success(user) {
-            if (user) {
-                UserService.setCurrentUser(user);
-                $location.url("/profile");
-            }else{
-                vm.message = "Invalid username/password";
-            }
-        }*/
     }
 
 
