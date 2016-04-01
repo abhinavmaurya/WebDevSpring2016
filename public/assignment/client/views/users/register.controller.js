@@ -39,26 +39,27 @@
                 return;
             }
             //var usr = UserService.findUserByUsername(user.username);
-            if (isDuplicateUsername(user.username)) {
+            /*if (isDuplicateUsername(user.username)) {
                 vm.message = "Username already exists";
                 return;
-            }else{
-                UserService
-                    .createUser(user)
-                    .then(
-                        function(response){
-                            var currentUser = response.data;
-                            console.log(currentUser);
-                            if(currentUser){
-                                UserService.setCurrentUser(currentUser);
-                                $location.url("/profile");
-                            }
-                        },
-                        function(err){
-                            console.log(err);
+            }*/
+
+            UserService
+                .createUser(user)
+                .then(
+                    function(response){
+                        var currentUser = response.data;
+                        if(currentUser){
+                            UserService.setCurrentUser(currentUser);
+                            $location.url("/profile");
                         }
-                    );
-            }
+                    },
+                    function(err){
+                        console.log(err);
+                    }
+                );
+
+
         }
 
         function isDuplicateUsername(username){
@@ -66,12 +67,13 @@
                 .findUserByUsername(username)
                 .then(function(response){
                    var user = response.data;
-                    console.log("duplicate check");
-                    console.log(user);
-                    if(user)
+                    if(user){
+                        console.log("dup user found");
                         return true;
-                    else
+                    }
+                    else{
                         return false;
+                    }
                 });
         }
     }

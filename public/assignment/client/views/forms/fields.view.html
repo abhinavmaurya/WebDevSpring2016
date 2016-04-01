@@ -33,7 +33,14 @@
                 <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
             </div>
         </td>
-        <td ng-switch-when="OPTIONS">
+        <td ng-switch-when="DATE">
+            <label>{{field.label}}</label>
+            <div class="input-group">
+                <input type="date" class="form-control" placeholder="{{field.placeholder}}">
+                <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
+            </div>
+        </td>
+        <td ng-switch-when="DROPDOWN">
             <label>{{field.label}}</label>
             <div class="input-group">
                 <select class="form-control">
@@ -42,7 +49,7 @@
                 <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
             </div>
         </td>
-        <td ng-switch-when="CHECKBOXES">
+        <td ng-switch-when="CHECKBOX">
             <label>{{field.label}}</label>
             <div class="input-group">
                 <div class="checkbox">
@@ -56,7 +63,7 @@
                 <div class="input-group-btn" ng-include="'views/forms/buttons.html'"></div>
             </div>
         </td>
-        <td ng-switch-when="RADIOS">
+        <td ng-switch-when="RADIO">
             <label>{{field.label}}</label>
             <div class="input-group">
                 <div ng-repeat="op in field.options" class="radio">
@@ -145,7 +152,7 @@
                                placeholder="Edit Placeholder">
                     </form>
                 </div>
-                <div ng-switch-when="OPTIONS">
+                <div ng-switch-when="DROPDOWN">
                     <form>
                         <label>Label</label>
                         <input ng-model="model.eField.label" class="form-control" type="text"

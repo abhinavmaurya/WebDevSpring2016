@@ -105,7 +105,9 @@
             }
             FieldService
                 .createField(formId, field)
-                .then(init);
+                .then(function(newField){
+                    init();
+                });
         }
 
 
@@ -235,7 +237,6 @@
         }
 
         function createDateField() {
-
             var field = {
                 label: "New Date Field",
                 type: "DATE"
@@ -246,7 +247,7 @@
 
         function createDropDownField() {
 
-            var field = {"label": "New Dropdown", "type": "OPTIONS", "options": [
+            var field = {"label": "New Dropdown", "type": "DROPDOWN", "options": [
                 {"label": "Option 1", "value": "OPTION_1"},
                 {"label": "Option 2", "value": "OPTION_2"},
                 {"label": "Option 3", "value": "OPTION_3"}
@@ -257,7 +258,7 @@
 
         function createCheckboxField() {
 
-            var field = {"label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+            var field = {"label": "New Checkboxes", "type": "CHECKBOX", "options": [
                 {"label": "Option A", "value": "OPTION_A"},
                 {"label": "Option B", "value": "OPTION_B"},
                 {"label": "Option C", "value": "OPTION_C"}
@@ -268,7 +269,7 @@
 
         function createRadioField() {
 
-            var field = {"label": "New Radio Buttons", "type": "RADIOS", "options": [
+            var field = {"label": "New Radio Buttons", "type": "RADIO", "options": [
                 {"label": "Option X", "value": "OPTION_X"},
                 {"label": "Option Y", "value": "OPTION_Y"},
                 {"label": "Option Z", "value": "OPTION_Z"}

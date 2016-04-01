@@ -28,7 +28,6 @@ module.exports = function (app, formModel) {
                     res.status(400).send(err);
                 }
             );
-        //res.json(formModel.findAllFieldsForForm(formId));
     }
 
     function findAllFieldsForForm(req, res) {
