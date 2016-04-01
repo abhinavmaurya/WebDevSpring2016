@@ -60,6 +60,7 @@ module.exports = function(db){
             function(err, stats){
                 if(err){
                     console.log("update user error");
+                    console.log(err);
                     deferred.reject();
                 }else{
                     console.log(stats);
