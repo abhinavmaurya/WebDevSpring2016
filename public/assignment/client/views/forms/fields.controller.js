@@ -278,7 +278,6 @@
         }
 
         function translateFieldType(fieldType) {
-            console.log(fieldType);
             var name = "";
             for (var k in vm.options) {
                 if (vm.options[k].value == fieldType){
@@ -286,7 +285,6 @@
                     break;
                 }
             }
-            console.log(name);
             return name;
         }
 
