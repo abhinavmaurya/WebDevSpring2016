@@ -50,7 +50,6 @@
                 .sortFields(formId, start, end)
                 .then(
                     function (response) {
-                        //vm.fields = response.data;
                         init();
                     },
                     function (err) {
@@ -279,11 +278,16 @@
         }
 
         function translateFieldType(fieldType) {
+            console.log(fieldType);
+            var name = "";
             for (var k in vm.options) {
                 if (vm.options[k].value == fieldType){
-                    return vm.options[k].key;
+                    name = vm.options[k].name;
+                    break;
                 }
             }
+            console.log(name);
+            return name;
         }
 
     }
