@@ -59,6 +59,7 @@ module.exports = function(db){
             {$set: user},
             function(err, stats){
                 if(err){
+                    console.log()
                     deferred.reject();
                 }else{
                     deferred.resolve(stats);
