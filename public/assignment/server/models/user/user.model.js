@@ -59,9 +59,10 @@ module.exports = function(db){
             {$set: user},
             function(err, stats){
                 if(err){
-                    console.log()
+                    console.log("update user error");
                     deferred.reject();
                 }else{
+                    console.log(stats);
                     deferred.resolve(stats);
                 }
             }
@@ -73,8 +74,11 @@ module.exports = function(db){
         var deferred = q.defer();
         UserModel.findById(userId, function(err, doc){
             if(err){
+                console.log("findUserById error");
                 deferred.reject(err);
             }else{
+                console.log("findUserById -- user");
+                console.log(doc);
                 deferred.resolve(doc);
             }
         });
