@@ -12,13 +12,12 @@
     function ProfileController($location, UserService){
 
         var vm = this;
-
+        var usr = null;
         function init(){
-            var usr = UserService.getCurrentUser();
+            usr = UserService.getCurrentUser();
             if(usr) {
                 console.log(usr);
                 vm.currentUser = {
-                    _id: usr._id,
                     username: usr.username,
                     firstName: usr.firstName,
                     lastName: usr.lastName,
@@ -47,13 +46,11 @@
         }
 
         function updateUser(user){
-            console.log(user);
-            console.log(vm.currentUser);
             user.emails = user.emails.split(";");
             user.phones = user.phones.split(";");
             user.updated = Date.now;
             UserService
-                .updateUser(user._id, user)
+                .updateUser(usr._id, user)
                 .then(function(response){
                     var updatedUser = response.data;
                     if(updatedUser){
