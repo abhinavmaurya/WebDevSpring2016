@@ -228,7 +228,7 @@
         function createMultiLineTextField() {
 
             var field = {
-                label: "New Text Field",
+                label: "New Text Area",
                 type: "TEXTAREA",
                 placeholder: "New Field"
             };
