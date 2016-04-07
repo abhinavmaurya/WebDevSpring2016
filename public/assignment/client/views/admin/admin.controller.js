@@ -22,6 +22,7 @@
                 .then(
                     function(response){
                         vm.users = response.data;
+                        refreshSort();
                         console.log(vm.users);
                     },
                     function(err){
@@ -29,7 +30,7 @@
                     }
                 );
             unselectUser();
-            sort(vm.predicate, vm.reverse);
+
         }
         init();
 
@@ -42,13 +43,17 @@
         vm.selectUser = selectUser;
         vm.unselectUser = unselectUser;
         vm.deleteUser = deleteUser;
-        vm.sort = sort;
+        vm.toggleSort = toggleSort;
 
-        function sort(predicate) {
-            vm.predicate = predicate;
+        function toggleSort(predicate) {
             vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
-            vm.users = orderBy(vm.users, predicate, vm.reverse);
+            vm.predicate = predicate;
+            vm.users = orderBy(vm.users, vm.predicate, vm.reverse);
         };
+
+        function refreshSort(){
+            vm.users = orderBy(vm.users, vm.predicate, vm.reverse);
+        }
 
 
         function selectUser(user){

@@ -8,20 +8,20 @@
         <tr>
             <th>
                 <span class="sortorder" ng-show="model.predicate == 'username'" ng-class="{reverse:model.reverse}"></span>
-                <a ng-click="model.sort('username')" href="">
+                <a ng-click="model.toggleSort('username')" href="">
                     Username
                 </a>
             </th>
             <th>Password</th>
             <th>
                 <span class="sortorder" ng-show="model.predicate == 'firstName'" ng-class="{reverse:model.reverse}"></span>
-                <a ng-click="model.sort('firstName')" href="">
+                <a ng-click="model.toggleSort('firstName')" href="">
                     Firstname
                 </a>
             </th>
             <th>
                 <span class="sortorder" ng-show="model.predicate == 'lastName'" ng-class="{reverse:model.reverse}"></span>
-                <a ng-click="model.sort('lastName')" href="">
+                <a ng-click="model.toggleSort('lastName')" href="">
                     Lastname
                 </a>
             </th>
