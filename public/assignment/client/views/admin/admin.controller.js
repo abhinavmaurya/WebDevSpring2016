@@ -9,9 +9,12 @@
         .module("FormBuilderApp")
         .controller("AdminController", AdminController);
 
-    function AdminController(AdminService){
+    function AdminController(AdminService, $filter){
 
         var vm = this;
+        var orderBy = $filter('orderBy');
+        vm.predicate = 'username';
+        vm.reverse = false;
 
         function init(){
             AdminService
@@ -26,6 +29,7 @@
                     }
                 );
             unselectUser();
+            sort(vm.predicate, vm.reverse);
         }
         init();
 
@@ -38,13 +42,14 @@
         vm.selectUser = selectUser;
         vm.unselectUser = unselectUser;
         vm.deleteUser = deleteUser;
+        vm.sort = sort;
 
+        function sort(predicate) {
+            vm.predicate = predicate;
+            vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
+            vm.users = orderBy(vm.users, predicate, vm.reverse);
+        };
 
-        /*function setUsers(users){
-         console.log(users);
-         $scope.users = users;
-         $scope.user = null;
-         }*/
 
         function selectUser(user){
             vm.user = angular.copy(user);

@@ -7,30 +7,25 @@
         <thead>
         <tr>
             <th>
-                <a href="#/admin">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Username
+                <span class="sortorder" ng-show="model.predicate == 'username'" ng-class="{reverse:model.reverse}"></span>
+                <a ng-click="model.sort('username')" href="">
+                    Username
+                </a>
+            </th>
+            <th>Password</th>
+            <th>
+                <span class="sortorder" ng-show="model.predicate == 'firstName'" ng-class="{reverse:model.reverse}"></span>
+                <a ng-click="model.sort('firstName')" href="">
+                    Firstname
                 </a>
             </th>
             <th>
-                <a href="#/admin">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Password
+                <span class="sortorder" ng-show="model.predicate == 'lastName'" ng-class="{reverse:model.reverse}"></span>
+                <a ng-click="model.sort('lastName')" href="">
+                    Lastname
                 </a>
             </th>
-            <th>
-                <a href="#/admin">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Firstname
-                </a>
-            </th>
-            <th>
-                <a href="#/admin">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Lastname
-                </a>
-            </th>
-            <th>
-                <a href="#/admin">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Roles
-                </a>
-            </th>
+            <th>Roles</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -40,7 +35,7 @@
                 <input type="text" class="form-control" id="userName" placeholder="username" ng-model="model.user.username"/>
             </td>
             <td>
-                <input type="text" class="form-control" id="password" placeholder="password" ng-model="model.user.password"/>
+                <input type="password" class="form-control" id="password" placeholder="password" ng-model="model.user.password"/>
             </td>
             <td>
                 <input type="text" class="form-control" id="firstname" placeholder="Alice" ng-model="model.user.firstName"/>
@@ -59,13 +54,14 @@
         </tr>
         <tr ng-repeat="user in model.users">
             <td>{{user.username}}</td>
-            <td>{{user.password}}</td>
+            <!--<td>{{user.password}}</td>-->
+            <td></td>
             <td>{{user.firstName}}</td>
             <td>{{user.lastName}}</td>
             <td>{{user.roles}}</td>
             <td class="action-column">
                 <a ng-click="model.deleteUser(user)" class="glyphicon glyphicon-remove btn btn-danger"></a>&nbsp;
-                <a ng-click="model.selectUser(user)" class="glyphicon glyphicon-pencil btn btn-info"></a>
+                <a ng-click="model.selectUser(user)" class="glyphicon glyphicon-cog btn btn-info"></a>
             </td>
         </tr>
         </tbody>
