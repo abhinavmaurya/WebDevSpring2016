@@ -68,10 +68,9 @@
 
         UserService
             .getLoggedinUser()
-            .then(function(response) {
-                var currentUser = response.data;
-                if(currentUser) {
-                    UserService.setCurrentUser(currentUser);
+            .success(function(user) {
+                if(user !== '0') {
+                    UserService.setCurrentUser(user);
                     deferred.resolve();
                 } else {
                     deferred.reject();
@@ -86,9 +85,10 @@
 
         UserService
             .getLoggedinUser()
-            .then(function(response){
-                var currentUser = response.data;
-                UserService.setCurrentUser(currentUser);
+            .success(function(user){
+                if(user !== '0'){
+                    UserService.setCurrentUser(user);
+                }
                 deferred.resolve();
             });
         return deferred.promise;

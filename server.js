@@ -2,8 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser      = require('body-parser');
 var multer          = require('multer');
-//var passport        = require('passport');
-//var LocalStrategy   = require('passport-local').Strategy;
+var passport        = require('passport');
 var cookieParser    = require('cookie-parser');
 var session         = require('express-session');
 var mongoose        = require('mongoose');
@@ -30,11 +29,19 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(multer());
-app.use(session({ secret:process.env.PASSPORT_SECRET }));
+//app.use(multer());
+multer();
+app.use(session({
+    secret:process.env.PASSPORT_SECRET,
+    resave: true,
+    saveUninitialized: true
+}));
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
+// Assignment app.js
 require("./public/assignment/server/app.js")(app, db);
 
 
