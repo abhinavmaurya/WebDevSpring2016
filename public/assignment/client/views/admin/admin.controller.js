@@ -9,12 +9,12 @@
         .module("FormBuilderApp")
         .controller("AdminController", AdminController);
 
-    function AdminController(UserService){
+    function AdminController(AdminService){
 
         var vm = this;
 
         function init(){
-            UserService
+            AdminService
                 .findAllUsers()
                 .then(
                     function(response){
@@ -57,7 +57,7 @@
         }
 
         function deleteUser(user){
-            UserService
+            AdminService
                 .deleteUserById(user._id)
                 .then(function(response){
                     init();
@@ -71,7 +71,7 @@
                 } else {
                     user.roles = ["student"];
                 }
-                UserService
+                AdminService
                     .createUser(user)
                     .then(function(response){
                         init();
@@ -88,7 +88,7 @@
                 if(typeof user.roles == "string") {
                     updatedUser.roles = user.roles.split(",");
                 }
-                UserService
+                AdminService
                     .updateUser(user._id, updatedUser)
                     .then(function(response){
                         init();

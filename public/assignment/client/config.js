@@ -65,7 +65,7 @@
             });
     }
 
-    var checkAdmin = function(UserService, $q){
+    var checkAdmin = function(UserService, $q, $location){
         var deferred = $q.defer();
         UserService
             .getLoggedinUser()
@@ -75,6 +75,9 @@
                 {
                     UserService.setCurrentUser(user);
                     deferred.resolve();
+                }else{
+                    deferred.reject();
+                    $location.url("/home");
                 }
             });
 

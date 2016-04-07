@@ -10,4 +10,5 @@ module.exports = function(app, db){
 
     var userModel   = require("./models/user/user.model.js")(db);
     var userService = require("./services/user.service.server.js")(app, userModel);
+    var adminService = require("./services/admin.service.server.js")(app, userModel);
 };
