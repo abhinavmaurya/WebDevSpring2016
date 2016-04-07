@@ -55,17 +55,34 @@
             .when("/admin",{
                 templateUrl: "views/admin/admin.view.html",
                 controller: "AdminController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve:{
+                    loggedin: checkAdmin
+                }
             })
             .otherwise({
                 redirectTo: "/home"
             });
     }
 
-    function checkLoggedIn(UserService, $q, $location) {
-
+    var checkAdmin = function(UserService, $q){
         var deferred = $q.defer();
+        UserService
+            .getLoggedinUser()
+            .success(function(user){
+                // User is Authenticated
+                if (user !== '0' && user.roles.indexOf('admin') != -1)
+                {
+                    UserService.setCurrentUser(user);
+                    deferred.resolve();
+                }
+            });
 
+        return deferred.promise;
+    };
+
+    function checkLoggedIn(UserService, $q, $location) {
+        var deferred = $q.defer();
         UserService
             .getLoggedinUser()
             .success(function(user) {

@@ -18,7 +18,17 @@
             </th>
             <th>
                 <a href="#/admin">
-                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Role
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Firstname
+                </a>
+            </th>
+            <th>
+                <a href="#/admin">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Lastname
+                </a>
+            </th>
+            <th>
+                <a href="#/admin">
+                    <span class="glyphicon glyphicon-triangle-bottom"></span>&nbsp;Roles
                 </a>
             </th>
             <th>Action</th>
@@ -27,44 +37,35 @@
         <tbody>
         <tr>
             <td>
-                <input type="text" class="form-control" id="userName" placeholder="username"/>
+                <input type="text" class="form-control" id="userName" placeholder="username" ng-model="model.user.username"/>
             </td>
             <td>
-                <input type="text" class="form-control" id="password" placeholder="password"/>
+                <input type="text" class="form-control" id="password" placeholder="password" ng-model="model.user.password"/>
             </td>
             <td>
-                <input type="text" class="form-control" id="role" placeholder="role1, role2"/>
+                <input type="text" class="form-control" id="firstname" placeholder="Alice" ng-model="model.user.firstName"/>
             </td>
-            <td nowrap="true">
-                <a href="#/admin" class="glyphicon glyphicon-plus btn btn-primary"></a>
-                <a href="#/admin" class="glyphicon glyphicon-ok btn btn-success"></a>
+            <td>
+                <input type="text" class="form-control" id="lastname" placeholder="Wondeland" ng-model="model.user.lastName"/>
+            </td>
+            <td>
+                <input type="text" class="form-control" id="roles" placeholder="student,admin" ng-model="model.user.roles"/>
+            </td>
+            <td class="action-column">
+                <a ng-show="model.selectedUser" ng-click="model.unselectUser()" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a ng-hide="model.selectedUser" ng-click="model.addUser(model.user)" class="glyphicon glyphicon-plus btn btn-primary"></a>
+                <a ng-show="model.selectedUser" ng-click="model.updateUser(model.user)" class="glyphicon glyphicon-ok btn btn-success"></a>
             </td>
         </tr>
-        <tr>
-            <td>alice</td>
-            <td></td>
-            <td>student</td>
-            <td>
-                <a href="#/admin" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                <a href="#/admin" class="glyphicon glyphicon-pencil btn btn-info"></a>
-            </td>
-        </tr>
-        <tr>
-            <td>bob</td>
-            <td></td>
-            <td>faculty | admin</td>
-            <td>
-                <a href="#/admin" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                <a href="#/admin" class="glyphicon glyphicon-pencil btn btn-info"></a>
-            </td>
-        </tr>
-        <tr>
-            <td>charlie</td>
-            <td></td>
-            <td></td>
-            <td>
-                <a href="#/admin" class="glyphicon glyphicon-remove btn btn-danger"></a>
-                <a href="#/admin" class="glyphicon glyphicon-pencil btn btn-info"></a>
+        <tr ng-repeat="user in model.users">
+            <td>{{user.username}}</td>
+            <td>{{user.password}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.roles}}</td>
+            <td class="action-column">
+                <a ng-click="model.deleteUser(user)" class="glyphicon glyphicon-remove btn btn-danger"></a>&nbsp;
+                <a ng-click="model.selectUser(user)" class="glyphicon glyphicon-pencil btn btn-info"></a>
             </td>
         </tr>
         </tbody>

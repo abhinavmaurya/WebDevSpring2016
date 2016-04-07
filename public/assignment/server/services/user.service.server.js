@@ -121,14 +121,45 @@ module.exports = function (app, userModel){
     }
 
     function createUser(req, res){
-        var user = req.body;
-        user.emails = [user.email];
-        user.phones = [user.phone];
-        userModel.createUser(user)
+        var newUser = req.body;
+        newUser.emails = [newUser.email];
+        newUser.phones = [newUser.phone];
+        newUser.roles = ["student"];
+        /*userModel.createUser(user)
             .then(
                 function(doc){
                     req.session.currentUser = doc;
                     res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );*/
+        userModel
+            .findUserByUsername(newUser.username)
+            .then(
+                function(user){
+                    if(user) {
+                        res.json(null);
+                    } else {
+                        return userModel.createUser(newUser);
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(user){
+                    if(user){
+                        req.login(user, function(err) {
+                            if(err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
                 },
                 function(err){
                     res.status(400).send(err);
@@ -160,7 +191,7 @@ module.exports = function (app, userModel){
     }
 
     function deleteUser(req, res){
-        var userId = req.body.userId;
+        var userId = req.params.userId;
         userModel.deleteUserById(userId)
             .then(
                 function(stats){
@@ -173,7 +204,7 @@ module.exports = function (app, userModel){
     }
 
     function getAllUsers(req, res){
-        userModel.getAllUsers()
+        userModel.findAllUsers()
             .then(
                 function(docs){
                     res.json(docs);
