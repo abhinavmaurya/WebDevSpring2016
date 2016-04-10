@@ -1,13 +1,27 @@
-<h2>{{model.stock.Name}} ({{model.stock.Symbol}})</h2>
-<div>
-    <p><strong>Date:</strong> {{model.stock.Timestamp}}</p>
-    <p><strong>Open Price($):</strong> {{model.stock.Open}}</p>
-    <p><strong>Current Price($):</strong> {{model.stock.LastPrice}}</p>
-    <p><strong>Change($):</strong> {{model.stock.Change}}</p>
-    <p><strong>Volume:</strong> {{model.stock.Volume}}</p>
-    <p><strong>Market Capital($):</strong> {{model.stock.MarketCap}}</p>
-
+<div class="well row">
+    <div class="col-sm-9">
+        <h1 class="text-left">{{model.stock.Name}} ({{model.stock.Symbol}})</h1>
+    </div>
+    <div class="col-sm-3">
+        <h1 class="text-right">{{model.format(model.stock.Change, 2, 3)}}</h1>
+        <!--ng-class="{'color:red': model.stock.Change< 0, 'color:green': model.stock.Change > 0, 'color:blue': model.stock.Change == 0}"-->
+    </div>
 </div>
+
+<div class="row well">
+    <div class="col-md-8 well chart" ng-controller="ChartController">
+        <highchart class="chart" config="chartConfig"></highchart>
+    </div>
+    <div class="col-md-4">
+        <p><strong>Date:</strong> {{model.formatDate(model.stock.Timestamp) | date:'medium'}}</p>
+        <p><strong>Open Price($):</strong> {{model.format(model.stock.Open, 2, 3)}}</p>
+        <p><strong>Current Price($):</strong> {{model.format(model.stock.LastPrice, 2, 3)}}</p>
+        <p><strong>Change($):</strong> {{model.format(model.stock.Change, 2, 3)}}</p>
+        <p><strong>Volume:</strong> {{model.format(model.stock.Volume)}}</p>
+        <p><strong>Market Capital($):</strong> {{model.format(model.stock.MarketCap, 2, 3)}}</p>
+    </div>
+</div>
+<!--
 <div ng-show="currentUser">
     <div ng-hide="model.displayAddToWatchlist">
         <a ng-click="model.addToWatchlist()" class="btn btn-primary">Add To Watchlist</a>
@@ -23,4 +37,70 @@
         </div>
         <a ng-click="model.addToPortfolio(model.qty, model.buyPrice)" class="btn btn-primary">Add To Portfolio</a>
     </form>
+</div>-->
+<div class="panel panel-info" ng-controller="StockNewsController as model">
+    <div class="panel-heading">
+        <h3>Latest News about {{model.stock.Name}}</h3>
+    </div>
+
+    <div class="panel-body fixed-panel">
+        <table class="table table-bordered table-responsive table-hover">
+            <tr ng-repeat="news in model.stockNews">
+                <td>
+                    <h4>{{news.title}}</h4>
+                    <p>{{news.content}}</p>
+                    <a ng-href={{news.link}} target="_blank">Read more..</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom" ng-show="currentUser">
+
+    <div class="row add-btns">
+        <div class="col-md-3 col-md-offset-3">
+            <a href="model.addToWatchList()" ng-disabled="model.displayAddToWatchlist" class="btn btn-success pull-left">Add To Watchlist</a>
+            <!--<a href="#" ng-if="!model.displayAddToWatchlist" class="btn btn-success pull-left">Add To Watchlist</a>-->
+        </div>
+        <div class="col-md-3">
+            <a ng-click="model.addToPortfolio()" class="btn btn-success pull-right" data-toggle="modal" data-target="#addToPortfolio">Add To Portfolio</a>
+        </div>
+    </div>
+
+</nav>
+
+
+<div id="addToPortfolio" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add {{model.stock.Name}}</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <label>Symbol/StockID</label>
+                    <input ng-model="model.addPort.symbol" class="form-control" type="text" placeholder="FB"/>
+                    <br>
+                    <label>Buying Price</label>
+                    <input ng-model="model.addPort.buyPrice" class="form-control" type="text"/>
+                    <br>
+                    <label>Quantity</label>
+                    <input ng-model="model.addPort.qty" class="form-control" type="text"/>
+                    <br>
+                    <label>Purchase Data</label>
+                    <input ng-model="model.addPort.date" class="form-control" type="date"/>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button ng-click="model.commitAdd(model.addPort)" type="button" class="btn btn-success"
+                        data-dismiss="modal">Add
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

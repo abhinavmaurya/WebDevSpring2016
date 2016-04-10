@@ -3,8 +3,24 @@
 }
 
 .home-image{
-    /*height: 200px;
-    width: 400px;*/
     max-height: 100%;
     max-width: 100%;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.add-btns{
+    margin-top: 5px;
+}
+
+.navbar-fixed-bottom{
+    background-color: #444444;
+}
+
+.fixed-panel {
+    max-height: 300px;
+    overflow-y: scroll;
 }

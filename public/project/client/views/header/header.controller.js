@@ -13,6 +13,7 @@
         var vm = this;
 
         vm.logout = logout;
+        vm.search = search;
 
         function init(){
             vm.$location = $location;
@@ -32,6 +33,13 @@
                         console.log("Failure");
                     }
                 );
+        }
+
+        function search(name){
+            if(name)
+                $location.url('/search/'+name);
+            else
+                $location.url('/search');
         }
 
     }

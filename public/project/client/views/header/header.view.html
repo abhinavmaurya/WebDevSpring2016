@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController as model">
+<nav class="navbar navbar-default" ng-controller="HeaderController as model">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -7,18 +7,30 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/home">TradeBull</a>
+            <a class="navbar-brand" href="#/home"><strong>TradeBull</strong></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav">
                 <li ng-class="{'active' : model.$location.url() == '/home'}"><a href="#/home">Home</a></li>
-                <li ng-class="{'active' : model.$location.url() == '/search'}"><a href="#/search">Search</a></li>
-                <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/register'}"><a href="#/register">Register</a></li>
-                <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/login'}"><a href="#/login">Login</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
+            </ul>
+            <div class="col-sm-3 col-md-3 pull-right">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input  ng-model="model.searchtxt" type="text" autocomplete="on" id="txtsearch" class="form-control" placeholder="Search Stocks..."/>
+                        <div class="input-group-btn">
+                            <button class="btn btn-info" type="submit" ng-click="model.search(model.searchtxt)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/register'}"><a href="#/register">Register</a></li>
+                <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
+                <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/login'}"><a href="#/login">Login</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/watchlist'}"><a href="#/watchlist">Watchlist</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/portfolio'}"><a href="#/portfolio">Portfolio</a></li>
-                <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/logout'}"><a href ng-click="model.logout()">Logout</a></li>
             </ul>
         </div>

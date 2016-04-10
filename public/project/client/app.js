@@ -4,5 +4,5 @@
 "use strict";
 (function(){
     angular
-        .module("TradeBullApp", ["ngRoute"]);
+        .module("TradeBullApp", ["ngRoute", "highcharts-ng"]);
 })();

@@ -13,23 +13,19 @@
 
         var vm = this;
 
+        vm.showResult = showResult;
         vm.search = search;
 
         function init(){
             var name = $routeParams.name;
             if(name){
-                search(name);
+                vm.name=name;
+                showResult(name);
             }
         }
         init();
 
-        var name = $routeParams.name;
-        if(name){
-            search(name);
-        }
-
-
-        function search(name){
+        function showResult(name){
             vm.message = null;
             StockService
                 .findStockByName(name)
@@ -39,6 +35,11 @@
                     else
                         vm.message = "No matching record(s) found."
                 });
+        }
+
+        function search(name){
+            if(name)
+                $location.url('/search/'+name);
         }
     }
 

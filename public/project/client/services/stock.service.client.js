@@ -21,7 +21,8 @@
             deleteStockFromUserWatchlist: deleteStockFromUserWatchlist,
             deleteStockFromUserPortfolio: deleteStockFromUserPortfolio,
             getUserPortfolio: getUserPortfolio,
-            updateStockInUserPortfolio: updateStockInUserPortfolio
+            updateStockInUserPortfolio: updateStockInUserPortfolio,
+            findStockNews: findStockNews
         };
         return api;
 
@@ -76,6 +77,13 @@
 
         function updateStockInUserPortfolio(userId, stockId, updatedStock){
             return $http.put("/api/project/"+ userId +"/portfolio/"+stockId, updatedStock);
+        }
+
+        function findStockNews(stockId){
+            /*return $http.jsonp("https://ajax.googleapis.com/ajax/services/feed/load?v=2.0&q=http://finance.yahoo.com/rss/headline?s="+stockId+ "&callback=JSON_CALLBACK");*/
+            /*return $http.jsonp("http://rss2json.com/api.json?rss_url=http%3A%2F%2Ffinance.yahoo.com%2Frss%2Fheadline%3Fs%3D"+stockId + "&callback=JSON_CALLBACK");*/
+            return $http.get("http://rss2json.com/api.json?rss_url=http%3A%2F%2Ffinance.yahoo.com%2Frss%2Fheadline%3Fs%3D"+stockId);
+
         }
     }
 })();

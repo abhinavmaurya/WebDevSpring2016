@@ -4,5 +4,5 @@
 
 (function(){
     angular
-        .module("PortfolioApp", ["ngRoute"]);
+        .module("PortfolioApp", ["ngRoute", "ngAnimate"]);
 })();

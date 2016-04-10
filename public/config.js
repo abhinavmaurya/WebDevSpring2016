@@ -21,7 +21,9 @@
                 templateUrl: "views/skill/skills.view.html"
             })
             .when("/contact",{
-                templateUrl: "views/contact/contact.view.html"
+                templateUrl: "views/contact/contact.view.html",
+                controller: "ContactController",
+                controllerAs: "model"
             })
             .when("/project",{
                 templateUrl: "views/works/project.view.html"

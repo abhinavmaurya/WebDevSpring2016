@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="Build and use the form at your will.">
+    <meta name="description" content="Track your portfolio on fingertips.">
     <meta name="author" content="Abhinav Maurya">
-    <title>Form&nbsp;Maker</title>
+    <title>TradeBull</title>
 
-    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="css/lumen.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
 
     <!--Bootstrap JS-->
@@ -22,9 +22,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 
+    <!--Chart-->
+    <script src="http://code.highcharts.com/stock/highstock.src.js"></script>
+    <script src="js/highcharts-ng.js"></script>
+    <script type="text/javascript" src="https://www.highcharts.com/samples/data/usdeur.js"></script>
+
     <!--Config-->
     <script src="app.js"></script>
     <script src="config.js"></script>
+
 
     <!--Services-->
     <script src="services/stock.service.client.js"></script>
@@ -46,15 +52,10 @@
 
 </head>
 <body ng-controller="MainController as model">
-    <!--<div ng-controller="MainController">-->
-    <!--include header-->
     <div ng-include="'views/header/header.view.html'"></div>
+    <div class="container">
 
-    <!--sidebar and dynamic content-->
-    <div class="container-fluid">
-        <div class="main">
-            <div ng-view></div>
-        </div>
+        <div ng-view></div>
     </div>
 </body>
 </html>
