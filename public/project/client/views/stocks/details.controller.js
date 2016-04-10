@@ -29,10 +29,15 @@
         vm.format = format;
         vm.formatDate= formatDate;
         vm.commitAdd = commitAdd;
+        vm.setStatus = setStatus;
 
         vm.addPort = null;
         vm.message = null;
         vm.error = null;
+
+        function setStatus(val){
+            return val < 0 ? 'panel-danger' : 'panel-success';
+        }
 
         function findInUserWatchlist(){
             if(user) {
