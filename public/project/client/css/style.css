@@ -46,13 +46,6 @@
 .color-red{color: red;}
 .color-green{color: green;}
 
-.portfolio-table{
-    display: table;
-    width:100%;
-}
-.portfolio-row{
-    display: table-row;
-}
-.cell{
-    display: table-cell;
+.my-heading{
+    display: inline;
 }

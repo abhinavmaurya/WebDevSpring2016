@@ -31,8 +31,8 @@
                 {{model.selStock.LastPrice}}
             </td>
             <td class="action-column">
-                <a ng-click="model.unselectStock()" class="glyphicon glyphicon-remove btn btn-danger"></a>&nbsp;
-                <a ng-click="model.updateStock(model.selStock)" class="glyphicon glyphicon-ok btn btn-success"></a>
+                <a ng-click="model.unselectStock()" class="btn btn-danger"><i class="fa fa-remove"></i></a>&nbsp;
+                <a ng-click="model.updateStock(model.selStock)" class="btn btn-success"><i class="fa fa-check"></i></a>
             </td>
         </tr>
         <tr ng-repeat="stock in model.portfolio">
@@ -41,8 +41,8 @@
             <td>{{stock.Quantity}}</td>
             <td>{{stock.LastPrice}}</td>
             <td class="action-column">
-                <a ng-click="model.selectStock(stock)" class="btn btn-info"><i class="fa fa-pencil-square-o fa-2x"></i></a>&nbsp;
-                <a ng-click="model.deleteFromPortfolio(stock)" class="btn btn-danger"><i class="fa fa-remove fa-2x"></i></a>
+                <a ng-click="model.selectStock(stock)" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
+                <a ng-click="model.deleteFromPortfolio(stock)" class="btn btn-danger"><i class="fa fa-remove"></i></a>
             </td>
         </tr>
         </tbody>
@@ -50,33 +50,66 @@
 </div>
 
 <!--Accordion test-->
-    <uib-accordion close-others="true">
-        <uib-accordian-group>
-            <uib-accordian-heading>
-                <div class="row">
-                    <div class="cell col-xs-6">Stock</div>
-                    <div class="cell col-xs-3 text-right">Profit</div>
-                    <div class="cell col-xs-3 text-right">Action</div>
+<uib-accordion>
+    <uib-accordion-group ng-repeat="stock in model.portfolio" is-open="group.open">
+        <uib-accordion-heading>
+            <div class="row">
+                <div class="btn col-xs-8">
+                    <div class="text-left">{{stock.Name}}&nbsp;({{stock.Symbol}})</div>
                 </div>
-            </uib-accordian-heading>
-        </uib-accordian-group>
-
-        <uib-accordion-group  ng-repeat="stock in model.portfolio">
-            <uib-accordion-heading>
-                <div class="row">
-                    <div class="cell col-xs-6"><b>{{stock.Name}}&nbsp;({{stock.Symbol}})</b></div>
-                    <div class="cell col-xs-3 text-right">{{stock.BuyingPrice}}</div>
-                    <div class="cell col-xs-3 text-right">
-                        <a ng-click="model.selectStock(stock)" class="btn btn-info"><i class="fa fa-pencil-square-o fa-sm"></i></a>&nbsp;
-                        <a ng-click="model.deleteFromPortfolio(stock)" class="btn btn-danger"><i class="fa fa-remove fa-sm"></i></a>
+                <div class="col-xs-4 text-right">
+                    <h4 class="my-heading">{{stock.BuyingPrice}}</h4>
+                    <h6 class="my-heading">(22.67)</h6>
+                </div>
+            </div>
+        </uib-accordion-heading>
+        <div class="row">
+            <div class="col-xs-6">
+                <!--<form class="form-horizontal">-->
+                <label class="control-label" for="stock_name">Name:</label>
+                <h5 class="my-heading" id="stock_name">{{stock.Name}}</h5>
+                <!--</form>-->
+            </div>
+            <div class="col-xs-6 text-right action-column" ng-hide="model.selStock">
+                <a ng-click="model.selectStock(stock)" class="btn btn-info btn-sm"><i class="fa fa-pencil"></i></a>&nbsp;
+                <a ng-click="model.deleteFromPortfolio(stock)" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>
+            </div>
+            <div class="col-xs-6 text-right action-column" ng-show="model.selStock">
+                <a ng-click="model.updateStock(model.selStock)" class="btn btn-info btn-sm"><i class="fa fa-check"></i></a>&nbsp;
+                <a ng-click="model.unselectStock()" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                    <div class="form-group">
+                        <h5 class="my-heading">Buying&nbsp;Price:</h5>
+                        <input type="text" class="form-control input-sm" ng-show="model.selStock" ng-model="model.selStock.BuyingPrice">
+                        <h5 class="my-heading" ng-hide="model.selStock">{{stock.BuyingPrice}}</h5>
                     </div>
-                </div>
-            </uib-accordion-heading>
-            TestData
-            <!--<div class="row">
-                Test Data
-            </div>-->
-
-        </uib-accordion-group>
-    </uib-accordion>
+                    <div class="form-group">
+                        <h5 class="my-heading">Date&nbsp;Of&nbsp;Purchase:</h5>
+                        <input type="date" class="form-control input-sm" ng-show="model.selStock" ng-model="model.selStock.PurchaseDate">
+                        <h5 class="my-heading" ng-hide="model.selStock">{{stock.PurchaseDate}}</h5>
+                    </div>
+                    <div class="form-group">
+                        <h5 class="my-heading">Quantity:</h5>
+                        <input type="text" class="form-control input-sm" ng-show="model.selStock" ng-model="model.selStock.Quantity">
+                        <h5 class="my-heading" ng-hide="model.selStock">{{stock.Quantity}}</h5>
+                    </div>
+                    <div class="form-group">
+                        <h5 class="my-heading">Current&nbsp;Worth:</h5>
+                        <h5 class="my-heading" ng-hide="model.selStock">{{stock.CurrentWorth}}</h5>
+                    </div>
+                    <div class="form-group">
+                        <h5 class="my-heading">Investment:</h5>
+                        <h5 class="my-heading" ng-hide="model.selStock">{{stock.Investment}}</h5>
+                    </div>
+                    <div class="form-group">
+                        <h5 class="my-heading">Total&nbsp;Profit/Loss:</h5>
+                        <h5 class="my-heading" ng-hide="model.selStock">{{stock.TotalPL}}</h5>
+                    </div>
+            </div>
+        </div>
+    </uib-accordion-group>
+</uib-accordion>
 
