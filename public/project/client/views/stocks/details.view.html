@@ -1,18 +1,19 @@
-<div class="panel" ng-class="model.setStatus(model.stock.Change)">
+<div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-10">
                 <h1 class="text-left">{{model.stock.Name}} ({{model.stock.Symbol}})</h1>
             </div>
-            <div class="col-sm-3">
-                <h1 class="text-right">{{model.format(model.stock.Change, 2, 3)}}</h1>
+            <div class="col-sm-2">
+                <h4 class="text-right" ng-class="model.setStatus(model.stock.Change)"><strong>{{model.format(model.stock.LastPrice, 2, 3)}}</strong></h4>
+                <h4 class="text-right" ng-class="model.setStatus(model.stock.Change)"><strong><i ng-class="model.getUpDown(model.stock.Change)"></i>{{model.format(model.stock.Change, 2, 3)}}</strong></h4>
             </div>
         </div>
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-8 well chart" ng-controller="ChartController">
-                <highchart class="chart" config="chartConfig"></highchart>
+            <div class="col-md-8 well chart" ng-controller="ChartController as model">
+                <highchart class="chart" config="model.chartConfig"></highchart>
             </div>
             <div class="col-md-4">
                 <p><strong>Date:</strong> {{model.formatDate(model.stock.Timestamp) | date:'medium'}}</p>
@@ -26,21 +27,25 @@
     </div>
 </div>
 
-<div class="panel panel-info" ng-controller="StockNewsController as model">
-    <div class="panel-heading">
-        <h3>Latest News about {{model.stock.Name}}</h3>
-    </div>
+<div class="col-md-8 news">
+    <div class="panel panel-info" ng-controller="StockNewsController as model">
+        <div class="panel-heading">
+            Latest News about {{model.stock.Name}}
+        </div>
 
-    <div class="panel-body fixed-panel">
-        <table class="table table-bordered table-responsive table-hover">
-            <tr ng-repeat="news in model.stockNews">
-                <td>
-                    <h4>{{news.title}}</h4>
-                    <p>{{news.content}}</p>
-                    <a ng-href={{news.link}} target="_blank">Read more..</a>
-                </td>
-            </tr>
-        </table>
+        <div class="panel-body fixed-panel">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <tr ng-repeat="news in model.stockNews">
+                        <td>
+                            <h4><strong>{{news.title}}</strong></h4>
+                            <p>{{news.content}}</p>
+                            <a ng-href={{news.link}} target="_blank">Read more..</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -48,8 +53,7 @@
 
     <div class="row add-btns">
         <div class="col-md-3 col-md-offset-3">
-            <a href="model.addToWatchList()" ng-disabled="model.displayAddToWatchlist" class="btn btn-success pull-left">Add To Watchlist</a>
-            <!--<a href="#" ng-if="!model.displayAddToWatchlist" class="btn btn-success pull-left">Add To Watchlist</a>-->
+            <a ng-click="model.addToWatchlist()" ng-disabled="model.displayAddToWatchlist" class="btn btn-success pull-left">Add To Watchlist</a>
         </div>
         <div class="col-md-3">
             <a ng-click="model.addToPortfolio()" class="btn btn-success pull-right" data-toggle="modal" data-target="#addToPortfolio">Add To Portfolio</a>
@@ -68,18 +72,18 @@
             </div>
 
             <div class="modal-body">
-                <form>
-                    <label>Symbol/StockID</label>
-                    <input ng-model="model.addPort.symbol" class="form-control" type="text" placeholder="FB"/>
+                <form class="form-horizontal">
+                    <label for="symbol" class="control-label">Symbol/StockID</label>
+                    <input ng-model="model.addPort.symbol" id="symbol" class="form-control" type="text" placeholder="FB"/>
                     <br>
-                    <label>Buying Price</label>
-                    <input ng-model="model.addPort.buyPrice" class="form-control" type="text"/>
+                    <label for="buyPrice" class="control-label">Buying Price</label>
+                    <input ng-model="model.addPort.buyPrice" id="buyPrice" class="form-control" type="text"/>
                     <br>
-                    <label>Quantity</label>
-                    <input ng-model="model.addPort.qty" class="form-control" type="text"/>
+                    <label for="quantity" class="control-label">Quantity</label>
+                    <input ng-model="model.addPort.qty" id="quantity" class="form-control" type="text"/>
                     <br>
-                    <label>Purchase Data</label>
-                    <input ng-model="model.addPort.date" class="form-control" type="date"/>
+                    <label for="purchaseDate" class="control-label">Purchase Data</label>
+                    <input ng-model="model.addPort.date" id="purchaseDate" class="form-control" type="date"/>
                 </form>
             </div>
 

@@ -30,13 +30,19 @@
         vm.formatDate= formatDate;
         vm.commitAdd = commitAdd;
         vm.setStatus = setStatus;
+        vm.getUpDown = getUpDown;
 
         vm.addPort = null;
         vm.message = null;
         vm.error = null;
 
         function setStatus(val){
-            return val < 0 ? 'panel-danger' : 'panel-success';
+            /*return val < 0 ? 'panel-danger' : val > 0 ? 'panel-success' : '';*/
+            return val < 0 ? 'color-red' : val > 0 ? 'color-green' : '';
+        }
+
+        function getUpDown(val){
+            return val < 0 ? 'fa fa-long-arrow-down' : val > 0 ? 'fa fa-long-arrow-up' : '';
         }
 
         function findInUserWatchlist(){
@@ -52,6 +58,7 @@
             }
         }
         function addToWatchlist(){
+            console.log(user._id, stockID);
             StockService
                 .addToUserWatchlist(user._id, stockID)
                 .then(function(response){
@@ -70,6 +77,7 @@
         }
 
         function addToPortfolio(){
+            console.log("portfolio");
             vm.addPort = {
                 symbol: stockID
             };
@@ -106,46 +114,81 @@
         }
     }
 
-    function ChartController($scope){
-        $scope.chartConfig = {
-            options: {
+    function ChartController(StockService, $routeParams){
+        var vm = this;
+        var stockID = $routeParams.symbol;
+        vm.data = [];
 
-                navigator: {
-                    enabled: true,
-                    series: {
-                        data: []
+        function init(){
+            var params = {
+                Normalized: false,
+                NumberOfDays: 750,
+                DataPeriod: "Day",
+                Elements:
+                    [{
+                        Symbol: stockID,
+                        Type: "price",
+                        Params: ["c"] //ohlc, c = close only
+                    }]
+            };
+            StockService
+                .findHistoricalData(JSON.stringify(params))
+                .then(function(response){
+                    var dates = response.data.Dates;
+                    var price = response.data.Elements[0].DataSeries.close.values;
+                    for(var i in dates){
+                        var element = [];
+                        var dat = new Date(dates[i]);
+                        dat = Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
+                        element.push(dat);
+                        element.push(price[i]);
+                        vm.data.push(element);
                     }
-                },
-                rangeSelector: {
-                    selected: 1
-                },
-                plotOptions: {
-                    series: {
-                        lineWidth: 1,
-                        fillOpacity: 0.5
+                    drawChart(vm.data);
+                });
+        }
+        init();
+        function drawChart(chartData) {
+            vm.chartConfig = {
+                options: {
 
-                    }
-                },
+                    navigator: {
+                        enabled: true,
+                        series: {
+                            data: []
+                        }
+                    },
+                    rangeSelector: {
+                        selected: 1
+                    },
+                    plotOptions: {
+                        series: {
+                            lineWidth: 1,
+                            fillOpacity: 0.5
 
-                legend: {
-                    enabled: false
-                },
-                loading: true
+                        }
+                    },
 
-            },
-            useHighStocks: true,
-            xAxis: [{
-                type: 'datetime'
-            }],
-            title : {
-                text : 'AAPL Stock Price'
-            },
-            series: [{
-                id: 'stockprice',
-                name: 'Price',
-                data: usdeur,
-                color: '#80a3ca'
-            }]
+                    legend: {
+                        enabled: false
+                    },
+                    loading: true
+
+                },
+                useHighStocks: true,
+                xAxis: [{
+                    type: 'datetime'
+                }],
+                title: {
+                    text: 'AAPL Stock Price'
+                },
+                series: [{
+                    id: 'stockprice',
+                    name: 'Price',
+                    data: chartData,
+                    color: '#80a3ca'
+                }]
+            }
         }
     }
 
