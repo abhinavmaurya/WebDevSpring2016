@@ -41,11 +41,42 @@
             <td>{{stock.Quantity}}</td>
             <td>{{stock.LastPrice}}</td>
             <td class="action-column">
-                <a ng-click="model.selectStock(stock)" class="glyphicon glyphicon-pencil btn btn-info"></a>&nbsp;
-                <a ng-click="model.deleteFromPortfolio(stock)" class="glyphicon glyphicon-remove btn btn-danger"></a>
+                <a ng-click="model.selectStock(stock)" class="btn btn-info"><i class="fa fa-pencil-square-o fa-2x"></i></a>&nbsp;
+                <a ng-click="model.deleteFromPortfolio(stock)" class="btn btn-danger"><i class="fa fa-remove fa-2x"></i></a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<!--Accordion test-->
+    <uib-accordion close-others="true">
+        <uib-accordian-group>
+            <uib-accordian-heading>
+                <div class="row">
+                    <div class="cell col-xs-6">Stock</div>
+                    <div class="cell col-xs-3 text-right">Profit</div>
+                    <div class="cell col-xs-3 text-right">Action</div>
+                </div>
+            </uib-accordian-heading>
+        </uib-accordian-group>
+
+        <uib-accordion-group  ng-repeat="stock in model.portfolio">
+            <uib-accordion-heading>
+                <div class="row">
+                    <div class="cell col-xs-6"><b>{{stock.Name}}&nbsp;({{stock.Symbol}})</b></div>
+                    <div class="cell col-xs-3 text-right">{{stock.BuyingPrice}}</div>
+                    <div class="cell col-xs-3 text-right">
+                        <a ng-click="model.selectStock(stock)" class="btn btn-info"><i class="fa fa-pencil-square-o fa-sm"></i></a>&nbsp;
+                        <a ng-click="model.deleteFromPortfolio(stock)" class="btn btn-danger"><i class="fa fa-remove fa-sm"></i></a>
+                    </div>
+                </div>
+            </uib-accordion-heading>
+            TestData
+            <!--<div class="row">
+                Test Data
+            </div>-->
+
+        </uib-accordion-group>
+    </uib-accordion>
 
