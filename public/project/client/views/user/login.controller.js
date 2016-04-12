@@ -41,7 +41,7 @@
                             }
                         },
                         function(err){
-
+                            vm.message = "Invalid username/password";
                         }
                     );
             }

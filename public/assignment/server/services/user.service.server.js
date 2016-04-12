@@ -82,7 +82,7 @@ module.exports = function (app, userModel){
         userModel.findUserById(userId)
             .then(
                 function(doc){
-                    res.json(user);
+                    res.json(doc);
                 },
                 function(err){
                     res.status(400).send(err);

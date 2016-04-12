@@ -42,11 +42,11 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
 // Assignment app.js
-require("./public/assignment/server/app.js")(app, db);
+//require("./public/assignment/server/app.js")(app, db);
 
 
 // Project app.js
-require("./public/project/server/app.js")(app);
+require("./public/project/server/app.js")(app, db);
 
 app.listen(port, ipaddress, function () {
     console.log("Server is listening on: " + ipaddress + ":" + port);

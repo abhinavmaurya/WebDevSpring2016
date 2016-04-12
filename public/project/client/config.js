@@ -90,7 +90,7 @@
                 redirectTo: "/home"
             });
 
-        function checkLoggedIn(UserService, $q, $location) {
+        /*function checkLoggedIn(UserService, $q, $location) {
 
             var deferred = $q.defer();
 
@@ -121,6 +121,35 @@
                     deferred.resolve();
                 });
 
+            return deferred.promise;
+        }*/
+        function checkLoggedIn(UserService, $q, $location) {
+            var deferred = $q.defer();
+            UserService
+                .getLoggedinUser()
+                .success(function(user) {
+                    if(user !== '0') {
+                        UserService.setCurrentUser(user);
+                        deferred.resolve();
+                    } else {
+                        deferred.reject();
+                        $location.url("/home");
+                    }
+                });
+            return deferred.promise;
+        }
+
+        function getLoggedIn(UserService, $q){
+            var deferred = $q.defer();
+
+            UserService
+                .getLoggedinUser()
+                .success(function(user){
+                    if(user !== '0'){
+                        UserService.setCurrentUser(user);
+                    }
+                    deferred.resolve();
+                });
             return deferred.promise;
         }
     }
