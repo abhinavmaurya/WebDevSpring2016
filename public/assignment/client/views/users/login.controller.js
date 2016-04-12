@@ -30,15 +30,20 @@
                         username: user.username,
                         password:user.password
                     })
-                    .then(function(response){
-                        var currentUser = response.data;
-                        if (currentUser) {
-                            UserService.setCurrentUser(currentUser);
-                            $location.url("/profile");
-                        }else{
+                    .then(
+                        function(response){
+                            var currentUser = response.data;
+                            if (currentUser) {
+                                UserService.setCurrentUser(currentUser);
+                                $location.url("/profile");
+                            }else{
+                                vm.message = "Invalid username/password";
+                            }
+                        },
+                        function(err){
                             vm.message = "Invalid username/password";
                         }
-                    });
+                    );
             }
         }
     }

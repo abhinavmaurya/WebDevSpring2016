@@ -7,7 +7,8 @@
  */
 "use strict"
 
-var passport         = require('passport');
+var passport    = require('passport');
+var bcrypt      = require("bcrypt-nodejs");
 
 module.exports = function (app, userModel){
 
@@ -47,6 +48,7 @@ module.exports = function (app, userModel){
                     if(user) {
                         res.json(null);
                     } else {
+                        newUser.password = bcrypt.hashSync(newUser.password);
                         return userModel.createUser(newUser);
                     }
                 },
