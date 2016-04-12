@@ -10,7 +10,7 @@
         .controller("ChartController", ChartController)
         .controller("StockNewsController", StockNewsController);
 
-    function DetailsController($routeParams, $scope, StockService, UserService){
+    function DetailsController($routeParams, $scope, StockService, UserService, SweetAlert){
         var stockID = $routeParams.symbol;
         var user = UserService.getCurrentUser();
 
@@ -24,6 +24,7 @@
             findInUserWatchlist();
         }
         init();
+        vm.addToWatchlist = addToWatchlist;
         vm.addToWatchlist = addToWatchlist;
         vm.addToPortfolio = addToPortfolio;
         vm.format = format;
@@ -63,6 +64,7 @@
                 .addToUserWatchlist(user._id, stockID)
                 .then(function(response){
                     if(response.data){
+                        SweetAlert.swal("Success!", "Successfully added to Watchlist!", "success");
                         vm.displayAddToWatchlist = true;
                     }
                 });
@@ -95,6 +97,7 @@
                 StockService
                     .addStockToUserPortfolio(user._id, stockID, newStock)
                     .then(function(response){
+                        SweetAlert.swal("Success!", "Successfully added to Portfolio!", "success");
                         vm.addPort = null;
                     });
             }

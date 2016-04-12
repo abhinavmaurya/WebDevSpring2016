@@ -4,5 +4,5 @@
 "use strict";
 (function(){
     angular
-        .module("TradeBullApp", ["ngRoute", "highcharts-ng", "ui.bootstrap"]);
+        .module("TradeBullApp", ["ngRoute", "highcharts-ng", "ui.bootstrap", "oitozero.ngSweetAlert"]);
 })();
