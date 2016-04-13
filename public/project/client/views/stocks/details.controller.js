@@ -10,7 +10,7 @@
         .controller("ChartController", ChartController)
         .controller("StockNewsController", StockNewsController);
 
-    function DetailsController($routeParams, $scope, StockService, UserService, SweetAlert){
+    function DetailsController($routeParams, $scope, UserStockService, StockService, UserService, SweetAlert){
         var stockID = $routeParams.symbol;
         var user = UserService.getCurrentUser();
 
@@ -48,7 +48,7 @@
 
         function findInUserWatchlist(){
             if(user) {
-                StockService
+                UserStockService
                     .findInUserWatchlist(user._id, stockID)
                     .then(function(response){
                         console.log(response.data);
@@ -60,7 +60,7 @@
         }
         function addToWatchlist(){
             console.log(user._id, stockID);
-            StockService
+            UserStockService
                 .addToUserWatchlist(user._id, stockID)
                 .then(function(response){
                     if(response.data){
@@ -94,7 +94,7 @@
                     "BuyingPrice": stockToAdd.buyPrice,
                     "Quantity": stockToAdd.qty
                 };
-                StockService
+                UserStockService
                     .addStockToUserPortfolio(user._id, stockID, newStock)
                     .then(function(response){
                         SweetAlert.swal("Success!", "Successfully added to Portfolio!", "success");

@@ -8,7 +8,7 @@
         .module("TradeBullApp")
         .controller("WatchlistController", WatchlistController);
 
-    function WatchlistController(StockService, UserService){
+    function WatchlistController(StockService, UserService, UserStockService){
 
         var vm = this;
         var userId = UserService.getCurrentUser()._id;
@@ -17,7 +17,7 @@
 
         function init(){
             vm.watchlist = [];
-            StockService
+            UserStockService
                 .getUserWatchlist(userId)
                 .then(
                     function(response){
@@ -32,7 +32,7 @@
                         }
                     },
                     function(err){
-                        console.log("Error fetching watchlist");
+                        console.log("err");
                     }
                 )
         }
@@ -40,7 +40,7 @@
         init();
 
         function deleteFromWatchlist(stock){
-            StockService
+            UserStockService
                 .deleteStockFromUserWatchlist(userId, stock.Symbol)
                 .then(function(response){
                     init();

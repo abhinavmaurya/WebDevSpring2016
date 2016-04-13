@@ -8,7 +8,7 @@
         .module("TradeBullApp")
         .controller("PortfolioController", WatchlistController);
 
-    function WatchlistController(StockService, UserService){
+    function WatchlistController(StockService, UserService, UserStockService){
 
         var vm = this;
         var userId = UserService.getCurrentUser()._id;
@@ -28,7 +28,7 @@
 
         function refreshList(){
             unselectStock();
-            StockService
+            UserStockService
                 .getUserPortfolio(userId)
                 .then(function(response){
                     console.log(response.data);
@@ -50,7 +50,7 @@
         }
 
         function deleteFromPortfolio(stock){
-            StockService
+            UserStockService
                 .deleteStockFromUserPortfolio(userId, stock.Symbol)
                 .then(function(response){
                     refreshList();
@@ -73,7 +73,7 @@
 
         function updateStock(stock){
             console.log(stock);
-            StockService
+            UserStockService
                 .updateStockInUserPortfolio(userId, stock.Symbol, stock)
                 .then(function(response){
                     refreshList();
