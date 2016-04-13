@@ -24,7 +24,7 @@
                         var watch_lst = response.data;
                         for(var s in watch_lst){
                             StockService
-                                .findStockById(watch_lst[s].Symbol)
+                                .findStockById(watch_lst[s])
                                 .then(function(response){
                                     var stock = response.data;
                                     vm.watchlist.push(stock);
