@@ -81,7 +81,7 @@
         function addToPortfolio(){
             console.log("portfolio");
             vm.addPort = {
-                symbol: stockID
+                Symbol: stockID
             };
         }
 
@@ -90,9 +90,10 @@
                 $scope.error = "Please provide valid quantity and buying price";
             }else{
                 var newStock = {
-                    "Symbol": stockID,
-                    "BuyingPrice": stockToAdd.buyPrice,
-                    "Quantity": stockToAdd.qty
+                    "stockId": stockID,
+                    "price": stockToAdd.buyPrice,
+                    "purchaseDate": stockToAdd.purchaseDate,
+                    "quantity": stockToAdd.qty
                 };
                 UserStockService
                     .addStockToUserPortfolio(user._id, stockID, newStock)

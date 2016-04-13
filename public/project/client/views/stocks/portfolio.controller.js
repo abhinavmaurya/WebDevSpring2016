@@ -41,7 +41,7 @@
             // synchronize loading of data from API
             angular.forEach(vm.portfolio, function(stock){
                 StockService
-                    .findStockById(stock.Symbol)
+                    .findStockById(stock.stockId)
                     .then(function(response){
                         stock.LastPrice = response.data.LastPrice;
                         stock.Name = response.data.Name;
@@ -50,8 +50,9 @@
         }
 
         function deleteFromPortfolio(stock){
+
             UserStockService
-                .deleteStockFromUserPortfolio(userId, stock.Symbol)
+                .deleteStockFromUserPortfolio(userId, stock._id)
                 .then(function(response){
                     refreshList();
                 });
@@ -60,9 +61,10 @@
         function selectStock(stock){
             vm.selStock = {
                 "Name": stock.Name,
-                "Symbol": stock.Symbol,
-                "BuyingPrice": stock.BuyingPrice,
-                "Quantity": stock.Quantity,
+                "stockId": stock.stockId,
+                "purchaseDate": stock.purchaseDate,
+                "price": stock.price,
+                "quantity": stock.quantity,
                 "LastPrice": stock.LastPrice
             };
         }
@@ -74,7 +76,7 @@
         function updateStock(stock){
             console.log(stock);
             UserStockService
-                .updateStockInUserPortfolio(userId, stock.Symbol, stock)
+                .updateStockInUserPortfolio(userId, stock.stockId, stock)
                 .then(function(response){
                     refreshList();
                 });
