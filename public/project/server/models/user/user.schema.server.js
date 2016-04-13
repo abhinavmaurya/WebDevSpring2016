@@ -4,8 +4,7 @@
 
 var mongoose = require('mongoose');
 module.exports = function() {
-
-    var PortfolioStockSchema = require("./portfolio.schema.server.js")();
+    
     var UserSchema = new mongoose.Schema(
         {
             /*User Basic Info*/
@@ -15,13 +14,13 @@ module.exports = function() {
             lastName: String,
             email: String,
             about: String,
-            admin: Boolean,
+            admin: Boolean
 
             /*User watchlist*/
-            watchlist: [String],
+            /*watchlist: [String],*/
 
             /*User Portfolio*/
-            portfolio: [PortfolioStockSchema]
+            /*portfolio: [PortfolioStockSchema]*/
         }, {collection: "project.user"});
     return UserSchema;
 };

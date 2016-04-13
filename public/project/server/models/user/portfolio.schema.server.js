@@ -10,7 +10,7 @@ module.exports = function() {
             stockId: {type: String, required: true},
             quantity: {type: Number, required: true},
             price: {type: Number, required: true},
-            purchaseDate: {type: Date, default: Date.now}
+            purchaseDate: {type: Date, required: true}
         }, {collection: "project.portfolio"});
     return PortfolioStockSchema;
 };

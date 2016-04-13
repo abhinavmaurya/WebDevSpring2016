@@ -9,8 +9,8 @@ var mongoose = require("mongoose");
 
 module.exports = function(db){
 
-    var UserSchema = require("./user.schema.server.js")(mongoose);
-    var UserModel = mongoose.model("User", UserSchema);
+    var UserStockSchema = require("./user-stock.schema.server.js")(mongoose);
+    var UserStockModel = mongoose.model("UserStock", UserStockSchema);
     var api = {
         findUserWatchlist: findUserWatchlist,
         findUserPortfolio: findUserPortfolio,
@@ -19,81 +19,92 @@ module.exports = function(db){
         deleteStockInUserWatchlist: deleteStockInUserWatchlist,
         addStockInUserPortfolio: addStockInUserPortfolio,
         deleteStockInUserPortfolio: deleteStockInUserPortfolio,
-        updateStockInUserPortfolio: updateStockInUserPortfolio
+        updateStockInUserPortfolio: updateStockInUserPortfolio,
+        createUserStock: createUserStock
     };
     return api;
 
     function findUserWatchlist(userId){
         var deferred = q.defer();
-        UserModel
-            .findById(userId, function(err, user){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    deferred.resolve(user.watchlist);
-                }
+        UserStockModel
+            .findOne(
+                {userId: userId},
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        deferred.resolve(doc.watchlist);
+                    }
             });
         return deferred.promise;
     }
 
     function findUserPortfolio(userId){
         var deferred = q.defer();
-        UserModel
-            .findById(userId, function(err, user){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    deferred.resolve(user.portfolio);
-                }
-            });
+        UserStockModel
+            .findOne(
+                {userId: userId},
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        deferred.resolve(doc.portfolio);
+                    }
+                });
         return deferred.promise;
     }
 
     function findStockInUserPortfolio(userId, portfolioStockId){
         var deferred = q.defer();
-        UserModel
-            .findById(userId, function(err, user){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    deferred.resolve(user.portfolio.id(portfolioStockId));
-                }
+        UserStockModel
+            .findOne(
+                {userId: userId},
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        deferred.resolve(doc.portfolio.id(portfolioStockId));
+                    }
             });
         return deferred.promise;
     }
 
     function addStockInUserWatchlist(userId, newWatchlistStock){
         var deferred = q.defer();
-        UserModel
-            .findById(userId, function(err, user){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    user.watchlist.push(newWatchlistStock);
-                    deferred.resolve(user.save());
-                }
+        UserStockModel
+            .findOne(
+                {userId: userId},
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        doc.watchlist.push(newWatchlistStock);
+                        deferred.resolve(doc.save());
+                    }
             });
         return deferred.promise;
     }
 
     function addStockInUserPortfolio(userId, newPortfolioStock){
         var deferred = q.defer();
-        UserModel
-            .findById(userId, function(err, user){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    user.portfolio.push(newPortfolioStock);
-                    deferred.resolve(user.save());
-                }
+        UserStockModel
+            .findOne(
+                {userId: userId},
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        doc.portfolio.push(newPortfolioStock);
+                        deferred.resolve(doc.save());
+                    }
             });
         return deferred.promise;
     }
 
     function deleteStockInUserWatchlist(userId, stockId){
         var deferred = q.defer();
-        UserModel.update(
-                {_id: userId},
+        UserStockModel.update(
+                {userId: userId},
                 {$pull: {watchlist: stockId}},
                 function(err, stats){
                     if(err){
@@ -108,9 +119,9 @@ module.exports = function(db){
 
     function deleteStockInUserPortfolio(userId, portfolioStockId){
         var deferred = q.defer();
-        UserModel.update(
-            {_id: userId},
-            {$pull: {watchlist: {_id: portfolioStockId}}},
+        UserStockModel.update(
+            {userId: userId},
+            {$pull: {portfolio: {_id: portfolioStockId}}},
             function(err, stats){
                 if(err){
                     deferred.reject(err);
@@ -124,18 +135,35 @@ module.exports = function(db){
 
     function updateStockInUserPortfolio(userId, updatedStockId, updatedPortfolioStock){
         var deferred = q.defer();
-        UserModel
-            .findById(userId, function(err, user){
+        UserStockModel
+            .findById(userId, function(err, doc){
                 if(err){
                     deferred.reject(err);
                 }else{
-                    var stockToUpdate = user.portfolio.id(updatedStockId);
+                    var stockToUpdate = doc.portfolio.id(updatedStockId);
                     stockToUpdate.quantity = updatedPortfolioStock.quantity;
                     stockToUpdate.purchaseDate = updatedPortfolioStock.purchaseDate;
                     stockToUpdate.price = updatedPortfolioStock.price;
-                    deferred.resolve(user.save());
+                    deferred.resolve(doc.save());
                 }
             });
         return deferred.promise;
+    }
+
+    function createUserStock(userId){
+        var newUserStock = {
+            userId: userId,
+            watchlist: [],
+            portfolio: []
+        };
+        UserStockModel
+            .create(newUserStock, function(err, stats){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(stats);
+                }
+            });
+        deferred.promise;
     }
 }
