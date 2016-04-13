@@ -14,6 +14,7 @@ module.exports = function(db){
     var api = {
         findUserWatchlist: findUserWatchlist,
         findUserPortfolio: findUserPortfolio,
+        findStockInUserWatchlist: findStockInUserWatchlist,
         findStockInUserPortfolio: findStockInUserPortfolio,
         addStockInUserWatchlist: addStockInUserWatchlist,
         deleteStockInUserWatchlist: deleteStockInUserWatchlist,
@@ -49,6 +50,21 @@ module.exports = function(db){
                         deferred.reject(err);
                     }else{
                         deferred.resolve(doc.portfolio);
+                    }
+                });
+        return deferred.promise;
+    }
+
+    function findStockInUserWatchlist(userId, watchlistStockId){
+        var deferred = q.defer();
+        UserStockModel
+            .findOne(
+                {userId: userId},
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        deferred.resolve(doc.watchlist.id(watchlistStockId));
                     }
                 });
         return deferred.promise;
@@ -133,14 +149,14 @@ module.exports = function(db){
         return deferred.promise;
     }
 
-    function updateStockInUserPortfolio(userId, updatedStockId, updatedPortfolioStock){
+    function updateStockInUserPortfolio(userId,updateStockId, updatedPortfolioStock){
         var deferred = q.defer();
         UserStockModel
             .findById(userId, function(err, doc){
                 if(err){
                     deferred.reject(err);
                 }else{
-                    var stockToUpdate = doc.portfolio.id(updatedStockId);
+                    var stockToUpdate = doc.portfolio.id(updateStockId);
                     stockToUpdate.quantity = updatedPortfolioStock.quantity;
                     stockToUpdate.purchaseDate = updatedPortfolioStock.purchaseDate;
                     stockToUpdate.price = updatedPortfolioStock.price;

@@ -3,11 +3,11 @@
  */
 "use strict"
 
-var passport         = require('passport');
-var LocalStrategy    = require('passport-local').Strategy;
-var bcrypt = require("bcrypt-nodejs");
+var passport        = require('passport');
+var LocalStrategy   = require('passport-local').Strategy;
+var bcrypt          = require("bcrypt-nodejs");
 
-module.exports = function (app, userModel){
+module.exports = function (app, userModel, userStockModel){
 
     var auth = authorized;
 
@@ -108,6 +108,7 @@ module.exports = function (app, userModel){
         newUser.emails = [newUser.email];
         newUser.phones = [newUser.phone];
         newUser.roles = ["student"];
+        var createdUser = null;
         userModel
             .findUserByUsername(newUser.username)
             .then(
@@ -126,7 +127,20 @@ module.exports = function (app, userModel){
             .then(
                 function(user){
                     if(user){
-                        req.login(user, function(err) {
+                        createdUser = user;
+                        return userStockModel.createUserStock(user._id);
+                    }else{
+                        res.status(400).send(err);
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(doc){
+                    if(createdUser){
+                        req.login(createdUser, function(err) {
                             if(err) {
                                 res.status(400).send(err);
                             } else {
