@@ -15,7 +15,7 @@
             findStockById: findStockById,
             findStockNews: findStockNews,
             findHistoricalData: findHistoricalData,
-            /**/
+            /*Watcher and holders for stock*/
             addWatcherToStock: addWatcherToStock,
             addHolderToStock: addHolderToStock,
             deleteWatcherFromStock: deleteWatcherFromStock,

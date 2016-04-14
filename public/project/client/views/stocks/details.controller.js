@@ -69,7 +69,7 @@
                         if(response.data){
                             console.log("calling stockservice add watcher");
                             StockService.addWatcherToStock(stockID, user._id)
-                                .then(
+                                /*.then(
                                     function(response){
                                         console.log("added to user stock watchlist as well as well");
                                         SweetAlert.swal("Success!", "Successfully added to Watchlist!", "success");
@@ -78,14 +78,14 @@
                                     function(err){
                                         console.log(err);
                                     }
-                                );
+                                )*/;
                         }
                     },
                     function(err){
                         console.log(err);
                     }
                 )
-                /*.then(
+                .then(
                     function(response){
                         console.log("added to user stock watchlist as well as well");
                         SweetAlert.swal("Success!", "Successfully added to Watchlist!", "success");
@@ -94,7 +94,7 @@
                     function(err){
                         console.log(err);
                     }
-                )*/;
+                );
         }
 
         function addToPortfolio(){
