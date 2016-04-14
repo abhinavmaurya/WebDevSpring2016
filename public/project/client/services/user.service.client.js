@@ -22,7 +22,15 @@
             findUserById: findUserById,
             findUserByUsername: findUserByUsername,
             logout: logout,
-            getLoggedinUser: getLoggedinUser
+            getLoggedinUser: getLoggedinUser,
+
+            /*followers and following users*/
+            findFollowers: findFollowers,
+            findFollowingUsers: findFollowingUsers,
+            addFollower: addFollower,
+            addFollowingUser: addFollowingUser,
+            deleteFollower: deleteFollower,
+            deleteFollowingUser: deleteFollowingUser
 
         };
         return api;
@@ -63,13 +71,36 @@
             return $http.get("/api/project/user/"+userId);
         }
 
-
         function deleteUserById(userId){
             return $http.delete("/api/project/user/"+userId);
         }
 
         function findUserByUsername(username){
             return $http.get("/api/project/user/username/"+ username);
+        }
+
+        function findFollowers(userId){
+            return $http.get("/api/project/user/"+userId+"/follower");
+        }
+
+        function findFollowingUsers(userId){
+            return $http.get("/api/project/user/"+userId+"/following");
+        }
+
+        function addFollower(userId, followerId){
+            return $http.post("/api/project/user/"+userId+"/follower/" +followerId);
+        }
+
+        function addFollowingUser(userId, followingId){
+            return $http.post("/api/project/user/"+userId+"/following/" +followingId);
+        }
+
+        function deleteFollower(userId, followerId){
+            return $http.delete("/api/project/user/"+userId+"/follower/" +followerId);
+        }
+
+        function deleteFollowingUser(userId, followingId){
+            return $http.delete("/api/project/user/"+userId+"/following/" +followingId);
         }
     }
 })();

@@ -59,13 +59,16 @@ module.exports = function(db){
         var deferred = q.defer();
         UserStockModel
             .findOne(
-                {userId: userId},
+                {
+                    userId: userId,
+                    watchlist: watchlistStockId
+                },
                 function(err, doc){
                     if(err){
                         deferred.reject(err);
                     }else{
                         /*deferred.resolve(doc.watchlist.id(watchlistStockId));*/
-                        UserStockModel.findOne(
+                        /*UserStockModel.findOne(
                             {watchlist: watchlistStockId},
                             function(err, doc){
                                 if(err){
@@ -74,7 +77,8 @@ module.exports = function(db){
                                     deferred.resolve(doc);
                                 }
                             }
-                        );
+                        );*/
+                        deferred.resolve(doc);
                     }
                 });
         return deferred.promise;

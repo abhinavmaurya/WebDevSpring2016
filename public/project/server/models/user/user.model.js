@@ -19,7 +19,13 @@ module.exports = function(db){
         findUserByUsername: findUserByUsername,
         deleteUserById: deleteUserById,
         findAllUsers: findAllUsers,
-        findUsers: findUsers
+        findUsers: findUsers,
+        findFollowers: findFollowers,
+        findFollowingUsers: findFollowingUsers,
+        addFollower: addFollower,
+        addFollowingUser: addFollowingUser,
+        deleteFollower: deleteFollower,
+        deleteFollowingUser: deleteFollowingUser
     };
     return api;
 
@@ -136,6 +142,100 @@ module.exports = function(db){
                     deferred.reject();
                 }else{
                     deferred.resolve(docs);
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
+    function findFollowers(userId){
+        var deferred = q.defer();
+        UserModel
+            .findById(
+                userId,
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        deferred.resolve(doc.followers);
+                    }
+                });
+        return deferred.promise;
+    }
+
+    function findFollowingUsers(userId){
+        var deferred = q.defer();
+        UserModel
+            .findById(
+                userId,
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        deferred.resolve(doc.following);
+                    }
+                });
+        return deferred.promise;
+    }
+
+    function addFollower(userId, followerUserId){
+        var deferred = q.defer();
+        UserModel
+            .findById(
+                userId,
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        doc.followers.push(followerUserId);
+                        deferred.resolve(doc.save());
+                    }
+                });
+        return deferred.promise;
+    }
+
+    function addFollowingUser(userId, followingUserId){
+        var deferred = q.defer();
+        UserModel
+            .findById(
+                userId,
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        doc.following.push(followingUserId);
+                        deferred.resolve(doc.save());
+                    }
+                });
+        return deferred.promise;
+    }
+
+    function deleteFollower(userId, followerUserId){
+        var deferred = q.defer();
+        UserModel.update(
+            {_id: userId},
+            {$pull: {followers: followerUserId}},
+            function(err, stats){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(stats);
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
+    function deleteFollowingUser(userId, followingUserId){
+        var deferred = q.defer();
+        UserModel.update(
+            {_id: userId},
+            {$pull: {following: followingUserId}},
+            function(err, stats){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(stats);
                 }
             }
         );

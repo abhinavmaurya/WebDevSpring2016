@@ -22,6 +22,13 @@ module.exports = function (app, userModel, userStockModel){
     app.get     ("/api/project/user/:userId",    auth,    getUserByUserId);
     app.get     ("/api/project/user/username/:username",  getUserByUsername);
 
+    app.get     ("/api/project/user/:userId/follower",    getFollowers);
+    app.get     ("/api/project/user/:userId/following",    getFollowingUsers);
+    app.post    ("/api/project/user/:userId/follower/:followerId",    addFollower);
+    app.post    ("/api/project/user/:userId/following/:followingId",    addFollowingUser);
+    app.delete  ("/api/project/user/:userId/follower/:followerId",    deleteFollower);
+    app.delete  ("/api/project/user/:userId/following/:followingId",    deleteFollowingUser);
+
     /*Functions for passport authentication*/
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
@@ -196,6 +203,89 @@ module.exports = function (app, userModel, userStockModel){
             .then(
                 function(docs){
                     res.json(docs);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    /*Followers and Following Users*/
+    function getFollowers(req, res){
+        var userId = req.params.userId;
+        userModel.findFollowers(userId)
+            .then(
+                function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function getFollowingUsers(req, res){
+        var userId = req.params.userId;
+        userModel.findFollowingUsers(userId)
+            .then(
+                function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function addFollower(req, res){
+        var userId = req.params.userId;
+        var followerId = req.params.followerId;
+        userModel.addFollower(userId, followerId)
+            .then(
+                function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function addFollowingUser(req, res){
+        var userId = req.params.userId;
+        var followingId = req.params.followingId;
+        userModel.addFollowingUser(userId, followingId)
+            .then(
+                function(doc){
+                    res.json(doc);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function deleteFollower(req, res){
+        var userId = req.params.userId;
+        var followerId = req.params.followerId;
+        userModel.deleteFollower(userId, followerId)
+            .then(
+                function(stats){
+                    res.send(stats);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function deleteFollowingUser(req, res){
+        var userId = req.params.userId;
+        var followerId = req.params.followerId;
+        userModel.deleteFollowingUser(userId, followerId)
+            .then(
+                function(stats){
+                    res.send(stats);
                 },
                 function(err){
                     res.status(400).send(err);

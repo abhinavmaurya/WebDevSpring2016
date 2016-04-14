@@ -86,6 +86,14 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
+            .when("/view/:userId", {
+                templateUrl: "views/user/userdetails.view.html",
+                controller: "UserDetailsController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+            })
             .otherwise({
                 redirectTo: "/home"
             });

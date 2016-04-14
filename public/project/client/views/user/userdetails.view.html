@@ -1,0 +1,40 @@
+<div class="col-md-8 col-md-offset-2">
+    <div  class="panel-grid panel panel-info">
+
+        <div class="panel-heading">
+            <div>
+                <i class="fa fa-user fa-4x"></i>&nbsp;
+                <h1 class="my-heading">{{model.user.username}}</h1>
+            </div>
+            <!--<div class="text-right">{{model.user.username}}</div>-->
+        </div>
+
+        <div class="panel-body">
+            <p><strong>User Name: </strong> {{model.user.username}}</p>
+            <p><strong>First Name: </strong> {{model.user.firstName}}</p>
+            <p><strong>Last Name: </strong>{{model.user.lastName}}</p>
+            <p><strong>Email: </strong>{{model.user.email}}</p>
+            <p>
+                <strong>Watching: </strong>
+                <ul>
+                    <li  ng-repeat="stock in model.user.watchlist">
+                        <a href="#/details/{{stock}}/">{{stock}}</a>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                <strong>Holding:</strong>
+                <ul>
+                    <li ng-repeat="stock in model.user.portfolio">
+                        <a href="#/details/{{stock.stockId}}/">{{stock.stockId}}</a>
+                    </li>
+                </ul>
+            </p>
+        </div>
+        <div class="panel-footer">
+            <button ng-hide="model.isFollowing" ng-click="model.follow()" class="btn btn-primary">Follow @{{model.user.username}}</button>
+            <button ng-show="model.isFollowing" ng-click="model.unfollow()" class="btn btn-primary">Unfollow @{{model.user.username}}</button>
+
+        </div>
+    </div>
+</div>

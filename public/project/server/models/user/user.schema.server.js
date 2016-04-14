@@ -14,13 +14,12 @@ module.exports = function() {
             lastName: String,
             email: String,
             about: String,
-            admin: Boolean
+            admin: Boolean,
+            /*followers: User being followed by these users*/
+            followers: [String],
+            /*following: User following these users*/
+            following: [String]
 
-            /*User watchlist*/
-            /*watchlist: [String],*/
-
-            /*User Portfolio*/
-            /*portfolio: [PortfolioStockSchema]*/
         }, {collection: "project.user"});
     return UserSchema;
 };

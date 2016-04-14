@@ -48,6 +48,7 @@
 
         function findInUserWatchlist(){
             if(user) {
+                console.log(user);
                 UserStockService
                     .findInUserWatchlist(user._id, stockID)
                     .then(function(response){
