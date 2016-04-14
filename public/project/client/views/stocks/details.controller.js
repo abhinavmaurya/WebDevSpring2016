@@ -38,7 +38,6 @@
         vm.error = null;
 
         function setStatus(val){
-            /*return val < 0 ? 'panel-danger' : val > 0 ? 'panel-success' : '';*/
             return val < 0 ? 'color-red' : val > 0 ? 'color-green' : '';
         }
 
@@ -63,20 +62,39 @@
             console.log(user._id, stockID);
             UserStockService
                 .addToUserWatchlist(user._id, stockID)
-                .then(function(response){
-                    if(response.data){
+                .then(
+                    function(response){
+                        console.log(response);
+                        console.log(response.data);
+                        if(response.data){
+                            console.log("calling stockservice add watcher");
+                            StockService.addWatcherToStock(stockID, user._id)
+                                .then(
+                                    function(response){
+                                        console.log("added to user stock watchlist as well as well");
+                                        SweetAlert.swal("Success!", "Successfully added to Watchlist!", "success");
+                                        vm.displayAddToWatchlist = true;
+                                    },
+                                    function(err){
+                                        console.log(err);
+                                    }
+                                );
+                        }
+                    },
+                    function(err){
+                        console.log(err);
+                    }
+                )
+                /*.then(
+                    function(response){
+                        console.log("added to user stock watchlist as well as well");
                         SweetAlert.swal("Success!", "Successfully added to Watchlist!", "success");
                         vm.displayAddToWatchlist = true;
+                    },
+                    function(err){
+                        console.log(err);
                     }
-                });
-        }
-
-        function postAddToPortfolio(stock){
-            if(stock){
-                $scope.message = "Successfully added stock to portfolio";
-            }else{
-                $scope.message = "Unable to add stock to portfolio";
-            }
+                )*/;
         }
 
         function addToPortfolio(){
@@ -98,10 +116,23 @@
                 };
                 UserStockService
                     .addStockToUserPortfolio(user._id, stockID, newStock)
-                    .then(function(response){
-                        SweetAlert.swal("Success!", "Successfully added to Portfolio!", "success");
-                        vm.addPort = null;
-                    });
+                    .then(
+                        function(response){
+                            return StockService.addHolderToStock(stockID, user._id);
+                        },
+                        function(err){
+                            console.log(err);
+                        }
+                    )
+                    .then(
+                        function(response){
+                            SweetAlert.swal("Success!", "Successfully added to Portfolio!", "success");
+                            vm.addPort = null;
+                        },
+                        function(err){
+                            console.log(err);
+                        }
+                    );
             }
         }
 

@@ -20,6 +20,7 @@ module.exports = function(db){
         deleteUserById: deleteUserById,
         findAllUsers: findAllUsers,
         findUsers: findUsers,
+        /**/
         findFollowers: findFollowers,
         findFollowingUsers: findFollowingUsers,
         addFollower: addFollower,
@@ -147,7 +148,7 @@ module.exports = function(db){
         );
         return deferred.promise;
     }
-
+    /*Followers and Following Users*/
     function findFollowers(userId){
         var deferred = q.defer();
         UserModel
@@ -212,8 +213,8 @@ module.exports = function(db){
 
     function deleteFollower(userId, followerUserId){
         var deferred = q.defer();
-        UserModel.update(
-            {_id: userId},
+        UserModel.findByIdAndUpdate(
+            userId,
             {$pull: {followers: followerUserId}},
             function(err, stats){
                 if(err){
@@ -228,7 +229,7 @@ module.exports = function(db){
 
     function deleteFollowingUser(userId, followingUserId){
         var deferred = q.defer();
-        UserModel.update(
+        UserModel.findByIdAndUpdate(
             {_id: userId},
             {$pull: {following: followingUserId}},
             function(err, stats){

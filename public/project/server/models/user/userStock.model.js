@@ -34,7 +34,12 @@ module.exports = function(db){
                     if(err){
                         deferred.reject(err);
                     }else{
-                        deferred.resolve(doc.watchlist);
+                        if(doc){
+                            deferred.resolve(doc.watchlist);
+                        }else{
+                            deferred.resolve([]);
+                        }
+
                     }
             });
         return deferred.promise;
@@ -108,8 +113,10 @@ module.exports = function(db){
                     if(err){
                         deferred.reject(err);
                     }else{
-                        doc.watchlist.push(newWatchlistStock);
-                        deferred.resolve(doc.save());
+                        if(doc){
+                            doc.watchlist.push(newWatchlistStock);
+                            deferred.resolve(doc.save());
+                        }
                     }
             });
         return deferred.promise;
@@ -124,8 +131,10 @@ module.exports = function(db){
                     if(err){
                         deferred.reject(err);
                     }else{
-                        doc.portfolio.push(newPortfolioStock);
-                        deferred.resolve(doc.save());
+                        if(doc){
+                            doc.portfolio.push(newPortfolioStock);
+                            deferred.resolve(doc.save());
+                        }
                     }
             });
         return deferred.promise;
@@ -195,6 +204,6 @@ module.exports = function(db){
                     deferred.resolve(stats);
                 }
             });
-        deferred.promise;
+        return deferred.promise;
     }
 }

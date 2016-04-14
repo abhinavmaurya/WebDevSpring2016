@@ -42,9 +42,20 @@
         function deleteFromWatchlist(stock){
             UserStockService
                 .deleteStockFromUserWatchlist(userId, stock.Symbol)
-                .then(function(response){
-                    init();
-                });
+                .then(
+                    function(response){
+                        return StockService.deleteWatcherFromStock(stock.Symbol, userId);
+                    }
+                )
+                .then(
+                    function(response){
+                        console.log("deleted watcher as well");
+                        init();
+                    },
+                    function(err){
+                        console.log(err);
+                    }
+                );
         }
     }
 })();

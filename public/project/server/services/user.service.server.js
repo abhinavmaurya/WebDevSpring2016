@@ -112,9 +112,6 @@ module.exports = function (app, userModel, userStockModel){
 
     function createUser(req, res){
         var newUser = req.body;
-        newUser.emails = [newUser.email];
-        newUser.phones = [newUser.phone];
-        newUser.roles = ["student"];
         var createdUser = null;
         userModel
             .findUserByUsername(newUser.username)
@@ -136,11 +133,12 @@ module.exports = function (app, userModel, userStockModel){
                     if(user){
                         createdUser = user;
                         return userStockModel.createUserStock(user._id);
-                    }else{
+                    }/*else{
                         res.status(400).send(err);
-                    }
+                    }*/
                 },
                 function(err){
+                    console.log(err);
                     res.status(400).send(err);
                 }
             )
@@ -149,14 +147,16 @@ module.exports = function (app, userModel, userStockModel){
                     if(createdUser){
                         req.login(createdUser, function(err) {
                             if(err) {
+                                console.log(err);
                                 res.status(400).send(err);
                             } else {
-                                res.json(user);
+                                res.json(createdUser);
                             }
                         });
                     }
                 },
                 function(err){
+                    console.log(err);
                     res.status(400).send(err);
                 }
             );
@@ -281,7 +281,7 @@ module.exports = function (app, userModel, userStockModel){
 
     function deleteFollowingUser(req, res){
         var userId = req.params.userId;
-        var followerId = req.params.followerId;
+        var followerId = req.params.followingId;
         userModel.deleteFollowingUser(userId, followerId)
             .then(
                 function(stats){

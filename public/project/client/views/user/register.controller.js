@@ -38,10 +38,10 @@
                 vm.message = "Passwords must match";
                 return;
             }
-            if (isDuplicateUsername(user.username)) {
+            /*if (isDuplicateUsername(user.username)) {
                 vm.message = "Username already exists";
                 return;
-            }
+            }*/
             UserService
                 .createUser(user)
                 .then(
@@ -51,10 +51,12 @@
                         if(currentUser){
                             UserService.setCurrentUser(currentUser);
                             $location.url("/profile");
+                        }else{
+                            vm.message = "Username already exists";
                         }
                     },
                     function(err){
-                        console.log("API Failure");
+                        console.log(err);
                     }
                 );
         }
@@ -71,7 +73,7 @@
                             return false;
                     },
                     function(err){
-                        console.log("API Failure");
+                        console.log(err);
                         return false;
                     }
                 );

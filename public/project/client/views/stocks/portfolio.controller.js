@@ -53,9 +53,23 @@
 
             UserStockService
                 .deleteStockFromUserPortfolio(userId, stock._id)
-                .then(function(response){
-                    refreshList();
-                });
+                .then(
+                    function(response){
+                        return StockService.deleteHolderFromStock(stockID, user._id);
+                        refreshList();
+                    },
+                    function(err){
+                        console.log(err);
+                    }
+                )
+                .then(
+                    function(response){
+                        refreshList();
+                    },
+                    function(err){
+                        console.log(err);
+                    }
+                );
         }
 
         function selectStock(stock){
