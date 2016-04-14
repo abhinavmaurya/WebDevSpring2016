@@ -5,12 +5,12 @@
 
 module.exports = function (app, stockModel){
 
-    app.post("/api/project/:stockId/portfolio/:userId", addHolderToStock);
-    app.post("/api/project/:stockId/watchlist/:userId", addWatcherToStock);
-    app.delete("/api/project/:stockId/portfolio/:userId", deleteHolderFromStock);
-    app.delete("/api/project/:stockId/watchlist/:userId", deleteWatcherFromStock);
-    app.get("/api/project/:userId/portfolio", findStockHolders);
-    app.get("/api/project/:userId/watchlist", findStockWatchers);
+    app.post("/api/project/:stockId/holder/:userId", addHolderToStock);
+    app.post("/api/project/:stockId/watcher/:userId", addWatcherToStock);
+    app.delete("/api/project/:stockId/holder/:userId", deleteHolderFromStock);
+    app.delete("/api/project/:stockId/watcher/:userId", deleteWatcherFromStock);
+    app.get("/api/project/:userId/holder", findStockHolders);
+    app.get("/api/project/:userId/watcher", findStockWatchers);
 
     function addHolderToStock(req, res){
         var stockId = req.params.stockId;

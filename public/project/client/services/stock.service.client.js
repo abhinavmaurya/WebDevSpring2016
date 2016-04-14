@@ -43,28 +43,28 @@
 
         function addWatcherToStock(stockId, userId){
             console.log("AddWatcher", stockId, userId);
-            return $http.post("/api/project/"+stockId+"/watchlist/"+userId);
+            return $http.post("/api/project/"+stockId+"/watcher/"+userId);
         }
 
         function addHolderToStock(stockId, userId){
             console.log("AddHolder", stockId, userId);
-            return $http.post("/api/project/"+stockId+"/portfolio/"+userId);
+            return $http.post("/api/project/"+stockId+"/holder/"+userId);
         }
 
         function deleteWatcherFromStock(stockId, userId){
-            return $http.delete("/api/project/"+stockId+"/watchlist/"+userId);
+            return $http.delete("/api/project/"+stockId+"/watcher/"+userId);
         }
 
         function deleteHolderFromStock(stockId, userId){
-            return $http.delete("/api/project/"+stockId+"/portfolio/"+userId);
+            return $http.delete("/api/project/"+stockId+"/holder/"+userId);
         }
 
         function findStockWatchers(stockId){
-            return $http.get("/api/project/"+stockId+"/watchlist");
+            return $http.get("/api/project/"+stockId+"/watcher");
         }
 
         function findStockHolders(stockId){
-            return $http.get("/api/project/"+stockId+"/portfolio");
+            return $http.get("/api/project/"+stockId+"/holder");
         }
     }
 })();

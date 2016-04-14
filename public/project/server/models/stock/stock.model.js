@@ -76,18 +76,20 @@ module.exports = function(db){
                             }
                         });
                     }else{   // if stock is not created and first user is watching/holding
-                        var newStock = new Stock({
+                        var newStock = {
                             stockId: stockId,
                             watchers: [],
                             holders: []
-                        });
+                        };
                         newStock.watchers.push(userId);
-                        newStock.save(function(err, doc){
-                            if (err) {
-                                deferred.reject(err);
-                            } else {
-                                deferred.resolve(doc);
-                            }
+                        StockModel.create(
+                            newStock,
+                            function(err, doc){
+                                if (err) {
+                                    deferred.reject(err);
+                                } else {
+                                    deferred.resolve(doc);
+                                }
                         });
                     }
                 }
@@ -115,14 +117,16 @@ module.exports = function(db){
                             }
                         });
                     }else{
-                        var newStock = new Stock({
+                        var newStock = {
                             stockId: stockId,
                             watchers: [],
                             holders: []
-                        });
+                        };
                         newStock.holders.push(userId);
 
-                        newStock.save(function(err, doc){
+                        StockModel.create(
+                            newStock,
+                            function(err, doc){
                             if (err) {
                                 deferred.reject(err);
                             } else {
