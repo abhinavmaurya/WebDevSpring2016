@@ -8,8 +8,8 @@ module.exports = function() {
     var StockSchema = new mongoose.Schema(
         {
             stockId: String,
-            watchers: [String], //ids of users watching this stock
-            holders: [String]  //ids of users holding this stock
+            watchers: [{userId: String, username: String}], //ids of users watching this stock
+            holders: [{userId: String, username: String}]  //ids of users holding this stock
         }, {collection: "project.stock"});
     return StockSchema;
 };

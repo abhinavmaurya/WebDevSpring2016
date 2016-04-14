@@ -41,14 +41,14 @@
             return $http.jsonp("http://dev.markitondemand.com/Api/v2/InteractiveChart/jsonp?parameters=" + params + "&callback=JSON_CALLBACK");
         }
 
-        function addWatcherToStock(stockId, userId){
-            console.log("AddWatcher", stockId, userId);
-            return $http.post("/api/project/"+stockId+"/watcher/"+userId);
+        function addWatcherToStock(stockId, user){
+            console.log("AddWatcher", stockId, user);
+            return $http.post("/api/project/"+stockId+"/watcher", user);
         }
 
-        function addHolderToStock(stockId, userId){
-            console.log("AddHolder", stockId, userId);
-            return $http.post("/api/project/"+stockId+"/holder/"+userId);
+        function addHolderToStock(stockId, user){
+            console.log("AddHolder", stockId, user);
+            return $http.post("/api/project/"+stockId+"/holder", user);
         }
 
         function deleteWatcherFromStock(stockId, userId){

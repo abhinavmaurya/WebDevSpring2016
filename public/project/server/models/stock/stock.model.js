@@ -57,7 +57,7 @@ module.exports = function(db){
         return deferred.promise;
     }
 
-    function addWatcherToStock(stockId, userId){
+    function addWatcherToStock(stockId, user){
         var deferred = q.defer();
         StockModel.findOne(
             {stockId: stockId},
@@ -66,7 +66,7 @@ module.exports = function(db){
                     deferred.reject(err);
                 }else{
                     if(doc) {   // if stock is already created
-                        doc.watchers.push(userId);
+                        doc.watchers.push(user);
                         // save changes
                         doc.save(function (err, doc) {
                             if (err) {
@@ -81,7 +81,7 @@ module.exports = function(db){
                             watchers: [],
                             holders: []
                         };
-                        newStock.watchers.push(userId);
+                        newStock.watchers.push(user);
                         StockModel.create(
                             newStock,
                             function(err, doc){
@@ -98,7 +98,7 @@ module.exports = function(db){
         return deferred.promise;
     }
 
-    function addHolderToStock(stockId, userId){
+    function addHolderToStock(stockId, user){
         var deferred = q.defer();
         StockModel.findOne(
             {stockId: stockId},
@@ -107,7 +107,7 @@ module.exports = function(db){
                     deferred.reject(err);
                 }else{
                     if(doc) {   // if stock is already created
-                        doc.holders.push(userId);
+                        doc.holders.push(user);
                         // save changes
                         doc.save(function (err, doc) {
                             if (err) {
@@ -122,7 +122,7 @@ module.exports = function(db){
                             watchers: [],
                             holders: []
                         };
-                        newStock.holders.push(userId);
+                        newStock.holders.push(user);
 
                         StockModel.create(
                             newStock,
@@ -144,7 +144,7 @@ module.exports = function(db){
         var deferred = q.defer();
         StockModel.update(
             {stockId: stockId},
-            {$pull: {watchers: userId}},
+            {$pull: {watchers: {userId: userId}}},
             function(err, doc){
                 if(err){
                     deferred.reject(err);
@@ -160,7 +160,7 @@ module.exports = function(db){
         var deferred = q.defer();
         StockModel.update(
             {stockId: stockId},
-            {$pull: {holders: userId}},
+            {$pull: {holders: {userId: userId}}},
             function(err, doc){
                 if(err){
                     deferred.reject(err);

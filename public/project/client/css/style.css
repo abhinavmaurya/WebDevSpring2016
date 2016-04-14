@@ -22,6 +22,7 @@
 }
 
 .fixed-panel {
+    min-height: 100px;
     max-height: 300px;
     overflow-y: scroll;
 }
@@ -40,6 +41,10 @@
 }
 
 .news p{
+    font-size: 14px;
+}
+
+.news a{
     font-size: 14px;
 }
 

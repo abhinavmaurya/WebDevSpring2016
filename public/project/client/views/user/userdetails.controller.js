@@ -67,7 +67,7 @@
         function isExist(element, lst){
             var flag = false;
             for(var s in lst){
-                if(lst[s] == element){
+                if(lst[s].userId == element){
                     flag=true;
                     break;
                 }
@@ -77,10 +77,10 @@
 
         function follow(){
             UserService
-                .addFollowingUser(vm.viewingUser._id, vm.userId)
+                .addFollowingUser(vm.viewingUser._id, {userId: vm.user._id, username: vm.user.username})
                 .then(
                     function(response){
-                        return UserService.addFollower(vm.userId, vm.viewingUser._id);
+                        return UserService.addFollower(vm.userId, {userId: vm.viewingUser._id, username: vm.viewingUser.username});
                     },
                     function (err){
                         console.log(err);

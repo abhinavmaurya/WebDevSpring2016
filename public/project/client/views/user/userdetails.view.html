@@ -33,7 +33,7 @@
         </div>
         <div class="panel-footer">
             <button ng-hide="model.isFollowing" ng-click="model.follow()" class="btn btn-primary">Follow @{{model.user.username}}</button>
-            <button ng-show="model.isFollowing" ng-click="model.unfollow()" class="btn btn-primary">Unfollow @{{model.user.username}}</button>
+            <button ng-show="model.isFollowing" ng-click="model.unfollow()" class="btn btn-danger">Unfollow @{{model.user.username}}</button>
 
         </div>
     </div>

@@ -67,7 +67,11 @@
                         console.log(response);
                         console.log(response.data);
                         if(response.data){
-                            StockService.addWatcherToStock(stockID, user._id);
+                            var newUser = {
+                                userId: user._id,
+                                username: user.username
+                            };
+                            StockService.addWatcherToStock(stockID, newUser);
                         }
                     },
                     function(err){
@@ -106,7 +110,11 @@
                     .addStockToUserPortfolio(user._id, stockID, newStock)
                     .then(
                         function(response){
-                            return StockService.addHolderToStock(stockID, user._id);
+                            var newUser = {
+                                userId: user._id,
+                                username: user.username
+                            };
+                            return StockService.addHolderToStock(stockID, newUser);
                         },
                         function(err){
                             console.log(err);

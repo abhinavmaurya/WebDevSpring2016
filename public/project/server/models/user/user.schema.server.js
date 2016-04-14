@@ -16,9 +16,9 @@ module.exports = function() {
             about: String,
             admin: Boolean,
             /*followers: User being followed by these users*/
-            followers: [String],
+            followers: [{userId: String, username: String}],
             /*following: User following these users*/
-            following: [String]
+            following: [{userId: String, username: String}]
 
         }, {collection: "project.user"});
     return UserSchema;

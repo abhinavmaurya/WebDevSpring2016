@@ -179,7 +179,7 @@ module.exports = function(db){
         return deferred.promise;
     }
 
-    function addFollower(userId, followerUserId){
+    function addFollower(userId, followerUser){
         var deferred = q.defer();
         UserModel
             .findById(
@@ -188,14 +188,14 @@ module.exports = function(db){
                     if(err){
                         deferred.reject(err);
                     }else{
-                        doc.followers.push(followerUserId);
+                        doc.followers.push(followerUser);
                         deferred.resolve(doc.save());
                     }
                 });
         return deferred.promise;
     }
 
-    function addFollowingUser(userId, followingUserId){
+    function addFollowingUser(userId, followingUser){
         var deferred = q.defer();
         UserModel
             .findById(
@@ -204,7 +204,7 @@ module.exports = function(db){
                     if(err){
                         deferred.reject(err);
                     }else{
-                        doc.following.push(followingUserId);
+                        doc.following.push(followingUser);
                         deferred.resolve(doc.save());
                     }
                 });
@@ -215,7 +215,7 @@ module.exports = function(db){
         var deferred = q.defer();
         UserModel.findByIdAndUpdate(
             userId,
-            {$pull: {followers: followerUserId}},
+            {$pull: {followers: {userId: followerUserId}}},
             function(err, stats){
                 if(err){
                     deferred.reject(err);
@@ -231,7 +231,7 @@ module.exports = function(db){
         var deferred = q.defer();
         UserModel.findByIdAndUpdate(
             {_id: userId},
-            {$pull: {following: followingUserId}},
+            {$pull: {following: {userId: followingUserId}}},
             function(err, stats){
                 if(err){
                     deferred.reject(err);

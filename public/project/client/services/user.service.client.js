@@ -87,12 +87,12 @@
             return $http.get("/api/project/user/"+userId+"/following");
         }
 
-        function addFollower(userId, followerId){
-            return $http.post("/api/project/user/"+userId+"/follower/" +followerId);
+        function addFollower(userId, follower){
+            return $http.post("/api/project/user/"+userId+"/follower", follower);
         }
 
-        function addFollowingUser(userId, followingId){
-            return $http.post("/api/project/user/"+userId+"/following/" +followingId);
+        function addFollowingUser(userId, followingUser){
+            return $http.post("/api/project/user/"+userId+"/following", followingUser);
         }
 
         function deleteFollower(userId, followerId){

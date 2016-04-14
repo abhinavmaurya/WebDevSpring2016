@@ -24,8 +24,8 @@ module.exports = function (app, userModel, userStockModel){
 
     app.get     ("/api/project/user/:userId/follower",    getFollowers);
     app.get     ("/api/project/user/:userId/following",    getFollowingUsers);
-    app.post    ("/api/project/user/:userId/follower/:followerId",    addFollower);
-    app.post    ("/api/project/user/:userId/following/:followingId",    addFollowingUser);
+    app.post    ("/api/project/user/:userId/follower",    addFollower);
+    app.post    ("/api/project/user/:userId/following",    addFollowingUser);
     app.delete  ("/api/project/user/:userId/follower/:followerId",    deleteFollower);
     app.delete  ("/api/project/user/:userId/following/:followingId",    deleteFollowingUser);
 
@@ -239,8 +239,8 @@ module.exports = function (app, userModel, userStockModel){
 
     function addFollower(req, res){
         var userId = req.params.userId;
-        var followerId = req.params.followerId;
-        userModel.addFollower(userId, followerId)
+        var follower = req.body;
+        userModel.addFollower(userId, follower)
             .then(
                 function(doc){
                     res.json(doc);
@@ -253,8 +253,8 @@ module.exports = function (app, userModel, userStockModel){
 
     function addFollowingUser(req, res){
         var userId = req.params.userId;
-        var followingId = req.params.followingId;
-        userModel.addFollowingUser(userId, followingId)
+        var followingUser = req.body;
+        userModel.addFollowingUser(userId, followingUser)
             .then(
                 function(doc){
                     res.json(doc);

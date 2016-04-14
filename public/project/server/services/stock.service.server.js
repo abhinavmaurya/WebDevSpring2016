@@ -5,8 +5,8 @@
 
 module.exports = function (app, stockModel){
 
-    app.post("/api/project/:stockId/holder/:userId", addHolderToStock);
-    app.post("/api/project/:stockId/watcher/:userId", addWatcherToStock);
+    app.post("/api/project/:stockId/holder", addHolderToStock);
+    app.post("/api/project/:stockId/watcher", addWatcherToStock);
     app.delete("/api/project/:stockId/holder/:userId", deleteHolderFromStock);
     app.delete("/api/project/:stockId/watcher/:userId", deleteWatcherFromStock);
     app.get("/api/project/:userId/holder", findStockHolders);
@@ -14,9 +14,10 @@ module.exports = function (app, stockModel){
 
     function addHolderToStock(req, res){
         var stockId = req.params.stockId;
-        var userId = req.params.userId;
+        var user = req.body;
+
         stockModel
-            .addHolderToStock(stockId, userId)
+            .addHolderToStock(stockId, user)
             .then(
                 function(doc){
                     res.json(doc);
@@ -29,9 +30,9 @@ module.exports = function (app, stockModel){
 
     function addWatcherToStock(req, res){
         var stockId = req.params.stockId;
-        var userId = req.params.userId;
+        var user = req.body;
         stockModel
-            .addWatcherToStock(stockId, userId)
+            .addWatcherToStock(stockId, user)
             .then(
                 function(doc){
                     res.json(doc);

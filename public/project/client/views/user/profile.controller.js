@@ -16,14 +16,17 @@
         function init(){
             var usr = UserService.getCurrentUser();
             if(usr) {
-                vm.currentUser = {
-                    _id: usr._id,
-                    username: usr.username,
-                    firstName: usr.firstName,
-                    lastName: usr.lastName,
-                    password: usr.password,
-                    email: usr.email
-                };
+                UserService
+                    .findUserById(usr._id)
+                    .then(
+                        function(response){
+                            vm.currentUser = response.data;
+                            console.log(vm.currentUser);
+                        },
+                        function(err){
+                            console.log(err);
+                        }
+                    );
             }else{
                 $location.url("/home");
             }
@@ -47,7 +50,7 @@
                         }
                     },
                     function(err){
-                        console.log("API Failure");
+                        console.log("err");
                     }
                 );
         }
