@@ -6,7 +6,6 @@
                 <i class="fa fa-user fa-4x"></i>&nbsp;
                 <h1 class="my-heading">{{model.user.username}}</h1>
             </div>
-            <!--<div class="text-right">{{model.user.username}}</div>-->
         </div>
 
         <div class="panel-body">
@@ -14,22 +13,7 @@
             <p><strong>First Name: </strong> {{model.user.firstName}}</p>
             <p><strong>Last Name: </strong>{{model.user.lastName}}</p>
             <p><strong>Email: </strong>{{model.user.email}}</p>
-            <p>
-                <strong>Watching: </strong>
-                <ul>
-                    <li  ng-repeat="stock in model.user.watchlist">
-                        <a href="#/details/{{stock}}/">{{stock}}</a>
-                    </li>
-                </ul>
-            </p>
-            <p>
-                <strong>Holding:</strong>
-                <ul>
-                    <li ng-repeat="stock in model.user.portfolio">
-                        <a href="#/details/{{stock.stockId}}/">{{stock.stockId}}</a>
-                    </li>
-                </ul>
-            </p>
+            <p><strong>About {{model.user.username}}: </strong> {{model.user.about}}</p>
         </div>
         <div class="panel-footer">
             <button ng-hide="model.isFollowing" ng-click="model.follow()" class="btn btn-primary">Follow @{{model.user.username}}</button>
@@ -37,4 +21,37 @@
 
         </div>
     </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{model.user.username}}'s Watchlist: </div>
+            <div class="panel-body table-responsive fixed-panel">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-repeat="stock in model.user.watchlist">
+                        <td class="text-left btn"><a href="#/details/{{stock.stockId}}">{{stock.Name}}&nbsp;({{stock.stockId}})</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{model.user.username}}'s Portfolio: </div>
+            <div class="panel-body table-responsive fixed-panel">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-repeat="stock in model.user.portfolio">
+                        <td class="text-left btn btn-block"><a href="#/details/{{stock.stockId}}">{{stock.Name}}&nbsp;({{stock.stockId}})</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>

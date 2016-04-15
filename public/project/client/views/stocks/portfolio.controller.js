@@ -13,13 +13,16 @@
         var vm = this;
         var userId = UserService.getCurrentUser()._id;
 
-
+        vm.messgae = null;
         vm.portfolio = null;
         vm.selStock = null;
         vm.deleteFromPortfolio = deleteFromPortfolio;
         vm.selectStock = selectStock;
         vm.unselectStock = unselectStock;
         vm.updateStock = updateStock;
+        vm.setStatus = setStatus;
+        vm.getUpDown = getUpDown;
+
 
         function init(){
             refreshList();
@@ -31,9 +34,14 @@
             UserStockService
                 .getUserPortfolio(userId)
                 .then(function(response){
-                    console.log(response.data);
-                    vm.portfolio = response.data;
-                    loadRealTimeData();
+                    if(response.data && response.data.length > 0){
+                        console.log(response.data);
+                        vm.portfolio = response.data;
+                        loadRealTimeData();
+                    }else{
+                        vm.message = "There are no stocks in your portfolio!"
+                    }
+
                 });
         }
 
@@ -43,8 +51,15 @@
                 StockService
                     .findStockById(stock.stockId)
                     .then(function(response){
+                        // format date
+                        stock.purchaseDate = new Date(stock.purchaseDate);
                         stock.LastPrice = response.data.LastPrice;
+                        stock.Change = response.data.Change;
                         stock.Name = response.data.Name;
+                        stock.Investment = stock.price * stock.quantity;
+                        stock.CurrentWorth = stock.LastPrice * stock.quantity;
+                        stock.TotalPL = (stock.CurrentWorth) - (stock.Investment);
+                        stock.TodaysPL = (stock.Change * stock.quantity);
                     });
             });
         }
@@ -87,7 +102,6 @@
                 )
                 .then(
                     function(response){
-                        /*SweetAlert.swal("Deleted!", stock.Name+" is deleted from your portfolio!", "success");*/
                         refreshList();
                     },
                     function(err){
@@ -118,6 +132,14 @@
                 .then(function(response){
                     refreshList();
                 });
+        }
+
+        function setStatus(val){
+            return val < 0 ? 'color-red' : val > 0 ? 'color-green' : '';
+        }
+
+        function getUpDown(val){
+            return val < 0 ? 'fa fa-long-arrow-down' : val > 0 ? 'fa fa-long-arrow-up' : '';
         }
     }
 })();

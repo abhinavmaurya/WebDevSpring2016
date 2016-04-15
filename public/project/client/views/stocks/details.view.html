@@ -5,8 +5,8 @@
                 <h1 class="text-left">{{model.stock.Name}} ({{model.stock.Symbol}})</h1>
             </div>
             <div class="col-sm-2">
-                <h4 class="text-right" ng-class="model.setStatus(model.stock.Change)"><strong>{{model.format(model.stock.LastPrice, 2, 3)}}</strong></h4>
-                <h4 class="text-right" ng-class="model.setStatus(model.stock.Change)"><strong><i ng-class="model.getUpDown(model.stock.Change)"></i>{{model.format(model.stock.Change, 2, 3)}}</strong></h4>
+                <h4 class="text-right" ng-class="model.setStatus(model.stock.Change)"><strong>{{model.stock.LastPrice | number:2}}</strong></h4>
+                <h4 class="text-right" ng-class="model.setStatus(model.stock.Change)"><strong><i ng-class="model.getUpDown(model.stock.Change)"></i>{{model.stock.Change | number:2}}</strong></h4>
             </div>
         </div>
     </div>
@@ -17,36 +17,83 @@
             </div>
             <div class="col-md-4">
                 <p><strong>Date:</strong> {{model.formatDate(model.stock.Timestamp) | date:'medium'}}</p>
-                <p><strong>Open Price($):</strong> {{model.format(model.stock.Open, 2, 3)}}</p>
-                <p><strong>Current Price($):</strong> {{model.format(model.stock.LastPrice, 2, 3)}}</p>
-                <p><strong>Change($):</strong> {{model.format(model.stock.Change, 2, 3)}}</p>
-                <p><strong>Volume:</strong> {{model.format(model.stock.Volume)}}</p>
-                <p><strong>Market Capital($):</strong> {{model.format(model.stock.MarketCap, 2, 3)}}</p>
+                <p><strong>Open Price($):</strong> {{model.stock.Open | number:2}}</p>
+                <p><strong>Current Price($):</strong> {{model.stock.LastPrice | number:2}}</p>
+                <p><strong>Change($):</strong> {{model.stock.Change | number:2}}</p>
+                <p><strong>Volume:</strong> {{model.stock.Volume | number:0}}</p>
+                <p><strong>Market Capital($):</strong> {{model.stock.MarketCap | number:0}}</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="col-md-8 news">
-    <div class="panel panel-info" ng-controller="StockNewsController as model">
-        <div class="panel-heading">
-            Latest News about {{model.stock.Name}}
-        </div>
-
-        <div class="panel-body fixed-panel">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <tr ng-repeat="news in model.stockNews">
-                        <td>
-                            <h4><strong>{{news.title}}</strong></h4>
-                            <p>{{news.content}}</p>
-                            <a ng-href={{news.link}} target="_blank">Read more..<i class="fa fa-external-link"></i></a>
-                        </td>
+<div class="row watchers-holders" ng-show="currentUser">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Watchers</div>
+            <div class="panel-body table-responsive fixed-panel">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-repeat="user in model.watchers">
+                        <td class="text-left"><a href="#/view/{{user.userId}}">{{user.username}}</a></td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Holders</div>
+            <div class="panel-body table-responsive fixed-panel">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-repeat="user in model.holders">
+                        <td class="text-left"><a href="#/view/{{user.userId}}">{{user.username}}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 news">
+        <div class="panel panel-info" ng-controller="StockNewsController as model">
+            <div class="panel-heading">
+                Latest News about {{model.stock.Name}}
+            </div>
+
+            <div class="panel-body fixed-panel">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tr ng-repeat="news in model.stockNews">
+                            <td>
+                                <h4><strong>{{news.title}}</strong></h4>
+                                <p>{{news.content}}</p>
+                                <a ng-href={{news.link}} target="_blank">Read more..<i class="fa fa-external-link"></i></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col-md-4 recommendation">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Stats:
+            </div>
+
+            <div class="panel-body fixed-panel">
+                <div class="col-xs-6 well">
+
+                </div>
+            </div>
+        </div>
+    </div>-->
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom" ng-show="currentUser">

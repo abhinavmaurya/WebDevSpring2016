@@ -8,7 +8,7 @@
         .module("TradeBullApp")
         .controller("UserDetailsController", UserDetailsController);
 
-    function UserDetailsController(UserService, SweetAlert, $routeParams, UserStockService){
+    function UserDetailsController(UserService, SweetAlert, $routeParams, UserStockService, StockService){
 
         var vm = this;
         vm.error = null;
@@ -56,12 +56,38 @@
                 .then(
                     function(response){
                         vm.user.portfolio = response.data;
+                        fetchUserStockDetails();
                         console.log(vm.user);
                     },
                     function(err){
                         console.log(err);
                     }
                 )
+        }
+
+        function fetchUserStockDetails(){
+            // fetch watchlist stocks
+            var watchlist = vm.user.watchlist;
+            vm.user.watchlist = [];
+            for(var s in watchlist){
+                StockService
+                    .findStockById(watchlist[s])
+                    .then(function(response){
+                        var stock = {stockId: response.data.Symbol, Name: response.data.Name};
+                        vm.user.watchlist.push(stock);
+                    });
+            }
+
+            var portfolio = vm.user.portfolio;
+            vm.user.portfolio = [];
+            for(var s in portfolio){
+                StockService
+                    .findStockById(portfolio[s])
+                    .then(function(response){
+                        var stock = {stockId: response.data.Symbol, Name: response.data.Name};
+                        vm.user.portfolio.push(stock);
+                    });
+            }
         }
 
         function isExist(element, lst){

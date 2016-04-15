@@ -15,6 +15,8 @@
         var user = UserService.getCurrentUser();
 
         var vm = this;
+        vm.watchers= null;
+        vm.holders = null;
         function init(){
             StockService
                 .findStockById(stockID)
@@ -22,12 +24,12 @@
                     vm.stock = response.data;
                 });
             findInUserWatchlist();
+            findWatchersAndHolders(stockID);
         }
         init();
         vm.addToWatchlist = addToWatchlist;
         vm.addToWatchlist = addToWatchlist;
         vm.addToPortfolio = addToPortfolio;
-        vm.format = format;
         vm.formatDate= formatDate;
         vm.commitAdd = commitAdd;
         vm.setStatus = setStatus;
@@ -58,6 +60,20 @@
                     });
             }
         }
+
+        function findWatchersAndHolders(stockId){
+            StockService
+                .findStockWatchers(stockId)
+                .then(function(response){
+                    vm.watchers = response.data;
+                });
+            StockService
+                .findStockHolders(stockId)
+                .then(function(response){
+                    vm.holders = response.data;
+                });
+        }
+
         function addToWatchlist(){
             console.log(user._id, stockID);
             UserStockService
@@ -129,13 +145,6 @@
                             console.log(err);
                         }
                     );
-            }
-        }
-
-        function format(num, n, x) {
-            if(num) {
-                var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-                return num.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
             }
         }
 
