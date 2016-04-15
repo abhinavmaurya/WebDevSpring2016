@@ -98,6 +98,7 @@
                     function(response){
                         SweetAlert.swal("Success!", "Successfully added to Watchlist!", "success");
                         vm.displayAddToWatchlist = true;
+                        findWatchersAndHolders(stockID);
                     },
                     function(err){
                         console.log(err);
@@ -140,6 +141,7 @@
                         function(response){
                             SweetAlert.swal("Success!", "Successfully added to Portfolio!", "success");
                             vm.addPort = null;
+                            findWatchersAndHolders(stockID);
                         },
                         function(err){
                             console.log(err);
@@ -246,8 +248,6 @@
             StockService
                 .findStockNews(stockID)
                 .then(function(response){
-                    console.log(response.data);
-                    console.log(response.data.items);
                     vm.stockNews = response.data.items;
                 });
         }

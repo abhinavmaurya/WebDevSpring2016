@@ -9,13 +9,18 @@
         .controller("HomeController", HomeController);
 
 
-    function HomeController(UserService){
+    function HomeController(UserService, StockService){
 
         var vm = this;
+        vm.headline = null;
         var user = UserService.getCurrentUser();
 
         function init(){
-
+            StockService
+                .findHeadlines()
+                .then(function(response){
+                    vm.headline = response.data.items;
+                });
         }
         init();
 

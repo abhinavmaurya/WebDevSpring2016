@@ -1,21 +1,22 @@
-<div class="row" ng-if="!currentUser">
-    <div class="col-md-9">
-        <img src="resources/portfolio_6.jpg" class="home-image">
-    </div>
-    <div class="col-md-3">
-        <div class="panel panel-info">
-            <div class="panel-heading">Tradebull</div>
-            <div class="panel-body">
-                <p>Forget about tracking your stocks in excel sheets. Search, Track and manage all your stocks at one place.</p>
-                <a href="#/register" class="btn btn-info">Register Now</a>
-            </div>
+<div ng-if="!currentUser">
+    <div class="row well">
+        <div class="col-md-9">
+            <img src="resources/portfolio_6.jpg" class="home-image">
         </div>
-        <br>
-        <div class="panel panel-info">
-            <div class="panel-heading">Dont want to join?</div>
-            <div class="panel-body">
-                <p>You can still search and track your favorite stocks.</p>
-                <a href="#/search" class="btn btn-info">Start Searching Now</a>
+        <div class="col-md-3">
+            <div class="panel panel-info">
+                <div class="panel-heading">Tradebull</div>
+                <div class="panel-body">
+                    <p>Forget about tracking your stocks in excel sheets. Search, Track and manage all your stocks at one place.</p>
+                    <a href="#/register" class="btn btn-info"><strong>Register Now</strong></a>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Dont want to join?</div>
+                <div class="panel-body">
+                    <p>You can still search and track your favorite stocks.</p>
+                    <a href="#/search" class="btn btn-info"><strong>Start Searching Now</strong></a>
+                </div>
             </div>
         </div>
     </div>
@@ -24,18 +25,42 @@
 <div ng-if="currentUser" class="row">
     <h2>Welcome {{currentUser.firstName}}!</h2>
 </div>
-    <br>
+
 <div ng-if="currentUser" class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 well">
         <h5>See how your purchased stocks are doing!</h5>
         <a href="#/portfolio" class="btn btn-primary">Go To Portfolio</a>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-4 well">
         <h5>Take a quick glance at your watchlist.</h5>
         <a href="#/watchlist" class="btn btn-primary">Go To Watchlist</a>
     </div>
-    <div class="col-sm-4">
-        <h5>Something else in mind?</h5>
+    <div class="col-sm-4 well">
+        <h5>Something else in mind? Find the stocks.</h5>
         <a href="#/search" class="btn btn-info">Search Now</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 news">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Headlines
+            </div>
+
+            <div class="panel-body fixed-panel">
+                <div>
+                    <table class="table table-bordered table-hover">
+                        <tr ng-repeat="news in model.headline">
+                            <td>
+                                <h4><strong>{{news.title}}</strong></h4>
+                                <p>{{news.content}}</p>
+                                <a ng-href={{news.link}} target="_blank">Read more..<i class="fa fa-external-link"></i></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

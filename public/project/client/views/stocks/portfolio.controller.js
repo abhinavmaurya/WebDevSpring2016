@@ -25,6 +25,7 @@
         vm.totalValue = null;
         vm.totalInvestment = null;
         vm.totalPL = null;
+        vm.todaysPL = null;
 
 
         function init(){
@@ -52,6 +53,7 @@
             vm.totalValue = 0;
             vm.totalInvestment = 0;
             vm.totalPL = 0;
+            vm.todaysPL = 0;
             angular.forEach(vm.portfolio, function(stock){
                 StockService
                     .findStockById(stock.stockId)
@@ -68,22 +70,9 @@
                         vm.totalValue = vm.totalValue + stock.CurrentWorth;
                         vm.totalInvestment = vm.totalInvestment + stock.Investment;
                         vm.totalPL = vm.totalPL + stock.TotalPL;
+                        vm.todaysPL = vm.todaysPL + stock.TodaysPL;
                     });
             });
-        }
-
-        function calculateTotalWorth(){
-            console.log(vm.portfolio);
-            var totVal = 0;
-            var totInv = 0;
-            for(var s in vm.portfolio){
-                totVal = totVal + vm.portfolio[s].TotalPL;
-                totInv = totInv + vm.portfolio[s].Investment;
-            }
-            vm.totalValue = totVal;
-            vm.totalInvestment = totInv;
-            vm.totalPL = totVal - totInv;
-            console.log(totInv, totVal, vm.totalPL);
         }
 
         function deleteFromPortfolio(stock){
@@ -101,7 +90,6 @@
                 },
                 function(isConfirm){
                     if (isConfirm) {
-                        /*SweetAlert.swal("Deleted!", "Your imaginary file has been deleted.", "success");*/
                         confirmDelete(stock);
                         SweetAlert.swal("Deleted!", stock.Name+" is deleted from your portfolio!", "success");
                     } else {

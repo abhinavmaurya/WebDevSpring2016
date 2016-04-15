@@ -15,6 +15,7 @@
             findStockById: findStockById,
             findStockNews: findStockNews,
             findHistoricalData: findHistoricalData,
+            findHeadlines: findHeadlines,
             /*Watcher and holders for stock*/
             addWatcherToStock: addWatcherToStock,
             addHolderToStock: addHolderToStock,
@@ -35,6 +36,10 @@
 
         function findStockNews(stockId){
             return $http.get("http://rss2json.com/api.json?rss_url=http%3A%2F%2Ffinance.yahoo.com%2Frss%2Fheadline%3Fs%3D"+stockId);
+        }
+
+        function findHeadlines(){
+            return $http.get("http://rss2json.com/api.json?rss_url=https%3A%2F%2Ffeeds.finance.yahoo.com%2Frss%2F2.0%2Fheadline%3Fs%3Da%26region%3DUS%26lang%3Den-US");
         }
 
         function findHistoricalData(params){
