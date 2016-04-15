@@ -161,6 +161,7 @@
         var vm = this;
         var stockID = $routeParams.symbol;
         vm.data = [];
+        vm.loadingChart = true;
 
         function init(){
             var params = {
@@ -187,6 +188,7 @@
                         element.push(price[i]);
                         vm.data.push(element);
                     }
+                    vm.loadingChart = false;
                     drawChart(vm.data);
                 });
         }
