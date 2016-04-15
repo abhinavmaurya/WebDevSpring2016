@@ -22,6 +22,9 @@
         vm.updateStock = updateStock;
         vm.setStatus = setStatus;
         vm.getUpDown = getUpDown;
+        vm.totalValue = null;
+        vm.totalInvestment = null;
+        vm.totalPL = null;
 
 
         function init(){
@@ -35,7 +38,6 @@
                 .getUserPortfolio(userId)
                 .then(function(response){
                     if(response.data && response.data.length > 0){
-                        console.log(response.data);
                         vm.portfolio = response.data;
                         loadRealTimeData();
                     }else{
@@ -47,6 +49,9 @@
 
         function loadRealTimeData(){
             // synchronize loading of data from API
+            vm.totalValue = 0;
+            vm.totalInvestment = 0;
+            vm.totalPL = 0;
             angular.forEach(vm.portfolio, function(stock){
                 StockService
                     .findStockById(stock.stockId)
@@ -60,8 +65,25 @@
                         stock.CurrentWorth = stock.LastPrice * stock.quantity;
                         stock.TotalPL = (stock.CurrentWorth) - (stock.Investment);
                         stock.TodaysPL = (stock.Change * stock.quantity);
+                        vm.totalValue = vm.totalValue + stock.CurrentWorth;
+                        vm.totalInvestment = vm.totalInvestment + stock.Investment;
+                        vm.totalPL = vm.totalPL + stock.TotalPL;
                     });
             });
+        }
+
+        function calculateTotalWorth(){
+            console.log(vm.portfolio);
+            var totVal = 0;
+            var totInv = 0;
+            for(var s in vm.portfolio){
+                totVal = totVal + vm.portfolio[s].TotalPL;
+                totInv = totInv + vm.portfolio[s].Investment;
+            }
+            vm.totalValue = totVal;
+            vm.totalInvestment = totInv;
+            vm.totalPL = totVal - totInv;
+            console.log(totInv, totVal, vm.totalPL);
         }
 
         function deleteFromPortfolio(stock){
@@ -112,12 +134,14 @@
 
         function selectStock(stock){
             vm.selStock = {
+                _id : stock._id,
                 "Name": stock.Name,
                 "stockId": stock.stockId,
                 "purchaseDate": stock.purchaseDate,
                 "price": stock.price,
                 "quantity": stock.quantity,
-                "LastPrice": stock.LastPrice
+                "LastPrice": stock.LastPrice,
+                "TotalPL": stock.TotalPL
             };
         }
 
@@ -128,7 +152,7 @@
         function updateStock(stock){
             console.log(stock);
             UserStockService
-                .updateStockInUserPortfolio(userId, stock.stockId, stock)
+                .updateStockInUserPortfolio(userId, stock._id, stock)
                 .then(function(response){
                     refreshList();
                 });

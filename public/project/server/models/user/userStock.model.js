@@ -175,16 +175,20 @@ module.exports = function(db){
     function updateStockInUserPortfolio(userId,updateStockId, updatedPortfolioStock){
         var deferred = q.defer();
         UserStockModel
-            .findById(userId, function(err, doc){
-                if(err){
-                    deferred.reject(err);
-                }else{
-                    var stockToUpdate = doc.portfolio.id(updateStockId);
-                    stockToUpdate.quantity = updatedPortfolioStock.quantity;
-                    stockToUpdate.purchaseDate = updatedPortfolioStock.purchaseDate;
-                    stockToUpdate.price = updatedPortfolioStock.price;
-                    deferred.resolve(doc.save());
-                }
+            .findOne(
+                {userId: userId},
+                function(err, doc){
+                    if(err){
+                        deferred.reject(err);
+                    }else{
+                        if(doc){
+                            var stockToUpdate = doc.portfolio.id(updateStockId);
+                            stockToUpdate.quantity = updatedPortfolioStock.quantity;
+                            stockToUpdate.purchaseDate = updatedPortfolioStock.purchaseDate;
+                            stockToUpdate.price = updatedPortfolioStock.price;
+                            deferred.resolve(doc.save());
+                        }
+                    }
             });
         return deferred.promise;
     }

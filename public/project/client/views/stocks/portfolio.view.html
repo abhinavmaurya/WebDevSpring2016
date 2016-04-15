@@ -1,18 +1,24 @@
-<h2>Portfolio</h2>
-
+<div class="row">
+    <h2 class="col-xs-4 pull-left">Portfolio</h2>
+    <div class="col-xs-8 pull-right">
+        <h3 class=" text-right" ng-class="model.setStatus(model.totalPL)">Worth: {{model.totalValue | number:2}}</h3>
+        <h4 class=" text-right" ng-class="model.setStatus(model.totalPL)">({{model.totalPL | number:2}})<i ng-class="model.getUpDown(model.totalPL)"></i></h4>
+    </div>
+</div>
 <div ng-show="model.message" class="validate alert alert-danger">
     <a class="close" data-dismiss="alert"><i class="fa fa-remove"></i></a>{{model.message}}
 </div>
 
-<div class="table-responsive visible-lg visible-md" ng-show="model.portfolio">
-    <table class="table table-striped table-bordered">
+<div class="table-responsive visible-lg visible-md portfolio-table" ng-show="model.portfolio">
+    <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
                 <th>Stock</th>
-                <th>Buy Price</th>
                 <th>Qty</th>
                 <th>PurchaseDate</th>
-                <th>Current Price</th>
+                <th>Buy&nbsp;Price</th>
+                <th>Current&nbsp;Price</th>
+                <th>Total&nbsp;P/L</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -23,16 +29,19 @@
                 <input type="text" class="form-control" placeholder="Stock Name" ng-model="model.selStock.stockId" disabled/>
             </td>
             <td>
-                <input type="text" class="form-control" placeholder="Buying Price" ng-model="model.selStock.price"/>
-            </td>
-            <td>
                 <input type="text" class="form-control" placeholder="Quantity" ng-model="model.selStock.quantity"/>
             </td>
             <td>
                 <input type="date" class="form-control" placeholder="Date" ng-model="model.selStock.purchaseDate"/>
             </td>
             <td>
-                {{model.selStock.LastPrice}}
+                <input type="text" class="form-control" placeholder="Buying Price" ng-model="model.selStock.price"/>
+            </td>
+            <td>
+                {{model.selStock.LastPrice | number:2}}
+            </td>
+            <td>
+                {{model.selStock.TotalPL | number:2}}
             </td>
             <td class="action-column">
                 <a ng-click="model.unselectStock()" class="btn btn-danger"><i class="fa fa-remove"></i></a>&nbsp;
@@ -41,10 +50,11 @@
         </tr>
         <tr ng-repeat="stock in model.portfolio">
             <td><a href="#/details/{{stock.stockId}}">{{stock.Name}}&nbsp;({{stock.stockId}})</a></td>
-            <td>{{stock.price}}</td>
             <td>{{stock.quantity}}</td>
             <td>{{stock.purchaseDate | date:'MM/dd/yyyy'}}</td>
+            <td>{{stock.price}}</td>
             <td>{{stock.LastPrice}}</td>
+            <td ng-class="model.setStatus(stock.TotalPL)"><strong>{{stock.TotalPL | number:2}}</strong></td>
             <td class="action-column">
                 <a ng-click="model.selectStock(stock)" class="btn btn-info"><i class="fa fa-pencil-square-o"></i></a>&nbsp;
                 <a ng-click="model.deleteFromPortfolio(stock)" class="btn btn-danger"><i class="fa fa-remove"></i></a>

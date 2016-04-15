@@ -54,3 +54,7 @@
 .my-heading{
     display: inline;
 }
+
+.portfolio-table td{
+    font-size: 16px;
+}
