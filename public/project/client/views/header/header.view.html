@@ -30,8 +30,13 @@
                 <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/register'}"><a href="#/register">Register</a></li>
                 <li ng-show="currentUser.admin" ng-class="{'active' : model.$location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
                 <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/login'}"><a href="#/login">Login</a></li>
-                <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/watchlist'}"><a href="#/watchlist">Watchlist</a></li>
-                <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/portfolio'}"><a href="#/portfolio">Portfolio</a></li>
+                <li class="dropdown" ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/watchlist' || model.$location.url() == '/portfolio'}">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My Stocks <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/watchlist'}"><a href="#/watchlist">Watchlist</a></li>
+                        <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/portfolio'}"><a href="#/portfolio">Portfolio</a></li>
+                    </ul>
+                </li>
                 <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/logout'}"><a href ng-click="model.logout()">Logout</a></li>
             </ul>
         </div>
