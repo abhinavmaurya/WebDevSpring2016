@@ -1,26 +1,35 @@
 /**
- * Created by abhinavmaurya on 2/19/16.
+ * Created by abhinavmaurya on 3/18/16.
  */
 
 "use strict";
-(function () {
 
+(function() {
     angular
         .module("TradeBullApp")
         .controller("AdminController", AdminController);
 
-
-    function AdminController(UserService){
+    function AdminController(AdminService, $filter){
 
         var vm = this;
+        var orderBy = $filter('orderBy');
+        vm.predicate = 'username';
+        vm.reverse = false;
 
         function init(){
-            UserService
+            AdminService
                 .findAllUsers()
-                .then(function(response){
-                    vm.users = response.data;
-                    console.log(vm.users);
-                });
+                .then(
+                    function(response){
+                        vm.users = response.data;
+                        refreshSort();
+                        console.log(vm.users);
+                    },
+                    function(err){
+                        console.log(err);
+                    }
+                );
+            unselectUser();
         }
         init();
 
@@ -33,21 +42,21 @@
         vm.selectUser = selectUser;
         vm.unselectUser = unselectUser;
         vm.deleteUser = deleteUser;
+        vm.toggleSort = toggleSort;
 
+        function toggleSort(predicate) {
+            vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
+            vm.predicate = predicate;
+            vm.users = orderBy(vm.users, vm.predicate, vm.reverse);
+        };
 
-        /*function setUsers(users){
-            console.log(users);
-            $scope.users = users;
-            $scope.user = null;
-        }*/
+        function refreshSort(){
+            vm.users = orderBy(vm.users, vm.predicate, vm.reverse);
+        }
+
 
         function selectUser(user){
-            vm.user = {
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                email: user.email
-            };
+            vm.user = angular.copy(user);
             vm.selectedUser = true;
         }
 
@@ -57,7 +66,7 @@
         }
 
         function deleteUser(user){
-            UserService
+            AdminService
                 .deleteUserById(user._id)
                 .then(function(response){
                     init();
@@ -65,39 +74,38 @@
         }
 
         function addUser(user){
-            if(user && user.username && user.password && user.email){
-                var newUser = {
-                    username: user.username,
-                    password: user.password,
-                    email: user.email
-                };
-                UserService
-                    .createUser(newUser)
+            if(user && user.username && user.password){
+                /*if(user.roles && user.roles.length > 1) {
+                    user.roles = user.roles.split(",");
+                } else {
+                    user.roles = ["student"];
+                }*/
+                console.log(user);
+                AdminService
+                    .createUser(user)
                     .then(function(response){
                         init();
                     });
             }else{
-                vm.message("Please provide user credentials properly");
+                vm.message = "Please provide user credentials properly";
             }
         }
 
         function updateUser(user){
-            if(user && user.username && user.password && user.email){
-                var updatedUser = {
-                    username: user.username,
-                    password: user.password,
-                    email: user.email
-                };
-                UserService
+            if(user && user.username && user.password){
+                var updatedUser = angular.copy(user);
+                delete updatedUser._id;
+                /*if(typeof user.roles == "string") {
+                    updatedUser.roles = user.roles.split(",");
+                }*/
+                AdminService
                     .updateUser(user._id, updatedUser)
                     .then(function(response){
                         init();
-                        unselectUser();
                     });
             }else{
-                vm.message("Please provide user credentials properly");
+                vm.message = "Please provide user credentials properly";
             }
         }
     }
-
 })();

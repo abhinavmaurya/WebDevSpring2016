@@ -14,7 +14,7 @@ module.exports = function() {
             lastName: String,
             email: String,
             about: String,
-            admin: Boolean,
+            admin: {type: Boolean, default: false},
             /*followers: User being followed by these users*/
             followers: [{userId: String, username: String}],
             /*following: User following these users*/

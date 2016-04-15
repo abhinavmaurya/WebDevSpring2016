@@ -1,6 +1,6 @@
 <div class="row">
     <h2 class="col-xs-4 pull-left">Portfolio</h2>
-    <div class="col-xs-8 pull-right">
+    <div class="col-xs-8 pull-right" ng-show="model.portfolio">
         <h3 class=" text-right" ng-class="model.setStatus(model.totalPL)">Worth: {{model.totalValue | number:2}}</h3>
         <h4 class=" text-right" ng-class="model.setStatus(model.totalPL)">({{model.totalPL | number:2}})<i ng-class="model.getUpDown(model.totalPL)"></i></h4>
     </div>
@@ -74,9 +74,9 @@
                         <div class="text-left"><h4>{{stock.Name}}&nbsp;({{stock.stockId}})</h4></div>
                     </div>
                     <div class="col-xs-4 text-right">
-                        <h4 ng-class="model.setStatus(stock.CurrentWorth)">{{stock.CurrentWorth | number:2}}</h4>
+                        <h4 ng-class="model.setStatus(stock.TotalPL)">{{stock.CurrentWorth | number:2}}</h4>
                         <h6 ng-class="model.setStatus(stock.TotalPL)">
-                            <i ng-class="model.getUpDown(stock.TotalPL)"></i>{{stock.TotalPL | number:2}}
+                            {{stock.TotalPL | number:2}}&nbsp;<i ng-class="model.getUpDown(stock.TotalPL)"></i>
                         </h6>
                     </div>
                 </div>

@@ -58,6 +58,7 @@ module.exports = function(db){
     }
 
     function updateUserById(userId, user){
+        delete user._id;
         var deferred = q.defer();
         UserModel.update(
             {_id: userId},

@@ -7,6 +7,7 @@ module.exports = function(app){
     var userStockModel   = require("./models/user/userStock.model.js")();
     var stockModel      = require("./models/stock/stock.model.js")();
     var userService = require("./services/user.service.server.js")(app, userModel, userStockModel);
+    var adminService = require("./services/admin.service.server.js")(app, userModel);
     var portfolioService = require("./services/portfolio.service.server.js")(app, userStockModel);
     var watchlistService = require("./services/watchlist.service.server.js")(app, userStockModel);
     var stockService    = require("./services/stock.service.server.js")(app, stockModel);

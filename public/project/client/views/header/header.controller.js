@@ -36,6 +36,7 @@
         }
 
         function search(name){
+            vm.searchtxt = null;
             if(name)
                 $location.url('/search/'+name);
             else

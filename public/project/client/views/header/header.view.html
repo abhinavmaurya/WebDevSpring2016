@@ -28,7 +28,7 @@
 
             <ul class="nav navbar-nav">
                 <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/register'}"><a href="#/register">Register</a></li>
-                <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
+                <li ng-show="currentUser.admin" ng-class="{'active' : model.$location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
                 <li ng-hide="currentUser" ng-class="{'active' : model.$location.url() == '/login'}"><a href="#/login">Login</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/watchlist'}"><a href="#/watchlist">Watchlist</a></li>
                 <li ng-show="currentUser" ng-class="{'active' : model.$location.url() == '/portfolio'}"><a href="#/portfolio">Portfolio</a></li>

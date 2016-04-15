@@ -57,7 +57,6 @@
                     function(response){
                         vm.user.portfolio = response.data;
                         fetchUserStockDetails();
-                        console.log(vm.user);
                     },
                     function(err){
                         console.log(err);
@@ -82,9 +81,10 @@
             vm.user.portfolio = [];
             for(var s in portfolio){
                 StockService
-                    .findStockById(portfolio[s])
+                    .findStockById(portfolio[s].stockId)
                     .then(function(response){
                         var stock = {stockId: response.data.Symbol, Name: response.data.Name};
+                        console.log(stock);
                         vm.user.portfolio.push(stock);
                     });
             }
