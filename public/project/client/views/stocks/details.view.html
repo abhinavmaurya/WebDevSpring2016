@@ -38,13 +38,11 @@
         <div class="panel panel-default">
             <div class="panel-heading">Watchers</div>
             <div class="panel-body table-responsive fixed-panel">
-                <table class="table table-hover">
-                    <tbody>
-                    <tr ng-repeat="user in model.watchers">
-                        <td class="text-left"><a href="#/view/{{user.userId}}">{{user.username}}</a></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <ul class="list-inline">
+                    <li ng-repeat="user in model.watchers" class="col-xs-4">
+                        <a href="#/view/{{user.userId}}"><i class="fa fa-user"></i>&nbsp;{{user.username}}</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -53,13 +51,11 @@
         <div class="panel panel-default">
             <div class="panel-heading">Holders</div>
             <div class="panel-body table-responsive fixed-panel">
-                <table class="table table-hover">
-                    <tbody>
-                    <tr ng-repeat="user in model.holders">
-                        <td class="text-left"><a href="#/view/{{user.userId}}">{{user.username}}</a></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <ul class="list-inline">
+                    <li ng-repeat="user in model.holders" class="col-xs-4">
+                        <a href="#/view/{{user.userId}}"><i class="fa fa-user"></i>&nbsp;{{user.username}}</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

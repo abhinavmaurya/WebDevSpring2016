@@ -71,3 +71,8 @@ input[type="checkbox"] {
 .sortorder.reverse:after {
     content: '\25bc';
 }
+
+.user-display li {
+    display: inline;
+    float: left;
+}

@@ -11,7 +11,6 @@
     function HeaderController(UserService, $location){
 
         var vm = this;
-
         vm.logout = logout;
         vm.search = search;
 
@@ -37,6 +36,7 @@
 
         function search(name){
             vm.searchtxt = null;
+            vm.isCollapsed = !vm.isCollapsed;
             if(name)
                 $location.url('/search/'+name);
             else

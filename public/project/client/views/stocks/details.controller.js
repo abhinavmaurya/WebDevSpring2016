@@ -80,8 +80,6 @@
                 .addToUserWatchlist(user._id, stockID)
                 .then(
                     function(response){
-                        console.log(response);
-                        console.log(response.data);
                         if(response.data){
                             var newUser = {
                                 userId: user._id,
@@ -127,11 +125,13 @@
                     .addStockToUserPortfolio(user._id, stockID, newStock)
                     .then(
                         function(response){
-                            var newUser = {
-                                userId: user._id,
-                                username: user.username
-                            };
-                            return StockService.addHolderToStock(stockID, newUser);
+                            if(!checkIfAlreadyHolder(user._id)){
+                                var newUser = {
+                                    userId: user._id,
+                                    username: user.username
+                                };
+                                return StockService.addHolderToStock(stockID, newUser);
+                            }
                         },
                         function(err){
                             console.log(err);
@@ -148,6 +148,17 @@
                         }
                     );
             }
+        }
+
+        function checkIfAlreadyHolder(userId){
+            var flag = false;
+            for(var s in vm.holders){
+                if(vm.holders[s].userId == userId){
+                    flag = true;
+                    break;
+                }
+            }
+            return flag;
         }
 
         function formatDate(date){

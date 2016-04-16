@@ -28,10 +28,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{model.user.username}}'s Watchlist: </div>
             <div class="panel-body table-responsive fixed-panel">
-                <table class="table table-hover">
+                <table class="table table-hover table-condensed">
                     <tbody>
                     <tr ng-repeat="stock in model.user.watchlist">
-                        <td class="text-left btn"><a href="#/details/{{stock.stockId}}">{{stock.Name}}&nbsp;({{stock.stockId}})</a></td>
+                        <td class="text-left btn"><a href="#/details/{{stock.stockId}}"><i class="fa fa-plus-circle"></i>&nbsp;{{stock.Name}}&nbsp;({{stock.stockId}})</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -43,10 +43,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">{{model.user.username}}'s Portfolio: </div>
             <div class="panel-body table-responsive fixed-panel">
-                <table class="table table-hover">
+                <table class="table table-hover table-condensed">
                     <tbody>
                     <tr ng-repeat="stock in model.user.portfolio">
-                        <td class="text-left btn"><a href="#/details/{{stock.stockId}}">{{stock.Name}}&nbsp;({{stock.stockId}})</a></td>
+                        <td class="text-left btn"><a href="#/details/{{stock.stockId}}"><i class="fa fa-plus-circle"></i>&nbsp;{{stock.Name}}&nbsp;({{stock.stockId}})</a></td>
                     </tr>
                     </tbody>
                 </table>
