@@ -14,6 +14,7 @@
         var userId = UserService.getCurrentUser()._id;
         vm.deleteFromWatchlist = deleteFromWatchlist;
         vm.setStatus = setStatus;
+        vm.getUpDown = getUpDown;
 
 
         function init(){
@@ -61,6 +62,10 @@
 
         function setStatus(val){
             return val < 0 ? 'color-red' : val > 0 ? 'color-green' : '';
+        }
+
+        function getUpDown(val){
+            return val < 0 ? 'fa fa-long-arrow-down' : val > 0 ? 'fa fa-long-arrow-up' : '';
         }
     }
 })();
