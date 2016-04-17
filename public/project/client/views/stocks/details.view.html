@@ -65,7 +65,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-8 news">
+    <div class=" col-lg-12 news">
         <div class="panel panel-info" ng-controller="StockNewsController as model">
             <div class="panel-heading">
                 Latest News about {{model.stock.Name}}
@@ -73,7 +73,7 @@
 
             <div class="panel-body fixed-panel">
                 <div>
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover table-striped table-condensed">
                         <tr ng-repeat="news in model.stockNews">
                             <td>
                                 <h4><strong>{{news.title}}</strong></h4>
