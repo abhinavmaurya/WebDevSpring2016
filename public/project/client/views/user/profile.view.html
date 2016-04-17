@@ -62,13 +62,6 @@
         <div class="panel panel-default">
             <div class="panel-heading">Following</div>
             <div class="panel-body table-responsive fixed-panel">
-                <!--<table class="table table-condensed table-striped">
-                    <tbody>
-                        <tr ng-repeat="user in model.currentUser.following">
-                            <td class="text-left"><a href="#/view/{{user.userId}}">{{user.username}}</a></td>
-                        </tr>
-                    </tbody>
-                </table>-->
                 <ul class="list-inline">
                     <li ng-repeat="user in model.currentUser.following" class="col-xs-4">
                         <a href="#/view/{{user.userId}}"><i class="fa fa-user"></i>&nbsp;{{user.username}}</a>
@@ -82,13 +75,6 @@
         <div class="panel panel-default">
             <div class="panel-heading">Followers</div>
             <div class="panel-body fixed-panel">
-                <!--<table class="table table-hover table-condensed table-striped">
-                    <tbody>
-                    <tr ng-repeat="user in model.currentUser.followers">
-                        <td class="text-left"><a href="#/view/{{user.userId}}">{{user.username}}</a></td>
-                    </tr>
-                    </tbody>
-                </table>-->
                 <ul class="list-inline">
                     <li ng-repeat="user in model.currentUser.followers" class="col-xs-4">
                         <a href="#/view/{{user.userId}}"><i class="fa fa-user"></i>&nbsp;{{user.username}}</a>

@@ -10,7 +10,7 @@
         .controller("ChartController", ChartController)
         .controller("StockNewsController", StockNewsController);
 
-    function DetailsController($routeParams, $scope, UserStockService, StockService, UserService, SweetAlert){
+    function DetailsController($routeParams, UserStockService, StockService, UserService, SweetAlert){
         var stockID = $routeParams.symbol;
         var user = UserService.getCurrentUser();
 
@@ -112,8 +112,9 @@
         }
 
         function commitAdd(stockToAdd){
-            if((isNaN(stockToAdd.qty) && stockToAdd.qty <= 0) || (isNaN(stockToAdd.buyPrice) && stockToAdd.buyPrice <= 0)) {
-                $scope.error = "Please provide valid quantity and buying price";
+            if((isNaN(stockToAdd.qty) || stockToAdd.qty <= 0) || (isNaN(stockToAdd.buyPrice) || stockToAdd.buyPrice <= 0) || (stockToAdd.purchaseDate == null || stockToAdd.purchaseDate > new Date())) {
+                /*vm.modal.error = "Please provide valid quantity, buying price";*/
+                SweetAlert.swal("Not added!", "Please provide valid quantity, buying price and date!", "error");
             }else{
                 var newStock = {
                     "stockId": stockID,
@@ -236,7 +237,7 @@
                     type: 'datetime'
                 }],
                 title: {
-                    text: 'AAPL Stock Price'
+                    text: stockID +' Stock Price'
                 },
                 series: [{
                     id: 'stockprice',

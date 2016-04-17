@@ -39,6 +39,7 @@
     <!--Controllers-->
     <script src="views/main/main.controller.js"></script>
     <script src="views/contact/contact.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
 </head>
 <body ng-controller="MainController">
 
@@ -51,8 +52,9 @@
 
 <!--include header-->
 <div ng-include="'views/header/header.view.html'"></div>
-
-<div ng-view></div>
+<div class="container-fluid views">
+    <div ng-view></div>
+</div>
 
 </body>
 </html>

@@ -13,6 +13,7 @@
         var vm = this;
         var userId = UserService.getCurrentUser()._id;
         vm.deleteFromWatchlist = deleteFromWatchlist;
+        vm.setStatus = setStatus;
 
 
         function init(){
@@ -56,6 +57,10 @@
                         console.log(err);
                     }
                 );
+        }
+
+        function setStatus(val){
+            return val < 0 ? 'color-red' : val > 0 ? 'color-green' : '';
         }
     }
 })();

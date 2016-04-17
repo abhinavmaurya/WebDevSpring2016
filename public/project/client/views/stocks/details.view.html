@@ -25,7 +25,10 @@
                 <p><strong>Date:</strong> {{model.formatDate(model.stock.Timestamp) | date:'medium'}}</p>
                 <p><strong>Open Price($):</strong> {{model.stock.Open | number:2}}</p>
                 <p><strong>Current Price($):</strong> {{model.stock.LastPrice | number:2}}</p>
-                <p><strong>Change($):</strong> {{model.stock.Change | number:2}}</p>
+                <p><strong>Change($):</strong> <span ng-class="model.setStatus(model.stock.Change)">{{model.stock.Change | number:2}}</span></p>
+                <p><strong>Change(%):</strong> <span ng-class="model.setStatus(model.stock.ChangePercent)">{{model.stock.ChangePercent | number:2}}%</span></p>
+                <p><strong>Change YTD($):</strong> <span ng-class="model.setStatus(model.stock.ChangeYTD)">{{model.stock.ChangeYTD | number:2}}</span></p>
+                <p><strong>Change YTD(%):</strong> <span ng-class="model.setStatus(model.stock.ChangePercentYTD)">{{model.stock.ChangePercentYTD | number:2}}%</span></p>
                 <p><strong>Volume:</strong> {{model.stock.Volume | number:0}}</p>
                 <p><strong>Market Capital($):</strong> {{model.stock.MarketCap | number:0}}</p>
             </div>
