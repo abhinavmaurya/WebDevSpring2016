@@ -1,7 +1,7 @@
 /**
  * Created by abhinavmaurya on 3/16/16.
  */
-
+"use strict";
 module.exports = function(app){
     var userModel   = require("./models/user/user.model.js")();
     var userStockModel   = require("./models/user/userStock.model.js")();

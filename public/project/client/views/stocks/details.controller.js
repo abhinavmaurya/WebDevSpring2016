@@ -1,7 +1,7 @@
 /**
  * Created by abhinavmaurya on 3/2/16.
  */
-
+"use strict";
 (function(){
 
     angular
@@ -49,11 +49,9 @@
 
         function findInUserWatchlist(){
             if(user) {
-                console.log(user);
                 UserStockService
                     .findInUserWatchlist(user._id, stockID)
                     .then(function(response){
-                        console.log(response.data);
                         if(response.data) {
                             vm.displayAddToWatchlist = true;
                         }
@@ -75,7 +73,6 @@
         }
 
         function addToWatchlist(){
-            console.log(user._id, stockID);
             UserStockService
                 .addToUserWatchlist(user._id, stockID)
                 .then(
@@ -105,7 +102,6 @@
         }
 
         function addToPortfolio(){
-            console.log("portfolio");
             vm.addPort = {
                 Symbol: stockID
             };
@@ -190,18 +186,20 @@
             StockService
                 .findHistoricalData(JSON.stringify(params))
                 .then(function(response){
-                    var dates = response.data.Dates;
-                    var price = response.data.Elements[0].DataSeries.close.values;
-                    for(var i in dates){
-                        var element = [];
-                        var dat = new Date(dates[i]);
-                        dat = Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
-                        element.push(dat);
-                        element.push(price[i]);
-                        vm.data.push(element);
+                    if(response.data){
+                        var dates = response.data.Dates;
+                        var price = response.data.Elements[0].DataSeries.close.values;
+                        for(var i in dates){
+                            var element = [];
+                            var dat = new Date(dates[i]);
+                            dat = Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
+                            element.push(dat);
+                            element.push(price[i]);
+                            vm.data.push(element);
+                        }
+                        vm.loadingChart = false;
+                        drawChart(vm.data);
                     }
-                    vm.loadingChart = false;
-                    drawChart(vm.data);
                 });
         }
         init();

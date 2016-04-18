@@ -23,7 +23,6 @@
                     function(response){
                         vm.users = response.data;
                         refreshSort();
-                        console.log(vm.users);
                     },
                     function(err){
                         console.log(err);
@@ -75,12 +74,6 @@
 
         function addUser(user){
             if(user && user.username && user.password){
-                /*if(user.roles && user.roles.length > 1) {
-                    user.roles = user.roles.split(",");
-                } else {
-                    user.roles = ["student"];
-                }*/
-                console.log(user);
                 AdminService
                     .createUser(user)
                     .then(function(response){
@@ -95,9 +88,6 @@
             if(user && user.username && user.password){
                 var updatedUser = angular.copy(user);
                 delete updatedUser._id;
-                /*if(typeof user.roles == "string") {
-                    updatedUser.roles = user.roles.split(",");
-                }*/
                 AdminService
                     .updateUser(user._id, updatedUser)
                     .then(function(response){

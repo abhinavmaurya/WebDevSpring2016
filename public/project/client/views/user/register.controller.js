@@ -38,10 +38,6 @@
                 vm.message = "Passwords must match";
                 return;
             }
-            /*if (isDuplicateUsername(user.username)) {
-                vm.message = "Username already exists";
-                return;
-            }*/
             UserService
                 .createUser(user)
                 .then(
@@ -57,24 +53,6 @@
                     },
                     function(err){
                         console.log(err);
-                    }
-                );
-        }
-
-        function isDuplicateUsername(username){
-            UserService
-                .findUserByUsername(username)
-                .then(
-                    function(response){
-                       var user = response.data;
-                        if(user)
-                            return true;
-                        else
-                            return false;
-                    },
-                    function(err){
-                        console.log(err);
-                        return false;
                     }
                 );
         }

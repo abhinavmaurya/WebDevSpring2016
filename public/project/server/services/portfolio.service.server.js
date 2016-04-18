@@ -1,7 +1,7 @@
 /**
  * Created by abhinavmaurya on 3/23/16.
  */
-
+"use strict";
 module.exports = function (app, userStockModel){
 
     app.post("/api/project/:userId/portfolio/:stockId", addStockToUserPortfolio);
@@ -42,8 +42,6 @@ module.exports = function (app, userStockModel){
     function findStockInUserPortfolio(req, res){
         var userId = req.params.userId;
         var stockId = req.params.stockId;
-        /*var stock = model.findStockInUserWatchList(userId, stockId);
-         res.send(stock);*/
         userStockModel
             .findStockInUserPortfolio(userId, stockId)
             .then(
@@ -75,8 +73,6 @@ module.exports = function (app, userStockModel){
         var userId = req.params.userId;
         var stockId = req.params.stockId;
         var updatedStock = req.body;
-        /*model.updateStockInUserPortfolio(userId, stockId, update);
-        res.send(200);*/
         userStockModel
             .updateStockInUserPortfolio(userId, stockId, updatedStock)
             .then(

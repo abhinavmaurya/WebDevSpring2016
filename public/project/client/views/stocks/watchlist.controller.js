@@ -1,7 +1,7 @@
 /**
  * Created by abhinavmaurya on 3/10/16.
  */
-
+"use strict";
 (function(){
 
     angular
@@ -51,7 +51,6 @@
                 )
                 .then(
                     function(response){
-                        console.log("deleted watcher as well");
                         init();
                     },
                     function(err){

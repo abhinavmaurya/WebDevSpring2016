@@ -1,7 +1,7 @@
 /**
  * Created by abhinavmaurya on 3/23/16.
  */
-
+"use strict";
 module.exports = function (app, userStockModel){
 
     app.post("/api/project/:userId/watchlist/:stockId", addToUserWatchlist);
@@ -12,8 +12,6 @@ module.exports = function (app, userStockModel){
     function addToUserWatchlist(req, res){
         var userId = req.params.userId;
         var stockId = req.params.stockId;
-        /*model.addToUserWatchlist(userId, stockId);
-        res.send(200);*/
         userStockModel
             .addStockInUserWatchlist(userId, stockId)
             .then(
@@ -30,8 +28,6 @@ module.exports = function (app, userStockModel){
     function findStockInUserWatchList(req, res){
         var userId = req.params.userId;
         var stockId = req.params.stockId;
-        /*var stock = model.findStockInUserWatchList(userId, stockId);
-        res.send(stock);*/
         userStockModel
             .findStockInUserWatchlist(userId, stockId)
             .then(
@@ -47,8 +43,6 @@ module.exports = function (app, userStockModel){
     function deleteStockFromUserWatchlist(req, res){
         var userId = req.params.userId;
         var stockId = req.params.stockId;
-        /*model.deleteStockFromUserWatchlist(userId, stockId);
-        res.send(200);*/
         userStockModel
             .deleteStockInUserWatchlist(userId, stockId)
             .then(
@@ -63,8 +57,6 @@ module.exports = function (app, userStockModel){
 
     function getUserWatchlist(req, res){
         var userId = req.params.userId;
-        /*var watchlist = model.getUserWatchlist(userId);
-        res.send(watchlist);*/
         userStockModel
             .findUserWatchlist(userId)
             .then(

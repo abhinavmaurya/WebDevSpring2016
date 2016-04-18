@@ -1,7 +1,7 @@
 /**
  * Created by abhinavmaurya on 3/10/16.
  */
-
+"use strict";
 (function(){
 
     angular
@@ -16,16 +16,17 @@
         vm.messgae = null;
         vm.portfolio = null;
         vm.selStock = null;
+        vm.totalValue = null;
+        vm.totalInvestment = null;
+        vm.totalPL = null;
+        vm.todaysPL = null;
+
         vm.deleteFromPortfolio = deleteFromPortfolio;
         vm.selectStock = selectStock;
         vm.unselectStock = unselectStock;
         vm.updateStock = updateStock;
         vm.setStatus = setStatus;
         vm.getUpDown = getUpDown;
-        vm.totalValue = null;
-        vm.totalInvestment = null;
-        vm.totalPL = null;
-        vm.todaysPL = null;
 
 
         function init(){
@@ -42,6 +43,7 @@
                         vm.portfolio = response.data;
                         loadRealTimeData();
                     }else{
+                        vm.portfolio = null;
                         vm.message = "There are no stocks in your portfolio!"
                     }
 
@@ -104,7 +106,7 @@
                 .deleteStockFromUserPortfolio(userId, stock._id)
                 .then(
                     function(response){
-                        return StockService.deleteHolderFromStock(stock._id, userId);
+                        return StockService.deleteHolderFromStock(stock.stockId, userId);
                     },
                     function(err){
                         console.log(err);
@@ -138,7 +140,6 @@
         }
 
         function updateStock(stock){
-            console.log(stock);
             UserStockService
                 .updateStockInUserPortfolio(userId, stock._id, stock)
                 .then(function(response){

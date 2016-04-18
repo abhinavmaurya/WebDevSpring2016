@@ -72,17 +72,6 @@ module.exports = function(db){
                     if(err){
                         deferred.reject(err);
                     }else{
-                        /*deferred.resolve(doc.watchlist.id(watchlistStockId));*/
-                        /*UserStockModel.findOne(
-                            {watchlist: watchlistStockId},
-                            function(err, doc){
-                                if(err){
-                                    deferred.reject(err);
-                                }else{
-                                    deferred.resolve(doc);
-                                }
-                            }
-                        );*/
                         deferred.resolve(doc);
                     }
                 });

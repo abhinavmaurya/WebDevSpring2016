@@ -47,12 +47,10 @@
         }
 
         function addWatcherToStock(stockId, user){
-            console.log("AddWatcher", stockId, user);
             return $http.post("/api/project/"+stockId+"/watcher", user);
         }
 
         function addHolderToStock(stockId, user){
-            console.log("AddHolder", stockId, user);
             return $http.post("/api/project/"+stockId+"/holder", user);
         }
 

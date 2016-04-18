@@ -38,8 +38,6 @@ module.exports = function (app, userModel){
 
     function createUser(req, res){
         var newUser = req.body;
-        if(!newUser.roles || !newUser.roles.length > 0)
-            newUser.roles = ["student"];
 
         userModel
             .findUserByUsername(newUser.username)
@@ -120,12 +118,11 @@ module.exports = function (app, userModel){
             res.send(401);
         } else {
             var user = req.user;
-            console.log(user);
             if(user.admin) {
                 next();
             }else{
                 res.send(403);
             }
         }
-    };
+    }
 };

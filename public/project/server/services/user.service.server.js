@@ -133,9 +133,7 @@ module.exports = function (app, userModel, userStockModel){
                     if(user){
                         createdUser = user;
                         return userStockModel.createUserStock(user._id);
-                    }/*else{
-                        res.status(400).send(err);
-                    }*/
+                    }
                 },
                 function(err){
                     console.log(err);
@@ -300,5 +298,5 @@ module.exports = function (app, userModel, userStockModel){
         } else {
             next();
         }
-    };
+    }
 };

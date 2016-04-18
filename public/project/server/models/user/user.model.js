@@ -20,7 +20,7 @@ module.exports = function(db){
         deleteUserById: deleteUserById,
         findAllUsers: findAllUsers,
         findUsers: findUsers,
-        /**/
+        /*Followers and Following*/
         findFollowers: findFollowers,
         findFollowingUsers: findFollowingUsers,
         addFollower: addFollower,

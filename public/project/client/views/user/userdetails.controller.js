@@ -84,7 +84,6 @@
                     .findStockById(portfolio[s].stockId)
                     .then(function(response){
                         var stock = {stockId: response.data.Symbol, Name: response.data.Name};
-                        console.log(stock);
                         vm.user.portfolio.push(stock);
                     });
             }

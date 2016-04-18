@@ -9,7 +9,7 @@
         .controller("SearchController", SearchController);
 
 
-    function SearchController($scope, StockService, $routeParams, $location){
+    function SearchController(StockService, $routeParams, $location){
 
         var vm = this;
 

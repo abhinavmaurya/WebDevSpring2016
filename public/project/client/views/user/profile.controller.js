@@ -21,7 +21,6 @@
                     .then(
                         function(response){
                             vm.currentUser = response.data;
-                            console.log(vm.currentUser);
                         },
                         function(err){
                             console.log(err);

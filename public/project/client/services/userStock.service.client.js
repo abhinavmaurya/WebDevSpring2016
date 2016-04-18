@@ -37,7 +37,6 @@
         }
 
         function addStockToUserPortfolio(userId, stockId, stock){
-            console.log(userId, stockId, stock);
             return $http.post("/api/project/"+ userId + "/portfolio/" + stockId, stock);
         }
 
