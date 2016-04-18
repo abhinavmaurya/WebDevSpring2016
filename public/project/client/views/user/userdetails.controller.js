@@ -40,7 +40,7 @@
 
                     },
                     function(err){
-                        vm.error("Error fetching data of user");
+                        vm.error = "Error fetching data of user";
                         console.log(err);
                     }
                 )
