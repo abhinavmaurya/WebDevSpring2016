@@ -35,7 +35,7 @@
                             vm.user = response.data;
                             return UserStockService.getUserWatchlist(userId);
                         }else{
-                            vm.error("User does not exist");
+                            vm.error = "User does not exist";
                         }
 
                     },
