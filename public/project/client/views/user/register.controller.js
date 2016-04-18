@@ -43,7 +43,6 @@
                 .then(
                     function(response){
                         var currentUser = response.data;
-                        console.log(currentUser);
                         if(currentUser){
                             UserService.setCurrentUser(currentUser);
                             $location.url("/profile");

@@ -163,7 +163,9 @@ module.exports = function (app, userModel, userStockModel){
     function updateUser(req, res){
         var userId = req.params.userId;
         var userData = req.body;
-        userData.password = bcrypt.hashSync(userData.password);
+        if(userData.password) {
+            userData.password = bcrypt.hashSync(userData.password);
+        }
         userModel.updateUserById(userId, userData)
             .then(
                 function(stats){
