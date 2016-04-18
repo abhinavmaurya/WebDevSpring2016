@@ -10,7 +10,7 @@
 var passport    = require('passport');
 var bcrypt      = require("bcrypt-nodejs");
 
-module.exports = function (app, userModel){
+module.exports = function (app, userModel, userStockModel){
 
     var adminAuth = isAdmin;
 
@@ -38,7 +38,7 @@ module.exports = function (app, userModel){
 
     function createUser(req, res){
         var newUser = req.body;
-
+        var createdUser = null;
         userModel
             .findUserByUsername(newUser.username)
             .then(
@@ -56,7 +56,19 @@ module.exports = function (app, userModel){
             )
             .then(
                 function(user){
-                    res.json(user);
+                    if(user){
+                        createdUser = user;
+                        return userStockModel.createUserStock(user._id);
+                    }
+                },
+                function(err){
+                    console.log(err);
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(response){
+                    res.json(createdUser);
                 },
                 function(err){
                     res.status(400).send(err);
@@ -91,6 +103,14 @@ module.exports = function (app, userModel){
     function deleteUser(req, res){
         var userId = req.params.userId;
         userModel.deleteUserById(userId)
+            .then(
+                function(stats){
+                    return userStockModel.deleteUserStock(userId);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
             .then(
                 function(stats){
                     res.send(200);

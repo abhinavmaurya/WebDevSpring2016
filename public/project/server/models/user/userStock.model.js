@@ -21,7 +21,8 @@ module.exports = function(db){
         addStockInUserPortfolio: addStockInUserPortfolio,
         deleteStockInUserPortfolio: deleteStockInUserPortfolio,
         updateStockInUserPortfolio: updateStockInUserPortfolio,
-        createUserStock: createUserStock
+        createUserStock: createUserStock,
+        deleteUserStock: deleteUserStock
     };
     return api;
 
@@ -199,4 +200,16 @@ module.exports = function(db){
             });
         return deferred.promise;
     }
-}
+
+    function deleteUserStock(userId){
+        var deferred = q.defer();
+        UserStockModel
+            .remove({userId: userId}, function(err, stats){
+                if(err){
+                    deferred.reject(err);
+                }else{
+                    deferred.resolve(stats);
+                }
+            });
+    }
+};
