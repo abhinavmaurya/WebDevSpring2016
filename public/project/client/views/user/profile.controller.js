@@ -15,6 +15,7 @@
 
         function init(){
             var usr = UserService.getCurrentUser();
+            vm.changePassword = false;
             if(usr) {
                 UserService
                     .findUserById(usr._id)
@@ -36,6 +37,9 @@
 
 
         function updateUser(user){
+            if(!vm.changePassword){
+                delete user.password;
+            }
             UserService
                 .updateUser(user._id, user)
                 .then(
@@ -44,6 +48,7 @@
                         if(updatedUser){
                             vm.message = "User updated successfully";
                             UserService.setCurrentUser(updatedUser);
+                            init();
                         }else{
                             vm.message = "Unable to update the user";
                         }
