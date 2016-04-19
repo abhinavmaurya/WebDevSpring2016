@@ -15,6 +15,7 @@
         var usr = null;
         function init(){
             usr = UserService.getCurrentUser();
+            vm.changePassword = false;
             if(usr) {
                 vm.currentUser = {
                     username: usr.username,
@@ -38,6 +39,9 @@
         }
 
         function updateUser(user){
+            if(!vm.changePassword){
+                delete user.password;
+            }
             user.emails = user.emails.split(";");
             user.phones = user.phones.split(";");
             user.updated = Date.now;

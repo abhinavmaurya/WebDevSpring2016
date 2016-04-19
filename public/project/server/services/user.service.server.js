@@ -4,15 +4,16 @@
 "use strict"
 
 var passport        = require('passport');
-var LocalStrategy   = require('passport-local').Strategy;
+/*var LocalStrategy   = require('passport-local').Strategy;*/
 var bcrypt          = require("bcrypt-nodejs");
 
-module.exports = function (app, userModel, userStockModel){
+module.exports = function (app, userModel, userStockModel, securityService){
 
     var auth = authorized;
+    var passport = securityService.getPassport();
 
     /*APIs*/
-    app.post    ("/api/project/login",   passport.authenticate('local'), login);
+    app.post    ("/api/project/login",   passport.authenticate('project'), login);
     app.get     ("/api/project/loggedin",    loggedin);
     app.post    ("/api/project/logout",  logout);
     app.post    ("/api/project/register",    createUser);
@@ -30,13 +31,13 @@ module.exports = function (app, userModel, userStockModel){
     app.delete  ("/api/project/user/:userId/following/:followingId",    deleteFollowingUser);
 
     /*Functions for passport authentication*/
-    passport.use(new LocalStrategy(localStrategy));
+    /*passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
+    passport.deserializeUser(deserializeUser);*/
 
     /* --------------- Implementation -----------------*/
 
-    function localStrategy(username, password, done) {
+    /*function localStrategy(username, password, done) {
         userModel
             .findUserByUsername(username)
             .then(
@@ -68,7 +69,7 @@ module.exports = function (app, userModel, userStockModel){
                     done(err, null);
                 }
             );
-    }
+    }*/
 
     function login(req, res) {
         var user = req.user;
@@ -76,7 +77,7 @@ module.exports = function (app, userModel, userStockModel){
     }
 
     function loggedin(req, res) {
-        res.send(req.isAuthenticated() ? req.user : '0');
+        res.send(req.isAuthenticated() && req.user.app === "tradebull" ? req.user : '0');
     }
 
     function logout(req, res) {

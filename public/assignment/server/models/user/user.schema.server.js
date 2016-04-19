@@ -13,7 +13,8 @@ module.exports = function() {
             lastName: String,
             emails: [String],
             phones: [String],
-            roles: [String]
+            roles: [String],
+            app: {type: String, default:"assignment"}
         }, {collection: "assignment.user"});
     return UserSchema;
 };

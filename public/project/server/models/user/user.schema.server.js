@@ -18,7 +18,8 @@ module.exports = function() {
             /*followers: User being followed by these users*/
             followers: [{userId: String, username: String}],
             /*following: User following these users*/
-            following: [{userId: String, username: String}]
+            following: [{userId: String, username: String}],
+            app: {type: String, default:"tradebull"}
 
         }, {collection: "project.user"});
     return UserSchema;

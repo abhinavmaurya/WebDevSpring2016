@@ -32,7 +32,6 @@
         }
 
         function addToUserWatchlist(userId, stockId){
-            console.log(userId, stockId);
             return $http.post("/api/project/"+ userId +"/watchlist/"+stockId);
         }
 

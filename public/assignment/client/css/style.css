@@ -36,3 +36,9 @@ table.thick-top-border{
 .sortorder.reverse:after {
     content: '\25bc';
 }
+
+#changePwd {
+    transform:scale(2, 2);
+    margin-top: 12px;
+    margin-left: 12px;
+}

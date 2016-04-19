@@ -14,6 +14,7 @@
 
         // event handlers declaration
         vm.login = login;
+        vm.message = null;
 
         function init(){
 
@@ -42,6 +43,7 @@
                         },
                         function(err){
                             vm.message = "Invalid username/password";
+                            console.log(err);
                         }
                     );
             }
