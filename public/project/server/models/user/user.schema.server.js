@@ -19,6 +19,7 @@ module.exports = function() {
             followers: [{userId: String, username: String}],
             /*following: User following these users*/
             following: [{userId: String, username: String}],
+            // to identify type of user object (assignment or project)
             app: {type: String, default:"tradebull"}
 
         }, {collection: "project.user"});

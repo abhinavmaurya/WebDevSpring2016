@@ -14,6 +14,7 @@ module.exports = function() {
             emails: [String],
             phones: [String],
             roles: [String],
+            // field to identify type of user object (assignment or project)
             app: {type: String, default:"assignment"}
         }, {collection: "assignment.user"});
     return UserSchema;

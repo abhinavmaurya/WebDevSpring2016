@@ -22,47 +22,6 @@ module.exports = function (app, userModel, securityService){
     app.get     ("/api/assignment/user/:userId",    auth,    getUserByUserId);
     app.get     ("/api/assignment/user/username/:username",  getUserByUsername);
 
-    /*Functions for passport authentication*/
-    /*passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);*/
-
-    /* --------------- Implementation -----------------*/
-
-    /*function localStrategy(username, password, done) {
-        userModel
-            .findUserByUsername(username)
-            .then(
-                function(user){
-                    if(user && bcrypt.compareSync(password, user.password)){
-                        return done(null, user);
-                    }else{
-                        return done(null, false);
-                    }
-                },
-                function(err){
-                    if (err) { return done(err); }
-                }
-            )
-    }*/
-
-    /*function serializeUser(user, done) {
-        done(null, user);
-    }
-
-    function deserializeUser(user, done) {
-        userModel
-            .findUserById(user._id)
-            .then(
-                function(user){
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
-    }*/
-
     function login(req, res) {
         var user = req.user;
         res.json(user);

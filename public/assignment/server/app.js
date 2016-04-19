@@ -8,7 +8,7 @@ module.exports = function(app, db, userModel, securityService){
 
     var fieldService = require("./services/field.service.server.js")(app, formModel);
 
-    //var userModel   = require("./models/user/user.model.js")(db);
+    // userModel passed from server.js as passport authentication for assignment and project is combined.
     var userService = require("./services/user.service.server.js")(app, userModel, securityService);
     var adminService = require("./services/admin.service.server.js")(app, userModel);
 };

@@ -19,7 +19,6 @@ module.exports = function(userModelAssignment,userModelProject) {
         getPassport : getPassport
 
     };
-
     return api;
 
 
@@ -36,8 +35,6 @@ module.exports = function(userModelAssignment,userModelProject) {
                 function(user) {
                     // if the user exists, compare passwords with bcrypt.compareSync
                     console.log("User Found ....",user);
-                    console.log(user.password);
-                    console.log(password);
                     if(user && bcrypt.compareSync(password, user.password)) {
                         console.log("User Authenticated For Assignment....")
                         return done(null, user);
@@ -62,8 +59,6 @@ module.exports = function(userModelAssignment,userModelProject) {
                     // if the user exists, compare passwords with bcrypt.compareSync
                     if(user) {
                         console.log("User Found ....",user);
-                        console.log(user.password);
-                        console.log(password);
                         if(user && bcrypt.compareSync(password, user.password)) {
                             console.log("User Authenticated For Project....")
                             return done(null, user);
