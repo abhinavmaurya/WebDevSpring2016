@@ -100,8 +100,9 @@
         <uib-accordion-group ng-repeat="stock in model.portfolio" is-open="group.open">
             <uib-accordion-heading>
                 <div class="row">
-                    <div class="btn col-xs-8">
-                        <div class="text-left"><h4>{{stock.Name}}&nbsp;({{stock.stockId}})</h4></div>
+                    <div class="col-xs-8">
+                        <h4 class="text-left">{{stock.Name}}</h4>
+                        <h5 class="text-left">({{stock.stockId}})</h5>
                     </div>
                     <div class="col-xs-4 text-right">
                         <h4 ng-class="model.setStatus(stock.TotalPL)">{{stock.CurrentWorth | number:2}}</h4>
@@ -162,7 +163,6 @@
                             {{stock.TotalPL | number:2}}<i ng-class="model.getUpDown(stock.TotalPL)"></i>
                         </h5>
                     </div>
-
                 </div>
             </div>
         </uib-accordion-group>
