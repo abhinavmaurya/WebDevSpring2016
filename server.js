@@ -31,7 +31,7 @@ if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.PORT || 3000;
-app.set('port', port);
+//app.set('port', port);
 
 
 app.use(bodyParser.json());
