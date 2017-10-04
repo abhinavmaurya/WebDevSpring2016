@@ -52,16 +52,17 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
 // User models of assignment and project.
-//var userModelAssignment = require("./public/assignment/server/models/user/user.model.js")(db,mongoose);
-//var userModelProject = require("./public/project/server/models/user/user.model.js")(db,mongoose);
+var userModelAssignment = require("./public/assignment/server/models/user/user.model.js")(db,mongoose);
+var userModelProject = require("./public/project/server/models/user/user.model.js")(db,mongoose);
 
 // Passport authentication common for assignment and project
-//var securityService = require("./public/security/security.js")(userModelAssignment,userModelProject);
+var securityService = require("./public/security/security.js")(userModelAssignment,userModelProject);
+
 // Assignment app.js
-//require("./public/assignment/server/app.js")(app, db, userModelAssignment,securityService);
+require("./public/assignment/server/app.js")(app, db, userModelAssignment,securityService);
 
 // Project app.js
-//require("./public/project/server/app.js")(app,db, userModelProject, securityService);
+require("./public/project/server/app.js")(app,db, userModelProject, securityService);
 
 /*app.listen(port, ipaddress, function () {
     console.log("Server is listening on: " + ipaddress + ":" + port);
