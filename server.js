@@ -27,7 +27,8 @@ if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
 }
 
 // connect to database
-//var db = mongoose.connect(connectionstring);
+console.log(connectionstring);
+var db = mongoose.connect(connectionstring);
 
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
