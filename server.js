@@ -18,7 +18,7 @@ var connectionstring = 'mongodb://127.0.0.1:27017/webdev2016';
             process.env.OPENSHIFT_MONGODB_DB_PORT + "/" +
             process.env.OPENSHIFT_APP_NAME;
 }*/
-print("MONGO USERNAME: " + process.env.MLAB_USERNAME_WEBDEV);
+console.log("MONGO USERNAME: " + process.env.MLAB_USERNAME_WEBDEV);
 if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
     var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
     var password = process.env.MLAB_PASSWORD_WEBDEV;
