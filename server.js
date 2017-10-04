@@ -31,6 +31,7 @@ var db = mongoose.connect(connectionstring);
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.PORT || 3000;
+app.set('port', port);
 
 
 app.use(bodyParser.json());
@@ -54,10 +55,10 @@ var userModelProject = require("./public/project/server/models/user/user.model.j
 // Passport authentication common for assignment and project
 var securityService = require("./public/security/security.js")(userModelAssignment,userModelProject);
 // Assignment app.js
-require("./public/assignment/server/app.js")(app, db, userModelAssignment,securityService);
+//require("./public/assignment/server/app.js")(app, db, userModelAssignment,securityService);
 
 // Project app.js
-require("./public/project/server/app.js")(app,db, userModelProject, securityService);
+//require("./public/project/server/app.js")(app,db, userModelProject, securityService);
 
 /*app.listen(port, ipaddress, function () {
     console.log("Server is listening on: " + ipaddress + ":" + port);
