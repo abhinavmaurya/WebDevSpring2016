@@ -22,8 +22,8 @@ console.log("MONGO USERNAME: " + process.env.MLAB_USERNAME_WEBDEV);
 if(process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
     var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
     var password = process.env.MLAB_PASSWORD_WEBDEV;
-    connectionString = 'mongodb://' + username + ':' + password;
-    connectionString += '@ds155028.mlab.com:55028/heroku_l4tbqfmc'; // use yours
+    connectionstring = 'mongodb://' + username + ':' + password;
+    connectionstring += '@ds155028.mlab.com:55028/heroku_l4tbqfmc'; // use yours
 }
 
 // connect to database
