@@ -30,7 +30,7 @@ var db = mongoose.connect(connectionstring);
 
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var port = process.env.PORT || 3000;
 
 
 app.use(bodyParser.json());
@@ -59,6 +59,10 @@ require("./public/assignment/server/app.js")(app, db, userModelAssignment,securi
 // Project app.js
 require("./public/project/server/app.js")(app,db, userModelProject, securityService);
 
-app.listen(port, ipaddress, function () {
+/*app.listen(port, ipaddress, function () {
     console.log("Server is listening on: " + ipaddress + ":" + port);
-});
+})*/
+app.listen(port, function () {
+    console.log("Server is listening on: " + ipaddress + ":" + port);
+})
+;
