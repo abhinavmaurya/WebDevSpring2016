@@ -63,6 +63,6 @@ require("./public/project/server/app.js")(app,db, userModelProject, securityServ
     console.log("Server is listening on: " + ipaddress + ":" + port);
 })*/
 app.listen(port, function () {
-    console.log("Server is listening on: " + ipaddress + ":" + port);
+    console.log("Server is listening on port: " + port);
 })
 ;
